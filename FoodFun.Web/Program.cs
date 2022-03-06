@@ -30,7 +30,9 @@ builder
     .Services
     .ConfigureApplicationCookie(options =>
     {
-        //configure login path if some try to access resource which not authorized for those
+        options.ExpireTimeSpan = TimeSpan.FromDays(10);
+        options.LoginPath = "/Account/Login";
+        options.AccessDeniedPath = "/Account/AccessDenied";
     });
 
 builder

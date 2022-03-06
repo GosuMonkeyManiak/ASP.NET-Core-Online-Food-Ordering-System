@@ -3,6 +3,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Models.Account;
     using FoodFun.Infrastructure.Data.Models;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
 
     public class AccountController : Controller
@@ -89,5 +90,18 @@
 
             return View();
         }
+
+        [Authorize]
+        [AutoValidateAntiforgeryToken]
+        public async Task<IActionResult> Logout()
+        {
+            await this.signInManger.SignOutAsync();
+
+            return Redirect("/Home/Index");
+        }
+
+        [Authorize]
+        public async Task<IActionResult> AccessDenied()
+            => View();
     }
 }

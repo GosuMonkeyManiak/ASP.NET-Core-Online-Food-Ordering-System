@@ -19,4 +19,8 @@
     <ProjectReference Include="..\FoodFun.Infrastructure\FoodFun.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\" />
+  </ItemGroup>
+
 </Project>

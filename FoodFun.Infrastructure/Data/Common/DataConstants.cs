@@ -5,6 +5,14 @@
         public const int DefaultIdMaxLength = 450;
         public const int UrlMaxLength = 2048;
 
+        public class User
+        {
+            public const int UserNameMinLength = 3;
+            public const int UserNameMaxLength = 256;
+
+            public const int PasswordMinLength = 6;
+        }
+
         public class ProductCategory
         {
             public const int TitleMaxLength = 30;

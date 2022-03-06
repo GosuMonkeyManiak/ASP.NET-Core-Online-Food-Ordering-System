@@ -1,10 +1,13 @@
 using FoodFun.Infrastructure.Data;
 using FoodFun.Infrastructure.Data.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+var connectionString = builder
+    .Configuration
+    .GetConnectionString("DefaultConnection");
 
 builder
     .Services
@@ -17,19 +20,28 @@ builder
 
 builder
     .Services
-    .AddDefaultIdentity<User>(options =>
+    .AddIdentity<User, IdentityRole>(options =>
     {
-        options.SignIn.RequireConfirmedAccount = true;
+        options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromHours(1);
     })
     .AddEntityFrameworkStores<FoodFunDbContext>();
 
-builder.Services.AddControllersWithViews();
+builder
+    .Services
+    .ConfigureApplicationCookie(options =>
+    {
+        //configure login path if some try to access resource which not authorized for those
+    });
+
+builder
+    .Services
+    .AddControllersWithViews();
 
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
-    app.UseMigrationsEndPoint();
+    app.UseDeveloperExceptionPage();
 }
 else
 {
@@ -48,6 +60,5 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-app.MapRazorPages();
 
 app.Run();

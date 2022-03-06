@@ -1,0 +1,50 @@
+﻿@model RegisterFormModel
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial"/>
+    
+    @if (ViewData["Message"] != null)
+    {
+        <script>
+            window.onload = function() {
+                alert('@ViewData["Message"]');
+            }
+        </script>
+    }
+}
+
+<div class="row">
+    <div class="offset-xl-3 col-xl-6">
+        <h1 class="text-center">Register</h1>
+
+        <form method="post">
+            <div class="form-group mb-3">
+                <label asp-for="Username" class="mb-1"></label>
+                <input asp-for="Username" class="form-control" placeholder="Username">
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Email" class="mb-1"></label>
+                <input asp-for="Email" class="form-control" placeholder="Email">
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Password" class="mb-1"></label>
+                <input asp-for="Password" class="form-control" placeholder="Password">
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="ConfirmPassword" class="mb-1"></label>
+                <input asp-for="ConfirmPassword" class="form-control" placeholder="Confirm Password">
+            </div>
+            
+            <div class="text-danger" asp-validation-summary="All"></div>
+            
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Register</button>
+            </div>
+        </form>
+    </div>
+</div>

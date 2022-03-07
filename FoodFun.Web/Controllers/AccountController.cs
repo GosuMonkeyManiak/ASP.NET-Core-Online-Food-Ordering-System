@@ -21,7 +21,9 @@
         }
 
         public IActionResult Register()
-            => View();
+            => this.User.Identity.IsAuthenticated ? 
+                Redirect(GlobalConstants.Redirect.HomeIndexUrl) :
+                View();
 
         [HttpPost]
         [AutoValidateAntiforgeryToken]
@@ -61,9 +63,11 @@
 
             return RedirectToAction(nameof(Login));
         }
-
+        
         public IActionResult Login(string returnUrl = null)
-            => View();
+            => this.User.Identity.IsAuthenticated ?
+                Redirect(GlobalConstants.Redirect.HomeIndexUrl) :
+                View();
 
         [HttpPost]
         [AutoValidateAntiforgeryToken]

@@ -1,5 +1,6 @@
 ﻿namespace FoodFun.Web.Controllers
 {
+    using Constants;
     using Microsoft.AspNetCore.Mvc;
     using Models.Account;
     using FoodFun.Infrastructure.Data.Models;
@@ -35,7 +36,7 @@
 
             if (isUserWithThatUsernameExist)
             {
-                this.ViewData["Message"] = "Account already exist!";
+                this.ViewData[nameof(GlobalConstants.Messages.AccountExist)] = GlobalConstants.Messages.AccountExist;
 
                 return View();
             }
@@ -78,17 +79,17 @@
             if (loginResult.Succeeded)
             {
                 return returnUrl == null ? 
-                    Redirect("/Home/Index") : 
+                    Redirect(GlobalConstants.Redirect.HomeIndexUrl) : 
                     Redirect(returnUrl);
             }
             else if (loginResult.IsLockedOut)
             {
-                this.ModelState.AddModelError(string.Empty, "Account locked out for one hour.Please try again later.");
+                this.ModelState.AddModelError(string.Empty, GlobalConstants.Messages.AccountLockOut);
 
                 return View();
             }
 
-            this.ModelState.AddModelError(string.Empty, "Invalid credentials.");
+            this.ModelState.AddModelError(string.Empty, GlobalConstants.Messages.InvalidCredentials);
 
             return View();
         }
@@ -99,7 +100,7 @@
         {
             await this.signInManger.SignOutAsync();
 
-            return Redirect("/Home/Index");
+            return Redirect(GlobalConstants.Redirect.HomeIndexUrl);
         }
 
         [Authorize]

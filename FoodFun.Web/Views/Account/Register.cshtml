@@ -1,18 +1,18 @@
 ﻿@model RegisterFormModel
 
 @{
-    ViewData["Title"] = "Register";
+    ViewData[GlobalConstants.Title] = "Register";
 }
 
 @section Scripts
 {
     <partial name="_ValidationScriptsPartial"/>
     
-    @if (ViewData["Message"] != null)
+    @if (ViewData[nameof(GlobalConstants.Messages.AccountExist)] != null)
     {
         <script>
             window.onload = function() {
-                alert('@ViewData["Message"]');
+                alert('@ViewData[nameof(GlobalConstants.Messages.AccountExist)]');
             }
         </script>
     }

@@ -1,6 +1,7 @@
 ﻿namespace FoodFun.Web.Models.Account
 {
     using System.ComponentModel.DataAnnotations;
+    using Constants;
 
     using static Infrastructure.Data.Common.DataConstants.User;
 
@@ -10,7 +11,7 @@
         [StringLength(
             UserNameMaxLength,
             MinimumLength = UserNameMinLength,
-            ErrorMessage = "{0} must be between {2} and {1} characters.")]
+            ErrorMessage = GlobalConstants.Messages.UsernameError)]
         public string Username { get; init; }
 
         [Required]
@@ -20,7 +21,7 @@
         [Required]
         [MinLength(
             PasswordMinLength,
-            ErrorMessage = "{0} must be with minimum length of {1} characters.")]
+            ErrorMessage = GlobalConstants.Messages.PasswordError)]
         [DataType(DataType.Password)]
         public string Password { get; init; }
 

@@ -18,5 +18,12 @@
             public const string AccountLockOut = "Account locked out for one hour.Please try again later.";
             public const string InvalidCredentials = "Invalid credentials.";
         }
+
+        public static class Roles
+        {
+            public const string Administrator = nameof(Administrator);
+            public const string OrderManager = "Order Manager";
+            public const string RestaurantManager = "Restaurant Manager";
+        }
     }
 }

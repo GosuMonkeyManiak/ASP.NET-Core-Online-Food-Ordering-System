@@ -1,5 +1,6 @@
 using FoodFun.Infrastructure.Data;
 using FoodFun.Infrastructure.Data.Models;
+using FoodFun.Web.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -44,6 +45,7 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
+    app.MigrateDatabaseAndSeed();
 }
 else
 {

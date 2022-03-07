@@ -61,12 +61,12 @@
             return RedirectToAction(nameof(Login));
         }
 
-        public IActionResult Login()
+        public IActionResult Login(string returnUrl = null)
             => View();
 
         [HttpPost]
         [AutoValidateAntiforgeryToken]
-        public async Task<IActionResult> Login(LoginFormModel formModel)
+        public async Task<IActionResult> Login(LoginFormModel formModel, string returnUrl = null)
         {
             var loginResult = await this.signInManger
                 .PasswordSignInAsync(
@@ -77,7 +77,9 @@
 
             if (loginResult.Succeeded)
             {
-                return Redirect("/Home/Index");
+                return returnUrl == null ? 
+                    Redirect("/Home/Index") : 
+                    Redirect(returnUrl);
             }
             else if (loginResult.IsLockedOut)
             {
@@ -101,7 +103,7 @@
         }
 
         [Authorize]
-        public async Task<IActionResult> AccessDenied()
+        public IActionResult AccessDenied()
             => View();
     }
 }

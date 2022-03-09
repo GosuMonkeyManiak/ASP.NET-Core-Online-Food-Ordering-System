@@ -7,6 +7,8 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
 
+    using static Constants.GlobalConstants.Roles;
+
     public class AccountController : Controller
     {
         private readonly SignInManager<User> signInManger;
@@ -50,6 +52,7 @@
             };
 
             var identityResult = await this.userManager.CreateAsync(user, formModel.Password);
+            await this.userManager.AddToRoleAsync(user, Customer);
 
             if (!identityResult.Succeeded)
             {

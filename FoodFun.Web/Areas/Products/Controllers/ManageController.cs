@@ -55,6 +55,7 @@
             return Redirect(GlobalConstants.Redirect.HomeIndexUrl);
         }
 
+        [Authorize(Roles = $"{Administrator}, {Customer}")]
         public async Task<IActionResult> All()
             => View(await this.productService.All());
     }

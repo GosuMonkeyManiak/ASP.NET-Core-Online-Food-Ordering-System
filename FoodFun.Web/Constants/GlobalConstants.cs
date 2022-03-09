@@ -30,6 +30,7 @@
             public const string Administrator = nameof(Administrator);
             public const string OrderManager = "Order Manager";
             public const string RestaurantManager = "Restaurant Manager";
+            public const string Customer = nameof(Customer);
         }
 
         public static class Areas

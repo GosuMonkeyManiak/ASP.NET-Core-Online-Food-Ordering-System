@@ -1,9 +1,8 @@
-﻿@if (!this.User.HasClaim(x => x.Type == ClaimTypes.Role) &&
-     this.User.HasClaim(x => x.Type == ClaimTypes.Name))
+﻿@if (this.User.IsInRole(Customer))
 {
-    <partial name="_UserLinksPartial"/>
+    <partial name="_CustomerLinksPartial"/>
 }
-else if (this.User.IsInRole(GlobalConstants.Roles.Administrator))
+else if (this.User.IsInRole(Administrator))
 {
     <li class="nav-item">
         <a asp-area="Products" asp-controller="Manage" asp-action="Add" class="nav-link text-dark">Add Product</a>

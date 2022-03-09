@@ -50,6 +50,7 @@
             await roleManager.CreateAsync(new IdentityRole(Administrator));
             await roleManager.CreateAsync(new IdentityRole(OrderManager));
             await roleManager.CreateAsync(new IdentityRole(RestaurantManager));
+            await roleManager.CreateAsync(new IdentityRole(Customer));
         }
 
         private async static Task SeedUsers(

@@ -1,0 +1,49 @@
+﻿@model ProductFormModel
+
+@{
+    ViewData[Title] = "Add Product";
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial"/>
+}
+
+<div class="row">
+    <div class="offset-xl-3 col-xl-6">
+        <h1 class="text-center">Add Product</h1>
+
+        <form method="post">
+            <div class="form-group mb-3">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control" placeholder="Bananas">
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="ImageUrl"></label>
+                <input asp-for="ImageUrl" class="form-control" placeholder="https://...">
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="CategoryId"></label>
+                <select asp-for="CategoryId" class="form-control">
+                    @foreach (var category in Model.Categories)
+                    {
+                        <option value="@category.Id">@category.Title</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Price"></label>
+                <input asp-for="Price" class="form-control" placeholder="8.99">
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Description"></label>
+                <textarea asp-for="Description" class="form-control" rows="3" placeholder="Best product ever..."></textarea>
+            </div>
+
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Add</button>
+            </div>
+        </form>
+    </div>
+</div>

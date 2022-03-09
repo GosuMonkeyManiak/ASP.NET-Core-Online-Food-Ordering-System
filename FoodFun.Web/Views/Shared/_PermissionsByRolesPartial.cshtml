@@ -5,22 +5,13 @@
 }
 else if (this.User.IsInRole(GlobalConstants.Roles.Administrator))
 {
-    <partial name="_UserLinksPartial"/>
-    <partial name="_RestaurantManagerPermissionsPartial"/>
     <li class="nav-item">
-        <a class="nav-link text-dark">Add Product</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link text-dark">Orders</a>
+        <a asp-area="Products" asp-controller="Manage" asp-action="Add" class="nav-link text-dark">Add Product</a>
     </li>
 }
 else if (this.User.IsInRole(GlobalConstants.Roles.RestaurantManager))
 {
-    <partial name="_RestaurantManagerPermissionsPartial"/>
 }
 else if (this.User.IsInRole(GlobalConstants.Roles.OrderManager))
 {
-    <li class="nav-item">
-        <a class="nav-link text-dark">Orders</a>
-    </li>
 }

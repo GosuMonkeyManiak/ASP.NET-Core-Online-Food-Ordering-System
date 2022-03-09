@@ -20,7 +20,13 @@
 
         public class Product
         {
+            public const int NameMinLength = 4;
             public const int NameMaxLength = 100;
+
+            public const string PriceMinLength = "0.10";
+            public const string PriceMaxLength = "500.0";
+
+            public const int DescriptionMinLength = 10;
         }
 
         public class DishCategory

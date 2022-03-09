@@ -1,3 +1,5 @@
+using FoodFun.Core.Contracts;
+using FoodFun.Core.Services;
 using FoodFun.Infrastructure.Data;
 using FoodFun.Infrastructure.Data.Models;
 using FoodFun.Web.Extensions;
@@ -40,6 +42,10 @@ builder
     .Services
     .AddControllersWithViews();
 
+builder
+    .Services
+    .AddTransient<IProductService, ProductService>();
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -62,7 +68,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
-    name: "Administration",
+    name: "Area",
     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
 app.MapControllerRoute(

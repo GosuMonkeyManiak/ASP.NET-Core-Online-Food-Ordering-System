@@ -36,6 +36,13 @@
                     .GetAwaiter()
                     .GetResult();
             }
+
+            if (!db.ProductsCategories.Any())
+            {
+                SeedCategoriesForProduct(db)
+                    .GetAwaiter()
+                    .GetResult();
+            }
         }
 
         private async static Task SeedRoles(RoleManager<IdentityRole> roleManager)
@@ -60,6 +67,23 @@
             await userManager.CreateAsync(user, password);
 
             await userManager.AddToRoleAsync(user, Administrator);
+        }
+
+        private async static Task SeedCategoriesForProduct(FoodFunDbContext dbContext)
+        {
+            List<ProductCategory> categories = new List<ProductCategory>()
+            {
+                new() { Title = "Meat" },
+                new() { Title = "Sea Food" },
+                new() { Title = "Drinks" },
+                new() { Title = "Vegetables" },
+                new() { Title = "Fruits" },
+            };
+
+            await dbContext.ProductsCategories
+                .AddRangeAsync(categories);
+
+            await dbContext.SaveChangesAsync();
         }
     }
 }

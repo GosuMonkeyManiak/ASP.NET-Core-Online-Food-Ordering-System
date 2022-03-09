@@ -52,6 +52,25 @@
             return new(true, new List<string>());
         }
 
+        public async Task<IEnumerable<ProductServiceModel>> All()
+            => await this.dbContext
+                .Products
+                .Include(p => p.Category)
+                .Select(p => new ProductServiceModel()
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    ImageUrl = p.ImageUrl,
+                    Category = new ProductCategoryServiceModel()
+                    {
+                        Id = p.CategoryId,
+                        Title = p.Category.Title
+                    },
+                    Price = p.Price,
+                    Description = p.Description
+                })
+                .ToListAsync();
+
         private async Task<bool> IsCategoryExist(int categoryId)
             => await this.dbContext
                 .ProductsCategories

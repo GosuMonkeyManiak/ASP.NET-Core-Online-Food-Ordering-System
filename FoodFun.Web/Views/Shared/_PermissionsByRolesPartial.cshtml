@@ -8,6 +8,9 @@ else if (this.User.IsInRole(GlobalConstants.Roles.Administrator))
     <li class="nav-item">
         <a asp-area="Products" asp-controller="Manage" asp-action="Add" class="nav-link text-dark">Add Product</a>
     </li>
+    <li class="nav-item">
+        <a asp-area="Products" asp-controller="Manage" asp-action="All" class="nav-link text-dark">All Products</a>
+    </li>
 }
 else if (this.User.IsInRole(GlobalConstants.Roles.RestaurantManager))
 {

@@ -1,0 +1,21 @@
+﻿@model IEnumerable<ProductServiceModel>
+@{
+    ViewData[Title] = "All";
+}
+
+<div class="row">
+    @foreach (var product in Model)
+    {
+        <div class="col-xl-3">
+            <div class="card text-center" style="width: 18rem;">
+                <img class="card-img-top" src="@product.ImageUrl" alt="@product.Name - (@product.Category.Title)">
+                <div class="card-body">
+                    <h5 class="card-title">@product.Name - (@product.Category.Title)</h5>
+                    <p class="card-text">@product.Price $</p>
+                    <p class="card-text">@product.Description</p>
+                    <a class="btn btn-primary text-center">Add to Card</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

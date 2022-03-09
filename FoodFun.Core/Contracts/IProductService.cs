@@ -12,5 +12,7 @@
             int categoryId,
             decimal price,
             string description);
+
+        Task<IEnumerable<ProductServiceModel>> All();
     }
 }

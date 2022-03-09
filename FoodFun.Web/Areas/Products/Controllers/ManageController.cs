@@ -54,5 +54,8 @@
 
             return Redirect(GlobalConstants.Redirect.HomeIndexUrl);
         }
+
+        public async Task<IActionResult> All()
+            => View(await this.productService.All());
     }
 }

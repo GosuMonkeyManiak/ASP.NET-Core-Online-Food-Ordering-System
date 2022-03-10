@@ -37,6 +37,7 @@
         {
             public const string Products = nameof(Products);
             public const string Identity = nameof(Identity);
+            public const string Administration = nameof(Administration);
         }
     }
 }

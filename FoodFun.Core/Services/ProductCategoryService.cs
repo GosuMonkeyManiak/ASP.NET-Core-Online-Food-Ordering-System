@@ -27,5 +27,10 @@
                     Title = pc.Title
                 })
                 .ToListAsync();
+
+        public async Task<bool> IsCategoryExist(int categoryId)
+            => await this.dbContext
+                .ProductsCategories
+                .AnyAsync(x => x.Id == categoryId);
     }
 }

@@ -132,11 +132,6 @@
             return true;
         }
 
-        private async Task<bool> IsCategoryExist(int categoryId)
-            => await this.dbContext
-                .ProductsCategories
-                .AnyAsync(x => x.Id == categoryId);
-
         private async Task<bool> IsProductExist(string productId)
             => await this.dbContext
                 .Products

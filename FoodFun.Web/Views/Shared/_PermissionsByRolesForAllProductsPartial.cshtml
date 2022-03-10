@@ -1,6 +1,8 @@
-﻿@if (this.User.IsInRole(Administrator))
+﻿@model string
+
+@if (this.User.IsInRole(Administrator))
 {
-    <a class="btn btn-warning">Edit</a>
+    <a class="btn btn-warning" asp-area="" asp-controller="Product" asp-action="Edit" asp-route-productId="@Model">Edit</a>
     <a class="btn btn-danger">Delete</a>
 }
 else

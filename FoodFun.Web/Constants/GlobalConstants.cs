@@ -3,6 +3,7 @@
     public static class GlobalConstants
     {
         public const string Title = nameof(Title);
+        public const int DefaultIdLength = 36;
 
         public static class Redirect
         {
@@ -25,6 +26,9 @@
             public const string UrlErrorWithMaxLength = "{0} can't be more then {1} characters.";
             public const string ProductPriceError = "{0} must be between {1} and {2}.";
             public const string DescriptionError = "{0} must be with a minimum {1} characters.";
+
+            public const string ProductNotExist = "Product doesn't exist!";
+            public const string ProductCategoryNotExist = "Product category doesn't exist!";
         }
 
         public static class Roles

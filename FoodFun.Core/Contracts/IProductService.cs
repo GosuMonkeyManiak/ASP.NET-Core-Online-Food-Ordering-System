@@ -14,5 +14,15 @@
             string description);
 
         Task<IEnumerable<ProductServiceModel>> All();
+
+        Task<Tuple<bool, ProductServiceModel>> GetById(string productId);
+
+        Task<bool> Update(
+            string id,
+            string name,
+            string imageUrl,
+            int categoryId,
+            decimal price,
+            string description);
     }
 }

@@ -4,6 +4,20 @@
     ViewData[Title] = "All";
 }
 
+@if (TempData[nameof(ProductNotExist)] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData[nameof(ProductNotExist)]
+    </div>
+}
+
+@if (TempData[nameof(ProductCategoryNotExist)] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData[nameof(ProductCategoryNotExist)]
+    </div>
+}
+
 <div class="row">
     @foreach (var product in Model)
     {
@@ -14,7 +28,7 @@
                     <h5 class="card-title">@product.Name - (@product.Category.Title)</h5>
                     <p class="card-text">@product.Price $</p>
                     <p class="card-text">@product.Description</p>
-                    <partial name="_PermissionsByRolesForAllProductsPartial"/>
+                    <partial name="_PermissionsByRolesForAllProductsPartial" model="@product.Id"/>
                 </div>
             </div>
         </div>

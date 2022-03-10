@@ -71,9 +71,74 @@
                 })
                 .ToListAsync();
 
+        public async Task<Tuple<bool, ProductServiceModel>> GetById(string productId)
+        {
+            if (!await IsProductExist(productId))
+            {
+                return new(false, null);
+            }
+
+            var product = await this.dbContext
+                .Products
+                .Include(p => p.Category)
+                .FirstOrDefaultAsync(p => p.Id == productId);
+
+            var productServiceModel = new ProductServiceModel()
+            {
+                Id = product.Id,
+                Name = product.Name,
+                ImageUrl = product.ImageUrl,
+                Price = product.Price,
+                Category = new ProductCategoryServiceModel()
+                {
+                    Id = product.Category.Id,
+                    Title = product.Category.Title
+                },
+                Description = product.Description
+            };
+
+            return new(true, productServiceModel);
+        }
+
+        public async Task<bool> Update(
+            string id, 
+            string name, 
+            string imageUrl, 
+            int categoryId,
+            decimal price, 
+            string description)
+        {
+            if (!await IsProductExist(id) || 
+                !await IsCategoryExist(categoryId))
+            {
+                return false;
+            }
+
+            var product = new Product()
+            {
+                Id = id,
+                Name = name,
+                ImageUrl = imageUrl,
+                CategoryId = categoryId,
+                Price = price,
+                Description = description
+            };
+
+            this.dbContext.Entry(product).State = EntityState.Modified;
+
+            await this.dbContext.SaveChangesAsync();
+
+            return true;
+        }
+
         private async Task<bool> IsCategoryExist(int categoryId)
             => await this.dbContext
                 .ProductsCategories
                 .AnyAsync(x => x.Id == categoryId);
+
+        private async Task<bool> IsProductExist(string productId)
+            => await this.dbContext
+                .Products
+                .AnyAsync(x => x.Id == productId);
     }
 }

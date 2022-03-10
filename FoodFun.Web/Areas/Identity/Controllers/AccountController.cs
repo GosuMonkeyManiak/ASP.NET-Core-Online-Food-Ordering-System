@@ -27,7 +27,7 @@
 
         public IActionResult Register()
             => this.User.Identity.IsAuthenticated ? 
-                Redirect(HomeIndexUrl) :
+                RedirectToAction(Index, Home, new { area= "" }) :
                 View();
 
         [HttpPost]
@@ -73,7 +73,7 @@
         
         public IActionResult Login(string returnUrl = null)
             => this.User.Identity.IsAuthenticated ?
-                Redirect(HomeIndexUrl) :
+                RedirectToAction(Index, Home, new { area = "" }) :
                 View();
 
         [HttpPost]
@@ -89,8 +89,8 @@
 
             if (loginResult.Succeeded)
             {
-                return returnUrl == null ? 
-                    Redirect(HomeIndexUrl) : 
+                return returnUrl == null ?
+                    RedirectToAction(Index, Home, new { area = "" }) : 
                     Redirect(returnUrl);
             }
             else if (loginResult.IsLockedOut)
@@ -111,7 +111,7 @@
         {
             await this.signInManger.SignOutAsync();
 
-            return Redirect(HomeIndexUrl);
+            return RedirectToAction(Index, Home, new { area = "" });
         }
 
         [Authorize]

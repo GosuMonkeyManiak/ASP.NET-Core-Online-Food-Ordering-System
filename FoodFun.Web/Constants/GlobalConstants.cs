@@ -7,6 +7,8 @@
         public static class Redirect
         {
             public const string HomeIndexUrl = "/Home/Index";
+            public const string Home = nameof(Home);
+            public const string Index = nameof(Index);
         }
 
         public static class Messages

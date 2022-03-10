@@ -1,20 +1,17 @@
-﻿namespace FoodFun.Web.Areas.Products.Controllers
+﻿namespace FoodFun.Web.Controllers
 {
     using Constants;
     using Core.Contracts;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using Models;
-
-    using static Constants.GlobalConstants.Areas;
+    using Models.Product;
     using static Constants.GlobalConstants.Roles;
-
-    [Area(Products)]
-    public class ManageController : Controller
+    
+    public class ProductController : Controller
     {
         private readonly IProductService productService;
 
-        public ManageController(IProductService productService)
+        public ProductController(IProductService productService)
             => this.productService = productService;
 
         [Authorize(Roles = Administrator)]

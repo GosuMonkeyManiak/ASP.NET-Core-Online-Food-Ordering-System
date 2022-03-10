@@ -1,4 +1,4 @@
-﻿namespace FoodFun.Web.Areas.Products.Models
+﻿namespace FoodFun.Web.Models.Product
 {
     using System.ComponentModel.DataAnnotations;
     using Core.Models.Products;

@@ -1,0 +1,6 @@
+﻿@if (this.User.IsInRole(Administrator))
+{
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="Administration" asp-controller="Home" asp-action="Index">Administration</a>
+    </li>
+}

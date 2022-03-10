@@ -1,9 +1,6 @@
 ﻿@if (this.User.IsInRole(Customer))
 {
     <li class="nav-item">
-        <a class="nav-link text-dark">All Products</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link text-dark">All Dishes</a>
+        <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="All">All Products</a>
     </li>
 }

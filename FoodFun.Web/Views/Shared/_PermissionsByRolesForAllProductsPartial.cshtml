@@ -1,0 +1,9 @@
+﻿@if (this.User.IsInRole(Administrator))
+{
+    <a class="btn btn-warning">Edit</a>
+    <a class="btn btn-danger">Delete</a>
+}
+else
+{
+    <a class="btn btn-primary">Add to card</a>
+}

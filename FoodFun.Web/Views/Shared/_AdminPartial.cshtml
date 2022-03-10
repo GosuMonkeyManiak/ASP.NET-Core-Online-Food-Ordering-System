@@ -1,6 +1,12 @@
 ﻿@if (this.User.IsInRole(Administrator))
 {
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Administration" asp-controller="Home" asp-action="Index">Administration</a>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarWhiteDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Products
+        </a>
+        <ul class="dropdown-menu dropdown-menu-white" aria-labelledby="navbarWhiteDropdownMenuLink">
+            <li><a class="dropdown-item" asp-area="" asp-controller="Product" asp-action="Add">Add Product</a></li>
+            <li><a class="dropdown-item" asp-area="" asp-controller="Product" asp-action="All">All Products</a></li>
+        </ul>
     </li>
 }

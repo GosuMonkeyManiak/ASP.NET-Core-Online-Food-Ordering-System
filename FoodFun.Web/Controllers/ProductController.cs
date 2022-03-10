@@ -50,7 +50,7 @@
                 return Add().GetAwaiter().GetResult();
             }
 
-            return Redirect(GlobalConstants.Redirect.HomeIndexUrl);
+            return RedirectToAction(nameof(All));
         }
 
         [Authorize(Roles = $"{Administrator}, {Customer}")]

@@ -15,6 +15,7 @@
 
         public class ProductCategory
         {
+            public const int TitleMinLength = 4;
             public const int TitleMaxLength = 30;
         }
 

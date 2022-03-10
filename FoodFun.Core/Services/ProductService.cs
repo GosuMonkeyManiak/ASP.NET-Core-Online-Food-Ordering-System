@@ -4,7 +4,8 @@
     using Infrastructure.Data;
     using Infrastructure.Data.Models;
     using Microsoft.EntityFrameworkCore;
-    using Models.Products;
+    using Models.Product;
+    using Models.ProductCategory;
 
     public class ProductService : IProductService
     {

@@ -1,6 +1,7 @@
 ﻿namespace FoodFun.Core.Contracts
 {
-    using Models.Products;
+    using Models.Product;
+    using Models.ProductCategory;
 
     public interface IProductService
     {

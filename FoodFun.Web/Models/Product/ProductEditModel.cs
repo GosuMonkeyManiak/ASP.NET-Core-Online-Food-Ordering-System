@@ -1,7 +1,7 @@
 ﻿namespace FoodFun.Web.Models.Product
 {
     using System.ComponentModel.DataAnnotations;
-    using Core.Models.Products;
+    using Core.Models.ProductCategory;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
 
     using static Constants.GlobalConstants;

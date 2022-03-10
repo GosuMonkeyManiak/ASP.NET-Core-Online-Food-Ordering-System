@@ -29,6 +29,8 @@
 
             public const string ProductNotExist = "Product doesn't exist!";
             public const string ProductCategoryNotExist = "Product category doesn't exist!";
+
+            public const string ProductCategoryTitleError = "{0} of category must be between {2} and {1} characters.";
         }
 
         public static class Roles

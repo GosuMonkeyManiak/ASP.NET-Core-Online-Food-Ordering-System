@@ -1,0 +1,16 @@
+﻿@model IEnumerable<ProductCategoryModel>
+
+@{
+    ViewData[Title] = "All Categories for product";
+}
+
+<div class="row">
+    <div class="offset-3 col-5">
+        <ul class="list-group list-group-flush list-unstyled">
+            @foreach (var category in Model)
+            {   
+                <li class="list-group-item">@category.Title</li>
+            }
+        </ul>
+    </div>
+</div>

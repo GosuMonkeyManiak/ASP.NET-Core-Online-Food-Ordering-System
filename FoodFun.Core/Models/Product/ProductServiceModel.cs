@@ -1,5 +1,7 @@
-﻿namespace FoodFun.Core.Models.Products
+﻿namespace FoodFun.Core.Models.Product
 {
+    using ProductCategory;
+
     public class ProductServiceModel
     {
         public string Id { get; init; }

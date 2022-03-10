@@ -1,4 +1,4 @@
-﻿namespace FoodFun.Core.Models.Products
+﻿namespace FoodFun.Core.Models.ProductCategory
 {
     public class ProductCategoryServiceModel
     {

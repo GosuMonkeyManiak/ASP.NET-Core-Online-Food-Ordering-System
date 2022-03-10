@@ -9,8 +9,4 @@
     <ProjectReference Include="..\FoodFun.Infrastructure\FoodFun.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Contracts\" />
-  </ItemGroup>
-
 </Project>

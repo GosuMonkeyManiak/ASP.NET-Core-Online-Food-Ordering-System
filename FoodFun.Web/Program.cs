@@ -24,10 +24,7 @@ builder
 
 builder
     .Services
-    .AddIdentity<User, IdentityRole>(options =>
-    {
-        options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromHours(1);
-    })
+    .AddIdentity<User, IdentityRole>(options => { options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromHours(1); })
     .AddEntityFrameworkStores<FoodFunDbContext>();
 
 builder
@@ -41,14 +38,12 @@ builder
 
 builder
     .Services
-    .AddControllersWithViews(options =>
-    {
-        options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
-    });
+    .AddControllersWithViews(options => { options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>(); });
 
 builder
     .Services
-    .AddTransient<IProductService, ProductService>();
+    .AddTransient<IProductService, ProductService>()
+    .AddTransient<IProductCategoryService, ProductCategoryService>();
 
 var app = builder.Build();
 
@@ -72,11 +67,11 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
-    name: "DefaultArea",
-    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+    "DefaultArea",
+    "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
 app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    "default",
+    "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

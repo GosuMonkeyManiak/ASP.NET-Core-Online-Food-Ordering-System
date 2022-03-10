@@ -4,6 +4,7 @@ using FoodFun.Infrastructure.Data;
 using FoodFun.Infrastructure.Data.Models;
 using FoodFun.Web.Extensions;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -40,7 +41,10 @@ builder
 
 builder
     .Services
-    .AddControllersWithViews();
+    .AddControllersWithViews(options =>
+    {
+        options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
+    });
 
 builder
     .Services

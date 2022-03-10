@@ -25,7 +25,6 @@
 
         [Authorize(Roles = Administrator)]
         [HttpPost]
-        [AutoValidateAntiforgeryToken]
         public async Task<IActionResult> Add(ProductFormModel formModel)
         {
             if (!this.ModelState.IsValid)
@@ -87,7 +86,6 @@
 
         [Authorize(Roles = Administrator)]
         [HttpPost]
-        [AutoValidateAntiforgeryToken]
         public async Task<IActionResult> Edit(ProductEditModel editModel)
         {
             if (!ModelState.IsValid)

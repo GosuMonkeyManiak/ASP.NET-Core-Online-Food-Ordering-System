@@ -31,7 +31,6 @@
                 View();
 
         [HttpPost]
-        [AutoValidateAntiforgeryToken]
         public async Task<IActionResult> Register(RegisterFormModel formModel)
         {
             if (!this.ModelState.IsValid)
@@ -77,7 +76,6 @@
                 View();
 
         [HttpPost]
-        [AutoValidateAntiforgeryToken]
         public async Task<IActionResult> Login(LoginFormModel formModel, string returnUrl = null)
         {
             var loginResult = await this.signInManger
@@ -106,7 +104,6 @@
         }
 
         [Authorize]
-        [AutoValidateAntiforgeryToken]
         public async Task<IActionResult> Logout()
         {
             await this.signInManger.SignOutAsync();

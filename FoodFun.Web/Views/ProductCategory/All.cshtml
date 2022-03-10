@@ -1,16 +1,38 @@
-﻿@model IEnumerable<ProductCategoryModel>
+﻿@model IEnumerable<ProductCategoryWithProductCountModel>
 
 @{
     ViewData[Title] = "All Categories for product";
 }
 
+@if (TempData[nameof(ProductCategoryNotExist)] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData[nameof(ProductCategoryNotExist)]
+    </div>
+}
+
 <div class="row">
     <div class="offset-3 col-5">
-        <ul class="list-group list-group-flush list-unstyled">
-            @foreach (var category in Model)
-            {   
-                <li class="list-group-item">@category.Title</li>
-            }
-        </ul>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Title</th>
+                    <th scope="col">Products in category</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var category in Model)
+                {
+                    <tr>
+                        <td>@category.Title</td>
+                        <td>@category.ProductsCount</td>
+                        <td>
+                            <a asp-area="" asp-controller="ProductCategory" asp-action="Edit" asp-route-categoryid="@category.Id" class="btn btn-warning">Edit</a> |
+                            <a>Disable</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
 </div>

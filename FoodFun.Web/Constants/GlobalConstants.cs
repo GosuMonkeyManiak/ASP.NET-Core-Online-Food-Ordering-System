@@ -30,6 +30,7 @@
             public const string ProductNotExist = "Product doesn't exist!";
             public const string ProductCategoryNotExist = "Product category doesn't exist!";
 
+            public const string ProductCategoryIdError = "{0} must be between {1} and {2}.";
             public const string ProductCategoryTitleError = "{0} of category must be between {2} and {1} characters.";
         }
 

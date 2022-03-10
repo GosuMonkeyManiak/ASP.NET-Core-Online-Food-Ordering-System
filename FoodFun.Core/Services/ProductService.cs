@@ -10,13 +10,19 @@
     public class ProductService : IProductService
     {
         private readonly FoodFunDbContext dbContext;
+        private readonly IProductCategoryService productCategoryService;
 
-        public ProductService(FoodFunDbContext dbContext) 
-            => this.dbContext = dbContext;
+        public ProductService(
+            FoodFunDbContext dbContext,
+            IProductCategoryService productCategoryService)
+        {
+            this.dbContext = dbContext;
+            this.productCategoryService = productCategoryService;
+        }
 
-        public async Task<List<ProductCategoryServiceModel>> GetCategories()
+        public async Task<List<ProductCategoryWithProductCountServiceModel>> GetCategories()
             => await this.dbContext.ProductsCategories
-                .Select(c => new ProductCategoryServiceModel()
+                .Select(c => new ProductCategoryWithProductCountServiceModel()
                 {
                     Id = c.Id,
                     Title = c.Title
@@ -30,7 +36,7 @@
             decimal price, 
             string description)
         {
-            if (!await IsCategoryExist(categoryId))
+            if (!await this.productCategoryService.IsCategoryExist(categoryId))
             {
                 return new(false, new List<string>() { "Category doesn't exist!" });
             }
@@ -62,7 +68,7 @@
                     Id = p.Id,
                     Name = p.Name,
                     ImageUrl = p.ImageUrl,
-                    Category = new ProductCategoryServiceModel()
+                    Category = new ProductCategoryWithProductCountServiceModel()
                     {
                         Id = p.CategoryId,
                         Title = p.Category.Title
@@ -90,7 +96,7 @@
                 Name = product.Name,
                 ImageUrl = product.ImageUrl,
                 Price = product.Price,
-                Category = new ProductCategoryServiceModel()
+                Category = new ProductCategoryWithProductCountServiceModel()
                 {
                     Id = product.Category.Id,
                     Title = product.Category.Title
@@ -110,7 +116,7 @@
             string description)
         {
             if (!await IsProductExist(id) || 
-                !await IsCategoryExist(categoryId))
+                !await this.productCategoryService.IsCategoryExist(categoryId))
             {
                 return false;
             }

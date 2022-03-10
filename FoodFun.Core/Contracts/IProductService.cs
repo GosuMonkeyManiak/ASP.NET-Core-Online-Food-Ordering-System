@@ -5,7 +5,7 @@
 
     public interface IProductService
     {
-        Task<List<ProductCategoryServiceModel>> GetCategories();
+        Task<List<ProductCategoryWithProductCountServiceModel>> GetCategories();
 
         Task<Tuple<bool, IEnumerable<string>>> AddProduct(
             string name,

@@ -6,8 +6,14 @@
     {
         Task Add(string title);
 
-        Task<IEnumerable<ProductCategoryServiceModel>> All();
+        Task<IEnumerable<ProductCategoryWithProductCountServiceModel>> All();
 
         Task<bool> IsCategoryExist(int categoryId);
+
+        Task<Tuple<bool, ProductCategoryServiceModel>> GetById(int id);
+
+        Task<bool> Update(
+            int categoryId,
+            string title);
     }
 }

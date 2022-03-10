@@ -18,13 +18,15 @@
                 .ProductsCategories
                 .AddAsync(new ProductCategory() { Title = title });
 
-        public async Task<IEnumerable<ProductCategoryServiceModel>> All()
+        public async Task<IEnumerable<ProductCategoryWithProductCountServiceModel>> All()
             => await this.dbContext
                 .ProductsCategories
-                .Select(pc => new ProductCategoryServiceModel()
+                .Include(pc => pc.Products)
+                .Select(pc => new ProductCategoryWithProductCountServiceModel()
                 {
                     Id = pc.Id,
-                    Title = pc.Title
+                    Title = pc.Title,
+                    ProductsCount = pc.Products.Count
                 })
                 .ToListAsync();
 
@@ -32,5 +34,45 @@
             => await this.dbContext
                 .ProductsCategories
                 .AnyAsync(x => x.Id == categoryId);
+
+        public async Task<Tuple<bool, ProductCategoryServiceModel>> GetById(int id)
+        {
+            if (!await IsCategoryExist(id))
+            {
+                return new(false, null);
+            }
+
+            var productCategory = await this.dbContext
+                .ProductsCategories
+                .FirstOrDefaultAsync(pc => pc.Id == id);
+
+            var productCategoryServiceModel = new ProductCategoryServiceModel()
+            {
+                Id = productCategory.Id,
+                Title = productCategory.Title
+            };
+
+            return new(true, productCategoryServiceModel);
+        }
+
+        public async Task<bool> Update(int categoryId, string title)
+        {
+            if (!await IsCategoryExist(categoryId))
+            {
+                return false;
+            }
+
+            var productCategory = new ProductCategory()
+            {
+                Id = categoryId,
+                Title = title
+            };
+
+            this.dbContext.Attach(productCategory).State = EntityState.Modified;
+
+            await this.dbContext.SaveChangesAsync();
+
+            return true;
+        }
     }
 }

@@ -10,7 +10,7 @@
 
         public string ImageUrl { get; init; }
 
-        public ProductCategoryServiceModel Category { get; init; }
+        public ProductCategoryWithProductCountServiceModel Category { get; init; }
 
         public decimal Price { get; init; }
 

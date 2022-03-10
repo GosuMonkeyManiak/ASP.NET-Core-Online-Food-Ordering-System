@@ -43,6 +43,6 @@
         public string Description { get; init; }
 
         [BindNever]
-        public IEnumerable<ProductCategoryServiceModel> Categories { get; init; } = new List<ProductCategoryServiceModel>();
+        public IEnumerable<ProductCategoryWithProductCountServiceModel> Categories { get; init; } = new List<ProductCategoryWithProductCountServiceModel>();
     }
 }

@@ -24,7 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Administration\Models\" />
     <Folder Include="Models\Account\" />
   </ItemGroup>
 

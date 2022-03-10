@@ -34,8 +34,8 @@ builder
     .ConfigureApplicationCookie(options =>
     {
         options.ExpireTimeSpan = TimeSpan.FromDays(10);
-        options.LoginPath = "/Account/Login";
-        options.AccessDeniedPath = "/Account/AccessDenied";
+        options.LoginPath = "/Identity/Account/Login";
+        options.AccessDeniedPath = "/Identity/Account/AccessDenied";
     });
 
 builder
@@ -68,7 +68,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
-    name: "Area",
+    name: "DefaultArea",
     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
 app.MapControllerRoute(

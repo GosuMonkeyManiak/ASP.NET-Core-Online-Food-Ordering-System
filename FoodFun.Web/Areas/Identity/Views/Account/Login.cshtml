@@ -1,0 +1,41 @@
+﻿@model LoginFormModel
+
+@{
+    ViewData[Title] = "Login";
+}
+
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <h2 class="text-center text-dark mt-5">@ViewData[Title]</h2>
+
+        <div class="card my-5">
+
+            <form method="post" class="card-body cardbody-color p-lg-5">
+
+                <div class="text-center">
+                    <img src="https://cdn.pixabay.com/photo/2016/03/31/19/56/avatar-1295397__340.png" class="img-fluid profile-image-pic img-thumbnail rounded-circle my-3" width="200px" alt="profile">
+                </div>
+
+                <div class="mb-3">
+                    <input asp-for="Username" class="form-control" placeholder="Username">
+                </div>
+                <div class="mb-3">
+                    <input asp-for="Password" class="form-control" placeholder="Password">
+                </div>
+                <div class="form-check mb-3">
+                    <label asp-for="RememberMe" class="form-check-label"></label>
+                    <input asp-for="RememberMe" class="form-check-input">
+                </div>
+                
+                <div asp-validation-summary="All" class="text-danger"></div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-color px-5 mb-5 w-100">@ViewData[Title]</button>
+                </div>
+                <div id="emailHelp" class="form-text text-center mb-5 text-dark">
+                    Not Registered? <a asp-area="Identity" asp-controller="Account" asp-action="Register" class="text-dark fw-bold">Create an Account</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

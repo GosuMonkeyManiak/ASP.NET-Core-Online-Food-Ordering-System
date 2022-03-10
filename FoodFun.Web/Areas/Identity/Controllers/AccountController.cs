@@ -1,14 +1,17 @@
-﻿namespace FoodFun.Web.Controllers
+﻿namespace FoodFun.Web.Areas.Identity.Controllers
 {
-    using Constants;
     using Microsoft.AspNetCore.Mvc;
-    using Models.Account;
     using FoodFun.Infrastructure.Data.Models;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
+    using Models;
 
+    using static Constants.GlobalConstants.Redirect;
     using static Constants.GlobalConstants.Roles;
+    using static Constants.GlobalConstants.Areas;
+    using static Constants.GlobalConstants.Messages;
 
+    [Area(Identity)]
     public class AccountController : Controller
     {
         private readonly SignInManager<User> signInManger;
@@ -24,7 +27,7 @@
 
         public IActionResult Register()
             => this.User.Identity.IsAuthenticated ? 
-                Redirect(GlobalConstants.Redirect.HomeIndexUrl) :
+                Redirect(HomeIndexUrl) :
                 View();
 
         [HttpPost]
@@ -40,7 +43,7 @@
 
             if (isUserWithThatUsernameExist)
             {
-                this.ViewData[nameof(GlobalConstants.Messages.AccountExist)] = GlobalConstants.Messages.AccountExist;
+                this.ViewData[nameof(AccountExist)] = AccountExist;
 
                 return View();
             }
@@ -52,7 +55,6 @@
             };
 
             var identityResult = await this.userManager.CreateAsync(user, formModel.Password);
-            await this.userManager.AddToRoleAsync(user, Customer);
 
             if (!identityResult.Succeeded)
             {
@@ -64,12 +66,14 @@
                 return View();
             }
 
+            await this.userManager.AddToRoleAsync(user, Customer);
+
             return RedirectToAction(nameof(Login));
         }
         
         public IActionResult Login(string returnUrl = null)
             => this.User.Identity.IsAuthenticated ?
-                Redirect(GlobalConstants.Redirect.HomeIndexUrl) :
+                Redirect(HomeIndexUrl) :
                 View();
 
         [HttpPost]
@@ -86,17 +90,17 @@
             if (loginResult.Succeeded)
             {
                 return returnUrl == null ? 
-                    Redirect(GlobalConstants.Redirect.HomeIndexUrl) : 
+                    Redirect(HomeIndexUrl) : 
                     Redirect(returnUrl);
             }
             else if (loginResult.IsLockedOut)
             {
-                this.ModelState.AddModelError(string.Empty, GlobalConstants.Messages.AccountLockOut);
+                this.ModelState.AddModelError(string.Empty, AccountLockOut);
 
                 return View();
             }
 
-            this.ModelState.AddModelError(string.Empty, GlobalConstants.Messages.InvalidCredentials);
+            this.ModelState.AddModelError(string.Empty, InvalidCredentials);
 
             return View();
         }
@@ -107,7 +111,7 @@
         {
             await this.signInManger.SignOutAsync();
 
-            return Redirect(GlobalConstants.Redirect.HomeIndexUrl);
+            return Redirect(HomeIndexUrl);
         }
 
         [Authorize]

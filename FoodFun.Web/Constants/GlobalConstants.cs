@@ -36,6 +36,7 @@
         public static class Areas
         {
             public const string Products = nameof(Products);
+            public const string Identity = nameof(Identity);
         }
     }
 }

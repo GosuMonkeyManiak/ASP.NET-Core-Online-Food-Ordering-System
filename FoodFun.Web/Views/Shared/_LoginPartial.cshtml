@@ -2,10 +2,10 @@
     @if (this.User.Identity.IsAuthenticated)
     {
         <li class="nav-item">
-            <a  class="nav-link text-dark" title="Manage">Hello @User.Identity?.Name!</a>
+            <a  class="nav-link text-dark">Hello @User.Identity?.Name!</a>
         </li>
         <li class="nav-item">
-            <form method="get" asp-area="" asp-controller="Account" asp-action="Logout" class="form-inline">
+            <form method="get" asp-area="Identity" asp-controller="Account" asp-action="Logout" class="form-inline">
                 <button  type="submit" class="nav-link btn btn-link text-dark">Logout</button>
             </form>
         </li>
@@ -13,10 +13,10 @@
     else
     {
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register" >Register</a>
+            <a class="nav-link text-dark" asp-area="Identity" asp-controller="Account" asp-action="Register" >Register</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login" >Login</a>
+            <a class="nav-link text-dark" asp-area="Identity" asp-controller="Account" asp-action="Login" >Login</a>
         </li>
     }
 </ul>

@@ -1,6 +1,5 @@
 ﻿namespace FoodFun.Web.Controllers
 {
-    using Constants;
     using Core.Contracts;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;

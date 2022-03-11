@@ -42,6 +42,6 @@
         public string Description { get; init; }
 
         [BindNever]
-        public IEnumerable<DishCategoryModel> Categories { get; init; } = new List<DishCategoryModel>();
+        public IEnumerable<DishCategoryModel> Categories { get; set; } = new List<DishCategoryModel>();
     }
 }

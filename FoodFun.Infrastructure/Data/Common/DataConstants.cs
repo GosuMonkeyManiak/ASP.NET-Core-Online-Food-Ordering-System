@@ -2,6 +2,11 @@
 {
     public class DataConstants
     {
+        public const string PriceMinLength = "0.10";
+        public const string PriceMaxLength = "500.0";
+
+        public const int DescriptionMinLength = 10;
+
         public const int DefaultIdMaxLength = 450;
         public const int UrlMaxLength = 2048;
 
@@ -23,20 +28,17 @@
         {
             public const int NameMinLength = 4;
             public const int NameMaxLength = 100;
-
-            public const string PriceMinLength = "0.10";
-            public const string PriceMaxLength = "500.0";
-
-            public const int DescriptionMinLength = 10;
         }
 
         public class DishCategory
         {
+            public const int TitleMinLength = 3;
             public const int TitleMaxLength = 80;
         }
 
         public class Dish
         {
+            public const int NameMinLength = 5;
             public const int NameMaxLength = 120;
         }
 

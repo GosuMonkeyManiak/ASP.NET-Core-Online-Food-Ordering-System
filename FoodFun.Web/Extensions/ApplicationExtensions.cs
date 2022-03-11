@@ -43,6 +43,13 @@
                     .GetAwaiter()
                     .GetResult();
             }
+
+            if (!db.DishesCategories.Any())
+            {
+                SeedCategoriesForDish(db)
+                    .GetAwaiter()
+                    .GetResult();
+            }
         }
 
         private async static Task SeedRoles(RoleManager<IdentityRole> roleManager)
@@ -82,6 +89,23 @@
             };
 
             await dbContext.ProductsCategories
+                .AddRangeAsync(categories);
+
+            await dbContext.SaveChangesAsync();
+        }
+
+        private async static Task SeedCategoriesForDish(FoodFunDbContext dbContext)
+        {
+            List<DishCategory> categories = new()
+            {
+                new() { Title = "Salad" },
+                new() { Title = "Soup" },
+                new() { Title = "Drinks" },
+                new() { Title = "BBQ" },
+                new() { Title = "Pizza" },
+            };
+
+            await dbContext.DishesCategories
                 .AddRangeAsync(categories);
 
             await dbContext.SaveChangesAsync();

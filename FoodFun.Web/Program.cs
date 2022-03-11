@@ -43,7 +43,9 @@ builder
 builder
     .Services
     .AddTransient<IProductService, ProductService>()
-    .AddTransient<IProductCategoryService, ProductCategoryService>();
+    .AddTransient<IProductCategoryService, ProductCategoryService>()
+    .AddTransient<IDishService, DishService>()
+    .AddTransient<IDishCategoryService, DishCategoryService>();
 
 var app = builder.Build();
 

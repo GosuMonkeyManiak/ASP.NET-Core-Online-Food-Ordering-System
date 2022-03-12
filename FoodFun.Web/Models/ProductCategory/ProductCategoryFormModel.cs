@@ -3,7 +3,7 @@
     using System.ComponentModel.DataAnnotations;
 
     using static Constants.GlobalConstants.Messages;
-    using static Infrastructure.Data.Common.DataConstants.ProductCategory;
+    using static Infrastructure.Common.DataConstants.ProductCategory;
 
     public class ProductCategoryFormModel
     {

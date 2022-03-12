@@ -1,4 +1,4 @@
-﻿namespace FoodFun.Infrastructure.Data.Models
+﻿namespace FoodFun.Infrastructure.Models
 {
     using System.ComponentModel.DataAnnotations;
 

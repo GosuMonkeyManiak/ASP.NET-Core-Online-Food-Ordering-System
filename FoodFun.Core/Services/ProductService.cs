@@ -2,7 +2,7 @@
 {
     using Contracts;
     using Infrastructure.Data;
-    using Infrastructure.Data.Models;
+    using Infrastructure.Models;
     using Microsoft.EntityFrameworkCore;
     using Models.Product;
     using Models.ProductCategory;

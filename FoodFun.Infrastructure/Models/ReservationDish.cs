@@ -1,16 +1,16 @@
-﻿namespace FoodFun.Infrastructure.Data.Models
+﻿namespace FoodFun.Infrastructure.Models
 {
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
     using static Common.DataConstants;
 
-    public class OrderDish
+    public class ReservationDish
     {
-        [ForeignKey(nameof(Order))]
-        public int OrderId { get; init; }
+        [ForeignKey(nameof(Reservation))]
+        public int ReservationId { get; init; }
 
-        public Order Order { get; init; }
+        public Reservation Reservation { get; init; }
 
         [Required]
         [MaxLength(DefaultIdMaxLength)]

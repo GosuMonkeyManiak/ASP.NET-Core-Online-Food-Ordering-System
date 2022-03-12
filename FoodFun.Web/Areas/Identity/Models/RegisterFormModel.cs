@@ -3,7 +3,7 @@
     using System.ComponentModel.DataAnnotations;
     using Constants;
 
-    using static Infrastructure.Data.Common.DataConstants.User;
+    using static Infrastructure.Common.DataConstants.User;
 
     public class RegisterFormModel
     {

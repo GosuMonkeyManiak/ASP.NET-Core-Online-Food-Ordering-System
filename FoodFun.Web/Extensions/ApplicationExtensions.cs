@@ -1,7 +1,7 @@
 ﻿namespace FoodFun.Web.Extensions
 {
     using Infrastructure.Data;
-    using Infrastructure.Data.Models;
+    using Infrastructure.Models;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
 

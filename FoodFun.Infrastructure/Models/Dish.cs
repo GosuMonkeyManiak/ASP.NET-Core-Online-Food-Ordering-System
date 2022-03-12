@@ -1,7 +1,8 @@
-﻿namespace FoodFun.Infrastructure.Data.Models
+﻿namespace FoodFun.Infrastructure.Models
 {
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using Common;
 
     using static Common.DataConstants;
     using static Common.DataConstants.Dish;
@@ -23,7 +24,7 @@
         [ForeignKey(nameof(Category))]
         public int CategoryId { get; init; }
 
-        public DishCategory Category { get; init; }
+        public DataConstants.DishCategory Category { get; init; }
 
         public decimal Price { get; init; }
 

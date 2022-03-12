@@ -1,10 +1,10 @@
-﻿namespace FoodFun.Infrastructure.Data.Models
+﻿namespace FoodFun.Infrastructure.Models
 {
     using System.ComponentModel.DataAnnotations;
 
-    using static Common.DataConstants.DishCategory;
+    using static Common.DataConstants.ProductCategory;
 
-    public class DishCategory
+    public class ProductCategory
     {
         [Key]
         public int Id { get; init; }
@@ -13,6 +13,6 @@
         [MaxLength(TitleMaxLength)]
         public string Title { get; init; }
 
-        public ICollection<Dish> Dishes { get; init; } = new HashSet<Dish>();
+        public ICollection<Product> Products { get; init; } = new HashSet<Product>();
     }
 }

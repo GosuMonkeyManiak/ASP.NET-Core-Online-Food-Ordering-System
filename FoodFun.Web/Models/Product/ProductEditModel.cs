@@ -6,8 +6,8 @@
 
     using static Constants.GlobalConstants;
     using static Constants.GlobalConstants.Messages;
-    using static Infrastructure.Data.Common.DataConstants;
-    using static Infrastructure.Data.Common.DataConstants.Product;
+    using static Infrastructure.Common.DataConstants;
+    using static Infrastructure.Common.DataConstants.Product;
 
     public class ProductEditModel
     {

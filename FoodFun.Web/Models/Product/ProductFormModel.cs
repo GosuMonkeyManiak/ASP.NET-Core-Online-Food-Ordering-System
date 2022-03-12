@@ -4,8 +4,8 @@
     using Core.Models.ProductCategory;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-    using static Infrastructure.Data.Common.DataConstants.Product;
-    using static Infrastructure.Data.Common.DataConstants;
+    using static Infrastructure.Common.DataConstants.Product;
+    using static Infrastructure.Common.DataConstants;
 
     using static Constants.GlobalConstants.Messages;
 

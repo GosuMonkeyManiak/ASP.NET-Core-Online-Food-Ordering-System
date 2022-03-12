@@ -1,7 +1,7 @@
 using FoodFun.Core.Contracts;
 using FoodFun.Core.Services;
 using FoodFun.Infrastructure.Data;
-using FoodFun.Infrastructure.Data.Models;
+using FoodFun.Infrastructure.Models;
 using FoodFun.Web.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

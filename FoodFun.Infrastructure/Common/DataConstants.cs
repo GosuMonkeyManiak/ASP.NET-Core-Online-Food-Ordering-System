@@ -1,4 +1,4 @@
-﻿namespace FoodFun.Infrastructure.Data.Common
+﻿namespace FoodFun.Infrastructure.Common
 {
     public class DataConstants
     {

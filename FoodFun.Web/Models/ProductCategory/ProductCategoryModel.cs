@@ -2,7 +2,7 @@
 {
     using System.ComponentModel.DataAnnotations;
 
-    using static Infrastructure.Data.Common.DataConstants.ProductCategory;
+    using static Infrastructure.Common.DataConstants.ProductCategory;
     using static Constants.GlobalConstants.Messages;
 
     public class ProductCategoryModel

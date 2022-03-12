@@ -2,7 +2,7 @@
 {
     using Contracts;
     using Infrastructure.Data;
-    using Infrastructure.Data.Models;
+    using Infrastructure.Models;
 
     public class DishService : IDishService
     {

@@ -1,7 +1,7 @@
 ﻿namespace FoodFun.Web.Areas.Identity.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
-    using FoodFun.Infrastructure.Data.Models;
+    using FoodFun.Infrastructure.Models;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Models;

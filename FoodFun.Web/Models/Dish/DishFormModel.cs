@@ -4,8 +4,8 @@
     using DishCategory;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-    using static Infrastructure.Data.Common.DataConstants;
-    using static Infrastructure.Data.Common.DataConstants.Dish;
+    using static Infrastructure.Common.DataConstants;
+    using static Infrastructure.Common.DataConstants.Dish;
     using static Constants.GlobalConstants.Messages;
 
     public class DishFormModel

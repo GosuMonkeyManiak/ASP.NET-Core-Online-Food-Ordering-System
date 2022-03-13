@@ -70,15 +70,15 @@
                 });
         }
 
-        public async Task<Tuple<bool, ProductServiceModel>> GetById(string productId)
+        public async Task<Tuple<bool, ProductServiceModel>> GetById(string id)
         {
-            if (!await IsProductExist(productId))
+            if (!await IsProductExist(id))
             {
                 return new(false, null);
             }
 
             var product = await this.productRepository
-                .GetProductWithCategoryById(productId);
+                .GetProductWithCategoryById(id);
 
             var productServiceModel = new ProductServiceModel()
             {

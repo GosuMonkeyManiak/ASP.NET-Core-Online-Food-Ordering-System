@@ -13,7 +13,7 @@
 
         Task<IEnumerable<ProductServiceModel>> All();
 
-        Task<Tuple<bool, ProductServiceModel>> GetById(string productId);
+        Task<Tuple<bool, ProductServiceModel>> GetById(string id);
 
         Task<bool> Update(
             string id,

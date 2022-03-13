@@ -8,7 +8,7 @@
 
         Task<IEnumerable<ProductCategoryWithProductCountServiceModel>> All();
 
-        Task<bool> IsCategoryExist(int categoryId);
+        Task<bool> IsCategoryExist(int id);
 
         Task<Tuple<bool, ProductCategoryServiceModel>> GetById(int id);
 

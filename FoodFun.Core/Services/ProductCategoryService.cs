@@ -32,9 +32,9 @@
                 });
         }
 
-        public async Task<bool> IsCategoryExist(int categoryId)
+        public async Task<bool> IsCategoryExist(int id)
             => await this.productCategoryRepository
-                .FindOrDefault(c => c.Id == categoryId) != null;
+                .FindOrDefault(c => c.Id == id) != null;
 
         public async Task<Tuple<bool, ProductCategoryServiceModel>> GetById(int id)
         {

@@ -11,15 +11,21 @@
     public class ProductController : Controller
     {
         private readonly IProductService productService;
+        private readonly IProductCategoryService productCategoryService;
 
-        public ProductController(IProductService productService)
-            => this.productService = productService;
+        public ProductController(
+            IProductService productService, 
+            IProductCategoryService productCategoryService)
+        {
+            this.productService = productService;
+            this.productCategoryService = productCategoryService;
+        }
 
         [Authorize(Roles = Administrator)]
         public async Task<IActionResult> Add() 
             => View(new ProductFormModel()
             {
-                Categories = await this.productService.GetCategories()
+                Categories = await this.productCategoryService.All()
             });
 
         [Authorize(Roles = Administrator)]
@@ -77,7 +83,7 @@
                 Price = productServiceModel.Price,
                 CategoryId = productServiceModel.Category.Id,
                 Description = productServiceModel.Description,
-                Categories = await this.productService.GetCategories()
+                Categories = await this.productCategoryService.All()
             };
 
             return View(productEditModel);

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ProductServiceModel>
+﻿@model IEnumerable<ProductListingModel>
 
 @{
     ViewData[Title] = "All";
@@ -23,9 +23,9 @@
     {
         <div class="col-xl-3">
             <div class="card text-center" style="width: 18rem;">
-                <img class="card-img-top" src="@product.ImageUrl" alt="@product.Name - (@product.Category.Title)">
+                <img class="card-img-top" src="@product.ImageUrl" alt="@product.Name - (@product.CategoryTitle)">
                 <div class="card-body">
-                    <h5 class="card-title">@product.Name - (@product.Category.Title)</h5>
+                    <h5 class="card-title">@product.Name - (@product.CategoryTitle)</h5>
                     <p class="card-text">@product.Price $</p>
                     <p class="card-text">@product.Description</p>
                     <partial name="_PermissionsByRolesForAllProductsPartial" model="@product.Id"/>

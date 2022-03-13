@@ -41,7 +41,7 @@
                 {
                     Id = p.Id,
                     Title = p.Title,
-                    ProductsCount = p.ProductsCount
+                    //ProductsCount = p.ProductsCount
                 })
                 .ToList();
 

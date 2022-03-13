@@ -1,22 +1,26 @@
 ﻿namespace FoodFun.Core.Services
 {
     using Contracts;
+    using Extensions;
+    using global::AutoMapper;
     using Infrastructure.Common.Contracts;
     using Infrastructure.Models;
     using Models.Product;
-    using Models.ProductCategory;
 
     public class ProductService : IProductService
     {
         private readonly IProductRepository productRepository;
         private readonly IProductCategoryService productCategoryService;
+        private readonly IMapper mapper;
 
         public ProductService(
             IProductRepository productRepository,
-            IProductCategoryService productCategoryService)
+            IProductCategoryService productCategoryService,
+            IMapper mapper)
         {
             this.productRepository = productRepository;
             this.productCategoryService = productCategoryService;
+            this.mapper = mapper;
         }
 
         public async Task<Tuple<bool, IEnumerable<string>>> AddProduct(
@@ -55,19 +59,7 @@
                 .GetAllProductsWithCategories();
 
             return productsWithCategories
-                .Select(p => new ProductServiceModel()
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                    ImageUrl = p.ImageUrl,
-                    Category = new ProductCategoryWithProductCountServiceModel()
-                    {
-                        Id = p.CategoryId,
-                        Title = p.Category.Title
-                    },
-                    Price = p.Price,
-                    Description = p.Description
-                });
+                .ProjectTo<ProductServiceModel>(this.mapper);
         }
 
         public async Task<Tuple<bool, ProductServiceModel>> GetById(string id)
@@ -80,21 +72,7 @@
             var product = await this.productRepository
                 .GetProductWithCategoryById(id);
 
-            var productServiceModel = new ProductServiceModel()
-            {
-                Id = product.Id,
-                Name = product.Name,
-                ImageUrl = product.ImageUrl,
-                Price = product.Price,
-                Category = new ProductCategoryWithProductCountServiceModel()
-                {
-                    Id = product.Category.Id,
-                    Title = product.Category.Title
-                },
-                Description = product.Description
-            };
-
-            return new(true, productServiceModel);
+            return new(true, this.mapper.Map<ProductServiceModel>(product));
         }
 
         public async Task<bool> Update(

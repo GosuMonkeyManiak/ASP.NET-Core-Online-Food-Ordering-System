@@ -1,13 +1,12 @@
 ﻿namespace FoodFun.Web.Models.Product
 {
-    using System.ComponentModel.DataAnnotations;
-    using Core.Models.ProductCategory;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
-
-    using static Infrastructure.Common.DataConstants.Product;
-    using static Infrastructure.Common.DataConstants;
+    using ProductCategory;
+    using System.ComponentModel.DataAnnotations;
 
     using static Constants.GlobalConstants.Messages;
+    using static Infrastructure.Common.DataConstants;
+    using static Infrastructure.Common.DataConstants.Product;
 
     public class ProductFormModel
     {
@@ -43,6 +42,6 @@
         public string Description { get; init; }
 
         [BindNever]
-        public IEnumerable<ProductCategoryWithProductCountServiceModel> Categories { get; init; } = new List<ProductCategoryWithProductCountServiceModel>();
+        public IEnumerable<ProductCategoryModel> Categories { get; init; } = new List<ProductCategoryModel>();
     }
 }

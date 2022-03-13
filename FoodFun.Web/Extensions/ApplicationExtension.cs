@@ -7,7 +7,7 @@
 
     using static Constants.GlobalConstants.Roles;
 
-    public static class ApplicationExtensions
+    public static class ApplicationExtension
     {
         public static void MigrateDatabaseAndSeed(this WebApplication app)
         {

@@ -1,3 +1,4 @@
+using FoodFun.Core.AutoMapper;
 using FoodFun.Core.Contracts;
 using FoodFun.Core.Services;
 using FoodFun.Infrastructure.Common.Contracts;
@@ -44,10 +45,17 @@ builder
 
 builder
     .Services
+    .AddAutoMapper(typeof(AutoMapperServiceProfile), typeof(Program));
+
+builder
+    .Services
+    .AddScoped<IProductRepository, ProductRepository>()
+    .AddScoped<IProductCategoryRepository, ProductCategoryRepository>();
+
+builder
+    .Services
     .AddTransient<IProductService, ProductService>()
-    .AddTransient<IProductRepository, ProductRepository>()
     .AddTransient<IProductCategoryService, ProductCategoryService>()
-    .AddTransient<IProductCategoryRepository, ProductCategoryRepository>()
     .AddTransient<IDishService, DishService>()
     .AddTransient<IDishCategoryService, DishCategoryService>();
 

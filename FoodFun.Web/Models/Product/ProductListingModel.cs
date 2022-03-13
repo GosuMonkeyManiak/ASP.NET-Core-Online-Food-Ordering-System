@@ -1,8 +1,6 @@
-﻿namespace FoodFun.Core.Models.Product
+﻿namespace FoodFun.Web.Models.Product
 {
-    using ProductCategory;
-
-    public class ProductServiceModel
+    public class ProductListingModel
     {
         public string Id { get; init; }
 
@@ -10,10 +8,10 @@
 
         public string ImageUrl { get; init; }
 
-        public ProductCategoryServiceModel Category { get; init; }
-
+        public string CategoryTitle { get; init; }
+       
         public decimal Price { get; init; }
-
+      
         public string Description { get; init; }
     }
 }

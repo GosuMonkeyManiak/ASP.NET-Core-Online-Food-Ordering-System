@@ -1,6 +1,8 @@
 ﻿namespace FoodFun.Core.Services
 {
     using Contracts;
+    using Extensions;
+    using global::AutoMapper;
     using Infrastructure.Common.Contracts;
     using Infrastructure.Models;
     using Models.ProductCategory;
@@ -8,17 +10,29 @@
     public class ProductCategoryService : IProductCategoryService
     {
         private readonly IProductCategoryRepository productCategoryRepository;
+        private readonly IMapper mapper;
 
-        public ProductCategoryService(IProductCategoryRepository productCategoryRepository)
+        public ProductCategoryService(
+            IProductCategoryRepository productCategoryRepository, 
+            IMapper mapper)
         {
             this.productCategoryRepository = productCategoryRepository;
+            this.mapper = mapper;
         }
 
         public async Task Add(string title)
             => await this.productCategoryRepository
                 .AddAsync(new() { Title = title });
 
-        public async Task<IEnumerable<ProductCategoryWithProductCountServiceModel>> All()
+        public async Task<IEnumerable<ProductCategoryServiceModel>> All()
+        {
+            var categoriesForProduct = await this.productCategoryRepository
+                .AllAsNoTracking();
+
+            return categoriesForProduct.ProjectTo<ProductCategoryServiceModel>(this.mapper);
+        }
+
+        public async Task<IEnumerable<ProductCategoryWithProductCountServiceModel>> AllWithProductsCount()
         {
             var categoriesWithProducts = await this.productCategoryRepository
                 .GetAllCategoriesWithProducts();

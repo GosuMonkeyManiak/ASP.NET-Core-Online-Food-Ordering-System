@@ -1,9 +1,12 @@
 ﻿namespace FoodFun.Web.Controllers
 {
     using Core.Contracts;
+    using Core.Extensions;
+    using global::AutoMapper;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Models.Product;
+    using Models.ProductCategory;
 
     using static Constants.GlobalConstants.Roles;
     using static Constants.GlobalConstants.Messages;
@@ -12,21 +15,28 @@
     {
         private readonly IProductService productService;
         private readonly IProductCategoryService productCategoryService;
+        private readonly IMapper mapper;
 
         public ProductController(
             IProductService productService, 
-            IProductCategoryService productCategoryService)
+            IProductCategoryService productCategoryService,
+            IMapper mapper)
         {
             this.productService = productService;
             this.productCategoryService = productCategoryService;
+            this.mapper = mapper;
         }
 
         [Authorize(Roles = Administrator)]
-        public async Task<IActionResult> Add() 
-            => View(new ProductFormModel()
+        public async Task<IActionResult> Add()
+        {
+            var categoriesForProduct = await this.productCategoryService.All();
+
+            return View(new ProductFormModel()
             {
-                Categories = await this.productCategoryService.All()
+                Categories = categoriesForProduct.ProjectTo<ProductCategoryModel>(this.mapper)
             });
+        }
 
         [Authorize(Roles = Administrator)]
         [HttpPost]
@@ -60,7 +70,12 @@
 
         [Authorize(Roles = $"{Administrator}, {Customer}")]
         public async Task<IActionResult> All()
-            => View(await this.productService.All());
+        {
+            var productsWithCategories = await this.productService
+                .All();
+
+            return View(productsWithCategories.ProjectTo<ProductListingModel>(this.mapper));
+        }
 
         [Authorize(Roles = Administrator)]
         public async Task<IActionResult> Edit(string productId)
@@ -75,16 +90,12 @@
                 return RedirectToAction(nameof(All));
             }
 
-            var productEditModel = new ProductEditModel()
-            {
-                Id = productServiceModel.Id,
-                Name = productServiceModel.Name,
-                ImageUrl = productServiceModel.ImageUrl,
-                Price = productServiceModel.Price,
-                CategoryId = productServiceModel.Category.Id,
-                Description = productServiceModel.Description,
-                Categories = await this.productCategoryService.All()
-            };
+            var productEditModel = this.mapper.Map<ProductEditModel>(productServiceModel);
+
+            var categoriesForProduct = await this.productCategoryService
+                .All();
+
+            productEditModel.Categories = categoriesForProduct.ProjectTo<ProductCategoryModel>(this.mapper);
 
             return View(productEditModel);
         }

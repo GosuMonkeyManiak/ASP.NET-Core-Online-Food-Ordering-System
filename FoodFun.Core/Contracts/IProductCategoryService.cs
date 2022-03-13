@@ -6,7 +6,9 @@
     {
         Task Add(string title);
 
-        Task<IEnumerable<ProductCategoryWithProductCountServiceModel>> All();
+        Task<IEnumerable<ProductCategoryWithProductCountServiceModel>> AllWithProductsCount();
+
+        Task<IEnumerable<ProductCategoryServiceModel>> All();
 
         Task<bool> IsCategoryExist(int id);
 

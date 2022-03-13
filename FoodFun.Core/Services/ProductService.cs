@@ -1,6 +1,7 @@
 ﻿namespace FoodFun.Core.Services
 {
     using Contracts;
+    using Infrastructure.Common.Contracts;
     using Infrastructure.Data;
     using Infrastructure.Models;
     using Microsoft.EntityFrameworkCore;
@@ -10,14 +11,17 @@
     public class ProductService : IProductService
     {
         private readonly FoodFunDbContext dbContext;
+        private readonly IProductRepository productRepository;
         private readonly IProductCategoryService productCategoryService;
 
         public ProductService(
             FoodFunDbContext dbContext,
-            IProductCategoryService productCategoryService)
+            IProductCategoryService productCategoryService, 
+            IProductRepository productRepository)
         {
             this.dbContext = dbContext;
             this.productCategoryService = productCategoryService;
+            this.productRepository = productRepository;
         }
 
         public async Task<List<ProductCategoryWithProductCountServiceModel>> GetCategories()
@@ -50,19 +54,21 @@
                 Description = description
             };
 
-            await this.dbContext
-                .Products
+            await this.productRepository
                 .AddAsync(product);
 
-            await this.dbContext.SaveChangesAsync();
+            await this.productRepository
+                .SaveChangesAsync();
 
             return new(true, new List<string>());
         }
 
         public async Task<IEnumerable<ProductServiceModel>> All()
-            => await this.dbContext
-                .Products
-                .Include(p => p.Category)
+        {
+            var productsWithCategories = await this.productRepository
+                .GetAllProductsWithCategories();
+
+            return productsWithCategories
                 .Select(p => new ProductServiceModel()
                 {
                     Id = p.Id,
@@ -75,8 +81,8 @@
                     },
                     Price = p.Price,
                     Description = p.Description
-                })
-                .ToListAsync();
+                });
+        }
 
         public async Task<Tuple<bool, ProductServiceModel>> GetById(string productId)
         {
@@ -85,10 +91,8 @@
                 return new(false, null);
             }
 
-            var product = await this.dbContext
-                .Products
-                .Include(p => p.Category)
-                .FirstOrDefaultAsync(p => p.Id == productId);
+            var product = await this.productRepository
+                .GetProductWithCategoryById(productId);
 
             var productServiceModel = new ProductServiceModel()
             {
@@ -131,16 +135,15 @@
                 Description = description
             };
 
-            this.dbContext.Entry(product).State = EntityState.Modified;
+            this.productRepository.Update(product);
 
-            await this.dbContext.SaveChangesAsync();
+            await this.productRepository.SaveChangesAsync();
 
             return true;
         }
 
         private async Task<bool> IsProductExist(string productId)
-            => await this.dbContext
-                .Products
-                .AnyAsync(x => x.Id == productId);
+            => await this.productRepository
+                .FindOrDefault(p => p.Id == productId) != null;
     }
 }

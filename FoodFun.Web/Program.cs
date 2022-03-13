@@ -1,6 +1,8 @@
 using FoodFun.Core.Contracts;
 using FoodFun.Core.Services;
+using FoodFun.Infrastructure.Common.Contracts;
 using FoodFun.Infrastructure.Data;
+using FoodFun.Infrastructure.Data.Repositories;
 using FoodFun.Infrastructure.Models;
 using FoodFun.Web.Extensions;
 using Microsoft.AspNetCore.Identity;
@@ -43,6 +45,7 @@ builder
 builder
     .Services
     .AddTransient<IProductService, ProductService>()
+    .AddTransient<IProductRepository, ProductRepository>()
     .AddTransient<IProductCategoryService, ProductCategoryService>()
     .AddTransient<IDishService, DishService>()
     .AddTransient<IDishCategoryService, DishCategoryService>();

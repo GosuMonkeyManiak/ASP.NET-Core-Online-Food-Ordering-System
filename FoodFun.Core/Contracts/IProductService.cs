@@ -1,12 +1,9 @@
 ﻿namespace FoodFun.Core.Contracts
 {
     using Models.Product;
-    using Models.ProductCategory;
 
     public interface IProductService
     {
-        Task<List<ProductCategoryWithProductCountServiceModel>> GetCategories();
-
         Task<Tuple<bool, IEnumerable<string>>> AddProduct(
             string name,
             string imageUrl,

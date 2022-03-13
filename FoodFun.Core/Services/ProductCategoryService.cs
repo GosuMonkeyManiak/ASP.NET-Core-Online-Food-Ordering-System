@@ -1,39 +1,40 @@
 ﻿namespace FoodFun.Core.Services
 {
     using Contracts;
-    using Infrastructure.Data;
+    using Infrastructure.Common.Contracts;
     using Infrastructure.Models;
-    using Microsoft.EntityFrameworkCore;
     using Models.ProductCategory;
 
     public class ProductCategoryService : IProductCategoryService
     {
-        private FoodFunDbContext dbContext;
+        private readonly IProductCategoryRepository productCategoryRepository;
 
-        public ProductCategoryService(FoodFunDbContext dbContext)
-            => this.dbContext = dbContext;
+        public ProductCategoryService(IProductCategoryRepository productCategoryRepository)
+        {
+            this.productCategoryRepository = productCategoryRepository;
+        }
 
         public async Task Add(string title)
-            => await this.dbContext
-                .ProductsCategories
-                .AddAsync(new ProductCategory() { Title = title });
+            => await this.productCategoryRepository
+                .AddAsync(new() { Title = title });
 
         public async Task<IEnumerable<ProductCategoryWithProductCountServiceModel>> All()
-            => await this.dbContext
-                .ProductsCategories
-                .Include(pc => pc.Products)
+        {
+            var categoriesWithProducts = await this.productCategoryRepository
+                .GetAllCategoriesWithProducts();
+
+            return categoriesWithProducts
                 .Select(pc => new ProductCategoryWithProductCountServiceModel()
                 {
                     Id = pc.Id,
                     Title = pc.Title,
                     ProductsCount = pc.Products.Count
-                })
-                .ToListAsync();
+                });
+        }
 
         public async Task<bool> IsCategoryExist(int categoryId)
-            => await this.dbContext
-                .ProductsCategories
-                .AnyAsync(x => x.Id == categoryId);
+            => await this.productCategoryRepository
+                .FindOrDefault(c => c.Id == categoryId) != null;
 
         public async Task<Tuple<bool, ProductCategoryServiceModel>> GetById(int id)
         {
@@ -42,9 +43,8 @@
                 return new(false, null);
             }
 
-            var productCategory = await this.dbContext
-                .ProductsCategories
-                .FirstOrDefaultAsync(pc => pc.Id == id);
+            var productCategory = await this.productCategoryRepository
+                .FindOrDefault(x => x.Id == id);
 
             var productCategoryServiceModel = new ProductCategoryServiceModel()
             {
@@ -68,9 +68,9 @@
                 Title = title
             };
 
-            this.dbContext.Attach(productCategory).State = EntityState.Modified;
+            this.productCategoryRepository.Update(productCategory);
 
-            await this.dbContext.SaveChangesAsync();
+            await this.productCategoryRepository.SaveChangesAsync();
 
             return true;
         }

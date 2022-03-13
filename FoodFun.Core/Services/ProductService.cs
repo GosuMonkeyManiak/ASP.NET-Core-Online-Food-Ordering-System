@@ -2,36 +2,22 @@
 {
     using Contracts;
     using Infrastructure.Common.Contracts;
-    using Infrastructure.Data;
     using Infrastructure.Models;
-    using Microsoft.EntityFrameworkCore;
     using Models.Product;
     using Models.ProductCategory;
 
     public class ProductService : IProductService
     {
-        private readonly FoodFunDbContext dbContext;
         private readonly IProductRepository productRepository;
         private readonly IProductCategoryService productCategoryService;
 
         public ProductService(
-            FoodFunDbContext dbContext,
-            IProductCategoryService productCategoryService, 
-            IProductRepository productRepository)
+            IProductRepository productRepository,
+            IProductCategoryService productCategoryService)
         {
-            this.dbContext = dbContext;
-            this.productCategoryService = productCategoryService;
             this.productRepository = productRepository;
+            this.productCategoryService = productCategoryService;
         }
-
-        public async Task<List<ProductCategoryWithProductCountServiceModel>> GetCategories()
-            => await this.dbContext.ProductsCategories
-                .Select(c => new ProductCategoryWithProductCountServiceModel()
-                {
-                    Id = c.Id,
-                    Title = c.Title
-                })
-                .ToListAsync();
 
         public async Task<Tuple<bool, IEnumerable<string>>> AddProduct(
             string name, 

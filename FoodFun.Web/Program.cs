@@ -47,6 +47,7 @@ builder
     .AddTransient<IProductService, ProductService>()
     .AddTransient<IProductRepository, ProductRepository>()
     .AddTransient<IProductCategoryService, ProductCategoryService>()
+    .AddTransient<IProductCategoryRepository, ProductCategoryRepository>()
     .AddTransient<IDishService, DishService>()
     .AddTransient<IDishCategoryService, DishCategoryService>();
 

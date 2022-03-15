@@ -1,4 +1,4 @@
-﻿@model ProductCategoryModel
+﻿@model ProductCategoryEditModel
 
 @{
     ViewData[Title] = "Edit Category";
@@ -15,11 +15,10 @@
                 <label asp-for="Title" class="mb-1"></label>
                 <input asp-for="Title" class="form-control" value="@Model.Title">
                 <span asp-validation-for="Title" class="text-danger"></span>
-                <span asp-validation-for="Id" class="text-danger"></span>
             </div>
 
             <div class="text-center">
-                <button type="submit" class="btn btn-primary">@ViewData[Title]</button>
+                <button type="submit" class="btn btn-primary">Edit</button>
             </div>
         </form>
     </div>

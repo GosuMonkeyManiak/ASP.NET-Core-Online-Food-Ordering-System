@@ -12,6 +12,9 @@
             CreateMap<Product, ProductServiceModel>();
 
             CreateMap<ProductCategory, ProductCategoryServiceModel>();
+            CreateMap<ProductCategory, ProductCategoryWithProductCountServiceModel>()
+                .ForMember(x => x.ProductsCount, options => options
+                    .MapFrom(x => x.Products.Count));
         }
     }
 }

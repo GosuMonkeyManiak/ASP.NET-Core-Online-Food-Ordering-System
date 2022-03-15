@@ -3,6 +3,8 @@
     using System.ComponentModel.DataAnnotations;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
     using ProductCategory;
+
+
     using static Constants.GlobalConstants;
     using static Constants.GlobalConstants.Messages;
     using static Infrastructure.Common.DataConstants;
@@ -48,6 +50,6 @@
         public string Description { get; init; }
 
         [BindNever]
-        public IEnumerable<ProductCategoryModel> Categories { get; set; } = new List<ProductCategoryModel>();
+        public IEnumerable<ProductCategoryEditModel> Categories { get; set; } = new List<ProductCategoryEditModel>();
     }
 }

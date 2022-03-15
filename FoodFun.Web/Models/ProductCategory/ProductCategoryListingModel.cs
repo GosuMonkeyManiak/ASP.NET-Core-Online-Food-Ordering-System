@@ -1,6 +1,6 @@
 ﻿namespace FoodFun.Web.Models.ProductCategory
 {
-    public class ProductCategoryWithProductCountModel
+    public class ProductCategoryListingModel
     {
         public int Id { get; init; }
 

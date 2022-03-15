@@ -18,7 +18,8 @@
                 .ForMember(x => x.CategoryId, options => options.
                     MapFrom(x => x.Category.Id));
 
-            CreateMap<ProductCategoryServiceModel, ProductCategoryModel>();
+            CreateMap<ProductCategoryServiceModel, ProductCategoryEditModel>();
+            CreateMap<ProductCategoryWithProductCountServiceModel, ProductCategoryListingModel>();
         }
     }
 }

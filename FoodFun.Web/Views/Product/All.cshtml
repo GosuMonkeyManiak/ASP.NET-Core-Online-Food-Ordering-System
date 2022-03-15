@@ -4,17 +4,10 @@
     ViewData[Title] = "All";
 }
 
-@if (TempData[nameof(ProductNotExist)] != null)
+@if (TempData[nameof(Error)] != null)
 {
     <div class="alert alert-danger" role="alert">
-        @TempData[nameof(ProductNotExist)]
-    </div>
-}
-
-@if (TempData[nameof(ProductCategoryNotExist)] != null)
-{
-    <div class="alert alert-danger" role="alert">
-        @TempData[nameof(ProductCategoryNotExist)]
+        @TempData[nameof(Error)]
     </div>
 }
 

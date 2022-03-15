@@ -1,13 +1,13 @@
-﻿@model IEnumerable<ProductCategoryWithProductCountModel>
+﻿@model IEnumerable<ProductCategoryListingModel>
 
 @{
     ViewData[Title] = "All Categories for product";
 }
 
-@if (TempData[nameof(ProductCategoryNotExist)] != null)
+@if (TempData[nameof(Error)] != null)
 {
     <div class="alert alert-danger" role="alert">
-        @TempData[nameof(ProductCategoryNotExist)]
+        @TempData[nameof(Error)]
     </div>
 }
 

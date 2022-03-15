@@ -1,6 +1,8 @@
 ﻿namespace FoodFun.Web.Controllers
 {
     using Core.Contracts;
+    using Core.Extensions;
+    using global::AutoMapper;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Models.ProductCategory;
@@ -12,9 +14,15 @@
     public class ProductCategoryController : Controller
     {
         private readonly IProductCategoryService productCategoryService;
+        private readonly IMapper mapper;
 
-        public ProductCategoryController(IProductCategoryService productCategoryService)
-            => this.productCategoryService = productCategoryService;
+        public ProductCategoryController(
+            IProductCategoryService productCategoryService, 
+            IMapper mapper)
+        {
+            this.productCategoryService = productCategoryService;
+            this.mapper = mapper;
+        }
 
         public async Task<IActionResult> Add()
             => View();
@@ -29,23 +37,16 @@
 
             await this.productCategoryService.Add(formModel.Title);
 
-            return RedirectToAction(nameof(Add));
+            return RedirectToAction(nameof(All));
         }
 
         public async Task<IActionResult> All()
         {
-            var productCategoriesFromService = await this.productCategoryService.All();
+            var categoriesWithProductsCount = await this.productCategoryService
+                .AllWithProductsCount();
 
-            var productCategories = productCategoriesFromService
-                .Select(p => new ProductCategoryWithProductCountModel()
-                {
-                    Id = p.Id,
-                    Title = p.Title,
-                    //ProductsCount = p.ProductsCount
-                })
-                .ToList();
-
-            return View(productCategories);
+            return View(categoriesWithProductsCount
+                .ProjectTo<ProductCategoryListingModel>(this.mapper));
         }
 
         public async Task<IActionResult> Edit(int categoryId)
@@ -55,22 +56,16 @@
 
             if (!isSucceed)
             {
-                TempData[nameof(ProductCategoryNotExist)] = ProductCategoryNotExist;
+                TempData[nameof(Error)] = ProductCategoryNotExist;
 
                 return RedirectToAction(nameof(All));
             }
 
-            var productCategoryModel = new ProductCategoryModel()
-            {
-                Id = productCategoryServiceModel.Id,
-                Title = productCategoryServiceModel.Title
-            };
-
-            return View(productCategoryModel);
+            return View(this.mapper.Map<ProductCategoryEditModel>(productCategoryServiceModel));
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(ProductCategoryModel productCategoryModel)
+        public async Task<IActionResult> Edit(ProductCategoryEditModel productCategoryModel)
         {
             if (!ModelState.IsValid)
             {
@@ -84,7 +79,7 @@
 
             if (!isSucceed)
             {
-                TempData[nameof(ProductCategoryNotExist)] = ProductCategoryNotExist;
+                TempData[nameof(Error)] = ProductCategoryNotExist;
             }
 
             return RedirectToAction(nameof(All));

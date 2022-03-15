@@ -23,7 +23,7 @@
             this.mapper = mapper;
         }
 
-        public async Task<Tuple<bool, IEnumerable<string>>> AddProduct(
+        public async Task<bool> AddProduct(
             string name, 
             string imageUrl, 
             int categoryId, 
@@ -32,7 +32,7 @@
         {
             if (!await this.productCategoryService.IsCategoryExist(categoryId))
             {
-                return new(false, new List<string>() { "Category doesn't exist!" });
+                return false;
             }
 
             var product = new Product()
@@ -50,7 +50,7 @@
             await this.productRepository
                 .SaveChangesAsync();
 
-            return new(true, new List<string>());
+            return true;
         }
 
         public async Task<IEnumerable<ProductServiceModel>> All()
@@ -83,8 +83,8 @@
             decimal price, 
             string description)
         {
-            if (!await IsProductExist(id) || 
-                !await this.productCategoryService.IsCategoryExist(categoryId))
+            if (!await this.productCategoryService.IsCategoryExist(categoryId)
+                || !await IsProductExist(id))
             {
                 return false;
             }

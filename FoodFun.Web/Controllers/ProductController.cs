@@ -34,7 +34,7 @@
 
             return View(new ProductFormModel()
             {
-                Categories = categoriesForProduct.ProjectTo<ProductCategoryModel>(this.mapper)
+                Categories = categoriesForProduct.ProjectTo<ProductCategoryEditModel>(this.mapper)
             });
         }
 
@@ -47,7 +47,7 @@
                 return Add().GetAwaiter().GetResult();
             }
              
-            var (isSucceed, errors) = await this.productService
+            var isSucceed = await this.productService
                 .AddProduct(
                     formModel.Name,
                     formModel.ImageUrl,
@@ -56,11 +56,8 @@
                     formModel.Description);
 
             if (!isSucceed)
-            {
-                foreach (var error in errors)
-                {
-                    this.ModelState.AddModelError(string.Empty, error);
-                }
+            { 
+                this.ModelState.AddModelError(string.Empty, ProductCategoryNotExist);
 
                 return Add().GetAwaiter().GetResult();
             }
@@ -85,7 +82,7 @@
 
             if (!isSucceed)
             {
-                this.TempData[nameof(ProductNotExist)] = ProductNotExist;
+                this.TempData[nameof(Error)] = ProductNotExist;
 
                 return RedirectToAction(nameof(All));
             }
@@ -95,7 +92,7 @@
             var categoriesForProduct = await this.productCategoryService
                 .All();
 
-            productEditModel.Categories = categoriesForProduct.ProjectTo<ProductCategoryModel>(this.mapper);
+            productEditModel.Categories = categoriesForProduct.ProjectTo<ProductCategoryEditModel>(this.mapper);
 
             return View(productEditModel);
         }
@@ -120,10 +117,7 @@
 
             if (!isSucceed)
             {
-                this.TempData[nameof(ProductNotExist)] = ProductNotExist;
-                this.TempData[nameof(ProductCategoryNotExist)] = ProductCategoryNotExist;
-
-                return RedirectToAction(nameof(All));
+                this.TempData[nameof(Error)] = ProductAndCategoryNotExist;
             }
 
             return RedirectToAction(nameof(All));

@@ -2,6 +2,9 @@
 {
     public static class GlobalConstants
     {
+        private const string ProductNotExistBase = "Product doesn't exist";
+        private const string ProductCategoryNotExistBase = "Product category doesn't exist";
+
         public const string Title = nameof(Title);
         public const int DefaultIdLength = 36;
 
@@ -14,6 +17,8 @@
 
         public static class Messages
         {
+            public const string Error = nameof(Error);
+
             public const string UsernameError = "{0} must be between {2} and {1} characters.";
             public const string PasswordError = "{0} must be with minimum length of {1} characters.";
 
@@ -27,8 +32,9 @@
             public const string ProductPriceError = "{0} must be between {1} and {2}.";
             public const string DescriptionError = "{0} must be with a minimum {1} characters.";
 
-            public const string ProductNotExist = "Product doesn't exist!";
-            public const string ProductCategoryNotExist = "Product category doesn't exist!";
+            public const string ProductNotExist = $"{ProductNotExistBase}!";
+            public const string ProductCategoryNotExist = $"{ProductCategoryNotExistBase}!";
+            public const string ProductAndCategoryNotExist = $"{ProductNotExistBase} or {ProductCategoryNotExistBase}!";
 
             public const string ProductCategoryIdError = "{0} must be between {1} and {2}.";
             public const string ProductCategoryTitleError = "{0} of category must be between {2} and {1} characters.";

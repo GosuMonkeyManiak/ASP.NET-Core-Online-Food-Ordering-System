@@ -21,8 +21,13 @@
         }
 
         public async Task Add(string title)
-            => await this.productCategoryRepository
+        {
+            await this.productCategoryRepository
                 .AddAsync(new() { Title = title });
+
+            await this.productCategoryRepository
+                .SaveChangesAsync();
+        }
 
         public async Task<IEnumerable<ProductCategoryServiceModel>> All()
         {
@@ -37,13 +42,7 @@
             var categoriesWithProducts = await this.productCategoryRepository
                 .GetAllCategoriesWithProducts();
 
-            return categoriesWithProducts
-                .Select(pc => new ProductCategoryWithProductCountServiceModel()
-                {
-                    Id = pc.Id,
-                    Title = pc.Title,
-                    ProductsCount = pc.Products.Count
-                });
+            return categoriesWithProducts.ProjectTo<ProductCategoryWithProductCountServiceModel>(this.mapper);
         }
 
         public async Task<bool> IsCategoryExist(int id)
@@ -60,13 +59,7 @@
             var productCategory = await this.productCategoryRepository
                 .FindOrDefault(x => x.Id == id);
 
-            var productCategoryServiceModel = new ProductCategoryServiceModel()
-            {
-                Id = productCategory.Id,
-                Title = productCategory.Title
-            };
-
-            return new(true, productCategoryServiceModel);
+            return new(true, this.mapper.Map<ProductCategoryServiceModel>(productCategory));
         }
 
         public async Task<bool> Update(int categoryId, string title)

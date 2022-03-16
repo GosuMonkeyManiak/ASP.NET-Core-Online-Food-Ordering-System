@@ -53,10 +53,20 @@
             return true;
         }
 
-        public async Task<IEnumerable<ProductServiceModel>> All()
+        public async Task<IEnumerable<ProductServiceModel>> All(
+            string searchTerm, 
+            int categoryFilterId,
+            byte orderNumber)
         {
+            var (searchTermResult,
+                categoryFilterIdResult,
+                orderNumberResult) = await ValidateAndSetDefaultSearchParameters(searchTerm, categoryFilterId, orderNumber);
+
             var productsWithCategories = await this.productRepository
-                .GetAllProductsWithCategories();
+                .GetAllProductsWithCategories(
+                    searchTermResult,
+                    categoryFilterIdResult,
+                    orderNumberResult);
 
             return productsWithCategories
                 .ProjectTo<ProductServiceModel>(this.mapper);
@@ -109,5 +119,32 @@
         private async Task<bool> IsProductExist(string productId)
             => await this.productRepository
                 .FindOrDefault(p => p.Id == productId) != null;
+
+        private async Task<Tuple<string, int, byte>> ValidateAndSetDefaultSearchParameters(
+            string searchTerm,
+            int categoryFilterId,
+            byte orderNumber)
+        {
+            string searchTermResult = null;
+            int categoryFilterIdResult = 0;
+            byte orderNumberResult = 0;
+
+            if (searchTerm != null)
+            {
+                searchTermResult = searchTerm;
+            }
+
+            if (await this.productCategoryService.IsCategoryExist(categoryFilterId))
+            {
+                categoryFilterIdResult = categoryFilterId;
+            }
+
+            if (orderNumber == 1)
+            {
+                orderNumberResult = orderNumber;
+            }
+
+            return new(searchTermResult, categoryFilterIdResult, orderNumberResult);
+        }
     }
 }

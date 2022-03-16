@@ -11,7 +11,10 @@
             decimal price,
             string description);
 
-        Task<IEnumerable<ProductServiceModel>> All();
+        Task<IEnumerable<ProductServiceModel>> All(
+            string searchTerm, 
+            int categoryFilterId,
+            byte order);
 
         Task<Tuple<bool, ProductServiceModel>> GetById(string id);
 

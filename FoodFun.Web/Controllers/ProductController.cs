@@ -66,12 +66,24 @@
         }
 
         [Authorize(Roles = $"{Administrator}, {Customer}")]
-        public async Task<IActionResult> All()
+        public async Task<IActionResult> All([FromQuery] ProductSearchModel searchModel)
         {
             var productsWithCategories = await this.productService
+                .All(
+                    searchModel.SearchTerm,
+                    searchModel.CategoryId,
+                    searchModel.OrderNumber);
+
+            var categoriesForProduct = await this.productCategoryService
                 .All();
 
-            return View(productsWithCategories.ProjectTo<ProductListingModel>(this.mapper));
+            var productSearchModel = new ProductSearchModel()
+            {
+                Products = productsWithCategories.ProjectTo<ProductListingModel>(this.mapper),
+                Categories = categoriesForProduct.ProjectTo<ProductCategoryModel>(this.mapper)
+            };
+
+            return View(productSearchModel);
         }
 
         [Authorize(Roles = Administrator)]

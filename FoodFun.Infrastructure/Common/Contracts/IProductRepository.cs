@@ -6,6 +6,9 @@
     {
         Task<Product> GetProductWithCategoryById(string id);
 
-        Task<IEnumerable<Product>> GetAllProductsWithCategories();
+        Task<IEnumerable<Product>> GetAllProductsWithCategories(
+            string searchTerm, 
+            int categoryFilterId,
+            byte orderNumber);
     }
 }

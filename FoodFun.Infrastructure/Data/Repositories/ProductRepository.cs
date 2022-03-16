@@ -17,10 +17,41 @@
                 .AsNoTracking()
                 .FirstOrDefaultAsync(p => p.Id == id);
 
-        public async Task<IEnumerable<Product>> GetAllProductsWithCategories()
-            => await this.DbSet
+        public async Task<IEnumerable<Product>> GetAllProductsWithCategories(
+            string searchTerm, 
+            int categoryFilterId,
+            byte orderNumber)
+        {
+            var query = this.DbSet
                 .Include(p => p.Category)
-                .AsNoTracking()
-                .ToListAsync();
+                .AsNoTracking();
+
+            if (searchTerm != null)
+            {
+                query = query
+                    .Where(x =>
+                        x.Name.Contains(searchTerm) ||
+                        x.Description.Contains(searchTerm));
+            }
+
+            if (categoryFilterId != 0)
+            {
+                query = query
+                    .Where(x => x.CategoryId == categoryFilterId);
+            }
+
+            if (orderNumber == 1)
+            {
+                query = query
+                    .OrderByDescending(x => x.Price);
+            }
+            else
+            {
+                query = query
+                    .OrderBy(x => x.Price);
+            }
+
+            return await query.ToListAsync();
+        }
     }
 }

@@ -20,6 +20,7 @@
 
             CreateMap<ProductCategoryServiceModel, ProductCategoryEditModel>();
             CreateMap<ProductCategoryWithProductCountServiceModel, ProductCategoryListingModel>();
+            CreateMap<ProductCategoryServiceModel, ProductCategoryModel>();
         }
     }
 }

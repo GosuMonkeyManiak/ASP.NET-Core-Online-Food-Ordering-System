@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ProductListingModel>
+﻿@model ProductSearchModel
 
 @{
     ViewData[Title] = "All";
@@ -11,8 +11,38 @@
     </div>
 }
 
+<div class="row mb-4">
+    <div class="offset-3 col-5">
+        <form method="get" class="form-inline">
+            <div class="input-group">
+                <div class="form-outline me-3">
+                    <input asp-for="SearchTerm" class="form-control" placeholder="Search"/>
+                </div>
+                
+                <select asp-for="CategoryId" class="form-control me-3 rounded">
+                    <option value="0">All</option>
+                    @foreach (var category in Model.Categories)
+                    {
+                        <option value="@category.Id">@category.Title</option>
+                    }
+                </select>
+                
+                <select asp-for="OrderNumber" class="form-control me-3 rounded">
+                    <option value="0">Low to High</option>
+                    <option value="1">High to Low</option>
+                </select>
+
+                <button type="submit" class="btn btn-primary rounded">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
 <div class="row">
-    @foreach (var product in Model)
+    @foreach (var product in Model.Products)
     {
         <div class="col-xl-3">
             <div class="card text-center" style="width: 18rem;">

@@ -13,6 +13,11 @@
 
         [Display(Name = "Order")]
         public byte OrderNumber { get; init; }
+       
+        public int CurrentPageNumber { get; init; } = 1;
+
+        [BindNever]
+        public int LastPageNumber { get; init; }
 
         [BindNever]
         public IEnumerable<ProductListingModel> Products { get; init; } = new List<ProductListingModel>();

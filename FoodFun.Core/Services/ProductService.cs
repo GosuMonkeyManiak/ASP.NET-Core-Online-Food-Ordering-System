@@ -3,6 +3,7 @@
     using Contracts;
     using Extensions;
     using global::AutoMapper;
+    using Infrastructure.Common;
     using Infrastructure.Common.Contracts;
     using Infrastructure.Models;
     using Models.Product;
@@ -22,6 +23,8 @@
             this.productCategoryService = productCategoryService;
             this.mapper = mapper;
         }
+
+        private double LastPageNumber { get; set; }
 
         public async Task<bool> AddProduct(
             string name, 
@@ -53,23 +56,29 @@
             return true;
         }
 
-        public async Task<IEnumerable<ProductServiceModel>> All(
+        public async Task<Tuple<IEnumerable<ProductServiceModel>, int, int>> All(
             string searchTerm, 
             int categoryFilterId,
-            byte orderNumber)
+            byte orderNumber,
+            int pageNumber)
         {
             var (searchTermResult,
                 categoryFilterIdResult,
-                orderNumberResult) = await ValidateAndSetDefaultSearchParameters(searchTerm, categoryFilterId, orderNumber);
+                orderNumberResult,
+                pageNumberResult) = await 
+                ValidateAndSetDefaultSearchParameters(searchTerm, categoryFilterId, orderNumber, pageNumber);
 
             var productsWithCategories = await this.productRepository
                 .GetAllProductsWithCategories(
                     searchTermResult,
                     categoryFilterIdResult,
-                    orderNumberResult);
+                    orderNumberResult,
+                    pageNumberResult);
 
-            return productsWithCategories
-                .ProjectTo<ProductServiceModel>(this.mapper);
+            return new(productsWithCategories
+                .ProjectTo<ProductServiceModel>(this.mapper),
+                pageNumberResult,
+                (int) this.LastPageNumber);
         }
 
         public async Task<Tuple<bool, ProductServiceModel>> GetById(string id)
@@ -120,14 +129,16 @@
             => await this.productRepository
                 .FindOrDefault(p => p.Id == productId) != null;
 
-        private async Task<Tuple<string, int, byte>> ValidateAndSetDefaultSearchParameters(
+        private async Task<Tuple<string, int, byte, int>> ValidateAndSetDefaultSearchParameters(
             string searchTerm,
             int categoryFilterId,
-            byte orderNumber)
+            byte orderNumber,
+            int pageNumber)
         {
             string searchTermResult = null;
             int categoryFilterIdResult = 0;
             byte orderNumberResult = 0;
+            int pageNumberResult = 1;
 
             if (searchTerm != null)
             {
@@ -144,7 +155,29 @@
                 orderNumberResult = orderNumber;
             }
 
-            return new(searchTermResult, categoryFilterIdResult, orderNumberResult);
+            await PopulateLastPageNumberByFilter(searchTermResult, categoryFilterIdResult);
+
+            if (pageNumber > 0 
+                && pageNumber <= this.LastPageNumber)
+            {
+                pageNumberResult = pageNumber;
+            }
+
+            return new(
+                searchTermResult, 
+                categoryFilterIdResult, 
+                orderNumberResult,
+                pageNumberResult);
+        }
+
+        private async Task PopulateLastPageNumberByFilter(
+            string searchTerm,
+            int categoryFilterId)
+        {
+            var numberOfPagesByFilter = await this.productRepository
+                .GetNumberOfPagesByFilter(searchTerm, categoryFilterId);
+
+            this.LastPageNumber = Math.Ceiling(numberOfPagesByFilter / (DataConstants.ItemPerPage * 1.0));
         }
     }
 }

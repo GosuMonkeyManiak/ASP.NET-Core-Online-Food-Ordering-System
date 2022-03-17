@@ -68,17 +68,22 @@
         [Authorize(Roles = $"{Administrator}, {Customer}")]
         public async Task<IActionResult> All([FromQuery] ProductSearchModel searchModel)
         {
-            var productsWithCategories = await this.productService
+            var (productsWithCategories,
+                currentPageNumber,
+                lastPageNumber) = await this.productService
                 .All(
                     searchModel.SearchTerm,
                     searchModel.CategoryId,
-                    searchModel.OrderNumber);
+                    searchModel.OrderNumber,
+                    searchModel.CurrentPageNumber);
 
             var categoriesForProduct = await this.productCategoryService
                 .All();
 
             var productSearchModel = new ProductSearchModel()
             {
+                CurrentPageNumber = currentPageNumber,
+                LastPageNumber = lastPageNumber,
                 Products = productsWithCategories.ProjectTo<ProductListingModel>(this.mapper),
                 Categories = categoriesForProduct.ProjectTo<ProductCategoryModel>(this.mapper)
             };

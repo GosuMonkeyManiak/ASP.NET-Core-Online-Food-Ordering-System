@@ -9,6 +9,11 @@
         Task<IEnumerable<Product>> GetAllProductsWithCategories(
             string searchTerm, 
             int categoryFilterId,
-            byte orderNumber);
+            byte orderNumber,
+            int pageNumber);
+
+        Task<int> GetNumberOfPagesByFilter(
+            string searchTerm,
+            int categoryFilterId);
     }
 }

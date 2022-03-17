@@ -12,13 +12,22 @@
 }
 
 <div class="row mb-4">
-    <div class="offset-3 col-5">
-        <form method="get" class="form-inline">
+    <div class="offset-3 col-6">
+        <form method="get" class="form-inline" id="form">
             <div class="input-group">
+                
+                <input type="hidden" asp-for="CurrentPageNumber" value="@Model.CurrentPageNumber" id="pageNumberInput"/>
+
+                <button @(Model.CurrentPageNumber - 1 <= 0 
+                            ? "disabled"
+                            : "") type="submit" class="btn btn-primary rounded me-3" id="previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </button>
+
                 <div class="form-outline me-3">
                     <input asp-for="SearchTerm" class="form-control" placeholder="Search"/>
                 </div>
-                
+
                 <select asp-for="CategoryId" class="form-control me-3 rounded">
                     <option value="0">All</option>
                     @foreach (var category in Model.Categories)
@@ -26,14 +35,20 @@
                         <option value="@category.Id">@category.Title</option>
                     }
                 </select>
-                
+
                 <select asp-for="OrderNumber" class="form-control me-3 rounded">
                     <option value="0">Low to High</option>
                     <option value="1">High to Low</option>
                 </select>
 
-                <button type="submit" class="btn btn-primary rounded">
+                <button type="submit" class="btn btn-primary rounded me-3">
                     <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+                
+                <button @(Model.CurrentPageNumber + 1 > Model.LastPageNumber 
+                            ? "disabled"
+                            : "") type="submit" class="btn btn-primary rounded" id="next">
+                    <span aria-hidden="true">&raquo;</span>
                 </button>
             </div>
         </form>
@@ -44,7 +59,7 @@
 <div class="row">
     @foreach (var product in Model.Products)
     {
-        <div class="col-xl-3">
+        <div class="col-xl-3 mb-4">
             <div class="card text-center" style="width: 18rem;">
                 <img class="card-img-top" src="@product.ImageUrl" alt="@product.Name - (@product.CategoryTitle)">
                 <div class="card-body">
@@ -57,3 +72,19 @@
         </div>
     }
 </div>
+
+@section Scripts{
+    <script>
+        let previousButton = document.querySelector("#previous");
+
+        previousButton.addEventListener('click', () => {
+            document.querySelector("#pageNumberInput").value = @(Model.CurrentPageNumber - 1);
+        });
+
+        let nextButton = document.querySelector("#next");
+
+        nextButton.addEventListener('click', () => {
+            document.querySelector("#pageNumberInput").value = @(Model.CurrentPageNumber + 1);
+        });
+    </script>
+}

@@ -5,6 +5,8 @@
     public interface IRepository<TEntity> : IDisposable
         where TEntity : class
     {
+        int Count { get; }
+
         Task<IEnumerable<TEntity>> All();
 
         Task<IEnumerable<TEntity>> AllAsNoTracking();

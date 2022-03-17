@@ -20,6 +20,9 @@
 
         protected DbSet<TEntity> DbSet { get; private init; }
 
+        public int Count 
+            => this.DbSet.Count();
+
         public async Task<IEnumerable<TEntity>> All()
             => await this.DbSet.ToListAsync();
 

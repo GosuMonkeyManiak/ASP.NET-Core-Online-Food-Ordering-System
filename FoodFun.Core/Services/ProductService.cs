@@ -56,7 +56,7 @@
             return true;
         }
 
-        public async Task<Tuple<IEnumerable<ProductServiceModel>, int, int>> All(
+        public async Task<Tuple<IEnumerable<ProductServiceModel>, int, int, int>> All(
             string searchTerm, 
             int categoryFilterId,
             byte orderNumber,
@@ -78,7 +78,8 @@
             return new(productsWithCategories
                 .ProjectTo<ProductServiceModel>(this.mapper),
                 pageNumberResult,
-                (int) this.LastPageNumber);
+                (int) this.LastPageNumber,
+                categoryFilterIdResult);
         }
 
         public async Task<Tuple<bool, ProductServiceModel>> GetById(string id)

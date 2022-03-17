@@ -11,7 +11,7 @@
             decimal price,
             string description);
 
-        Task<Tuple<IEnumerable<ProductServiceModel>, int, int>> All(
+        Task<Tuple<IEnumerable<ProductServiceModel>, int, int, int>> All(
             string searchTerm, 
             int categoryFilterId,
             byte order,

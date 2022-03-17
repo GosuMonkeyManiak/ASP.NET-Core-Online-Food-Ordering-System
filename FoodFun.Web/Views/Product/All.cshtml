@@ -32,6 +32,11 @@
                     <option value="0">All</option>
                     @foreach (var category in Model.Categories)
                     {
+                        if (category.Id == Model.SelectedCategoryId)
+                        {
+                            <option value="@category.Id" selected>@category.Title</option>
+                            continue;
+                        }
                         <partial name="_ProductCategoryPartial" model="category"/>
                     }
                 </select>

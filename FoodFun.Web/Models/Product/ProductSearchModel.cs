@@ -20,6 +20,9 @@
         public int LastPageNumber { get; init; }
 
         [BindNever]
+        public int SelectedCategoryId { get; init; }
+
+        [BindNever]
         public IEnumerable<ProductListingModel> Products { get; init; } = new List<ProductListingModel>();
 
         [BindNever]

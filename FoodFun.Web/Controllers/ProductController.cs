@@ -70,7 +70,8 @@
         {
             var (productsWithCategories,
                 currentPageNumber,
-                lastPageNumber) = await this.productService
+                lastPageNumber,
+                selectedCategoryId) = await this.productService
                 .All(
                     searchModel.SearchTerm,
                     searchModel.CategoryId,
@@ -84,6 +85,7 @@
             {
                 CurrentPageNumber = currentPageNumber,
                 LastPageNumber = lastPageNumber,
+                SelectedCategoryId = selectedCategoryId,
                 Products = productsWithCategories.ProjectTo<ProductListingModel>(this.mapper),
                 Categories = categoriesForProduct.ProjectTo<ProductCategoryModel>(this.mapper)
             };

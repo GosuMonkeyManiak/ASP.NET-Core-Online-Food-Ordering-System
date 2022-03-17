@@ -10,7 +10,7 @@
 
         public static class Redirect
         {
-            public const string HomeIndexUrl = "/Home/Index";
+            public const string HomeIndexUrl = $"/{Home}/{Index}";
             public const string Home = nameof(Home);
             public const string Index = nameof(Index);
         }
@@ -41,6 +41,7 @@
 
             public const string DishNameError = "{0} of dish must be between {2} and {1} characters.";
             public const string DishPriceError = ProductPriceError;
+            public const string DishCategoryNotExist = "Dish category doesn't exist!";
         }
 
         public static class Roles

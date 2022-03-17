@@ -9,13 +9,15 @@
         private readonly FoodFunDbContext dbContext;
         private readonly IDishCategoryService dishCategoryService;
 
-        public DishService(FoodFunDbContext dbContext, IDishCategoryService dishCategoryService)
+        public DishService(
+            FoodFunDbContext dbContext, 
+            IDishCategoryService dishCategoryService)
         {
             this.dbContext = dbContext;
             this.dishCategoryService = dishCategoryService;
         }
 
-        public async Task<Tuple<bool, IEnumerable<string>>> Add(
+        public async Task<bool> Add(
             string name, 
             string imageUrl, 
             int categoryId, 
@@ -24,7 +26,7 @@
         {
             if (!await this.dishCategoryService.IsCategoryExist(categoryId))
             {
-                return new(false, new List<string>(){ "Category doesn't exist!" });
+                return false;
             }
 
             var dish = new Dish()
@@ -42,7 +44,7 @@
 
             await this.dbContext.SaveChangesAsync();
 
-            return new(true, null);
+            return true;
         }
     }
 }

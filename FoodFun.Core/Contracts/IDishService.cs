@@ -2,7 +2,7 @@
 {
     public interface IDishService
     {
-        Task<Tuple<bool, IEnumerable<string>>> Add(
+        Task<bool> Add(
             string name,
             string imageUrl,
             int categoryId,

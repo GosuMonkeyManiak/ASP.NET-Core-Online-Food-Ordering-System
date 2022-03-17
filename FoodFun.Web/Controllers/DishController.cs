@@ -66,9 +66,29 @@
         }
 
         [Authorize(Roles = $"{Administrator}, {Customer}")]
-        public IActionResult All()
+        public async Task<IActionResult> All()
         {
-            return null;
+            var dishesWithCategoriesFromService = await this.dishService
+                .All();
+
+            return View(dishesWithCategoriesFromService.ProjectTo<DishListingModel>(this.mapper));
+        }
+
+        [Authorize(Roles = Administrator)]
+        public async Task<IActionResult> Edit(string dishId)
+        {
+            var dishWithCategory = await this.dishService
+                .GetByIdOrDefault(dishId);
+
+            if (dishWithCategory == null)
+            {
+                return Redirect(HomeIndexUrl);
+            }
+
+            var dishEditModel = this.mapper.Map<DishEditModel>(dishWithCategory);
+            dishEditModel.Categories = await GetDishCategories();
+
+            return View(dishEditModel);
         }
 
         private async Task<IEnumerable<DishCategoryModel>> GetDishCategories()

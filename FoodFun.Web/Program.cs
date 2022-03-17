@@ -50,7 +50,8 @@ builder
 builder
     .Services
     .AddScoped<IProductRepository, ProductRepository>()
-    .AddScoped<IProductCategoryRepository, ProductCategoryRepository>();
+    .AddScoped<IProductCategoryRepository, ProductCategoryRepository>()
+    .AddScoped<IDishRepository, DishRepository>();
 
 builder
     .Services

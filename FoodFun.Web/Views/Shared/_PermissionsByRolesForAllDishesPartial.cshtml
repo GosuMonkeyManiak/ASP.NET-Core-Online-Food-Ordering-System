@@ -1,0 +1,11 @@
+﻿@model string
+
+@if (this.User.IsInRole(Administrator))
+{
+    <a class="btn btn-warning" asp-area="" asp-controller="Dish" asp-action="Edit" asp-route-dishId="@Model">Edit</a>
+    <a class="btn btn-danger">Delete</a>
+}
+else
+{
+    <a class="btn btn-primary">Add to card</a>
+}

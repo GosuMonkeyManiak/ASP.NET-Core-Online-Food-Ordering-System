@@ -1,7 +1,7 @@
-﻿@model DishFormModel
+﻿@model DishEditModel
 
 @{
-    ViewData[Title] = "Add Dish";
+    ViewData[Title] = "Edit";
 }
 
 <div class="row">
@@ -11,12 +11,12 @@
         <form method="post">
             <div class="form-group mb-3">
                 <label asp-for="Name" class="mb-1"></label>
-                <input asp-for="Name" class="form-control" placeholder="Chicken soup">
+                <input asp-for="Name" class="form-control" placeholder="Chicken soup" value="@Model.Name">
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group mb-3">
                 <label asp-for="ImageUrl" class="mb-1"></label>
-                <input asp-for="ImageUrl" class="form-control" placeholder="https://...">
+                <input asp-for="ImageUrl" class="form-control" placeholder="https://..." value="@Model.ImageUrl">
                 <span asp-validation-for="ImageUrl" class="text-danger"></span>
             </div>
             <div class="form-group mb-3">
@@ -24,6 +24,11 @@
                 <select asp-for="CategoryId" class="form-control">
                     @foreach (var category in Model.Categories)
                     {
+                        if (category.Id == Model.CategoryId)
+                        {
+                            <option value="@category.Id" selected>@category.Title</option>
+                            continue;
+                        }
                         <option value="@category.Id">@category.Title</option>
                     }
                 </select>
@@ -31,17 +36,17 @@
             </div>
             <div class="form-group mb-3">
                 <label asp-for="Price" class="mb-1"></label>
-                <input asp-for="Price" class="form-control" placeholder="8.99">
+                <input asp-for="Price" class="form-control" placeholder="8.99" value="@Model.Price">
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
             <div class="form-group mb-3">
                 <label asp-for="Description" class="mb-1"></label>
-                <textarea asp-for="Description" class="form-control" rows="3" placeholder="Best dish ever..."></textarea>
+                <textarea asp-for="Description" class="form-control" rows="3" placeholder="Best dish ever...">@Model.Description</textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
 
             <div class="text-center">
-                <button type="submit" class="btn btn-primary">Add</button>
+                <button type="submit" class="btn btn-primary">Edit</button>
             </div>
         </form>
     </div>

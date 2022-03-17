@@ -1,0 +1,22 @@
+﻿@model IEnumerable<DishListingModel>
+
+@{
+    ViewData[Title] = "All";
+}
+
+<div class="row">
+    @foreach (var product in Model)
+    {
+        <div class="col-xl-3 mb-4">
+            <div class="card text-center" style="width: 18rem;">
+                <img class="card-img-top" src="@product.ImageUrl" alt="@product.Name - (@product.CategoryTitle)">
+                <div class="card-body">
+                    <h5 class="card-title">@product.Name - (@product.CategoryTitle)</h5>
+                    <p class="card-text">@product.Price $</p>
+                    <p class="card-text">@product.Description</p>
+                    <partial name="_PermissionsByRolesForAllDishesPartial" model="@product.Id"/>
+                </div>
+            </div>
+        </div>
+    }
+</div>

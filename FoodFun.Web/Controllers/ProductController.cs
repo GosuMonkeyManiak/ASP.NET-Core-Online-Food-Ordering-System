@@ -34,7 +34,7 @@
 
             return View(new ProductFormModel()
             {
-                Categories = categoriesForProduct.ProjectTo<ProductCategoryEditModel>(this.mapper)
+                Categories = categoriesForProduct.ProjectTo<ProductCategoryModel>(this.mapper)
             });
         }
 
@@ -109,7 +109,7 @@
             var categoriesForProduct = await this.productCategoryService
                 .All();
 
-            productEditModel.Categories = categoriesForProduct.ProjectTo<ProductCategoryEditModel>(this.mapper);
+            productEditModel.Categories = categoriesForProduct.ProjectTo<ProductCategoryModel>(this.mapper);
 
             return View(productEditModel);
         }

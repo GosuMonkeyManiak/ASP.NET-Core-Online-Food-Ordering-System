@@ -1,0 +1,15 @@
+﻿@model int
+
+<script>
+    let previousButton = document.querySelector("#previous");
+
+    previousButton.addEventListener('click', () => {
+        document.querySelector("#pageNumberInput").value = @(Model - 1);
+    });
+
+    let nextButton = document.querySelector("#next");
+
+    nextButton.addEventListener('click', () => {
+        document.querySelector("#pageNumberInput").value = @(Model + 1);
+    });
+</script>

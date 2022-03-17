@@ -29,7 +29,7 @@
                             <option value="@category.Id" selected>@category.Title</option>
                             continue;
                         }
-                        <option value="@category.Id">@category.Title</option>
+                        <partial name="_ProductCategoryPartial" model="category"/>
                     }
                 </select>
             </div>

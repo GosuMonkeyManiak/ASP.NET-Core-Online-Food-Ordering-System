@@ -22,7 +22,7 @@
                 <select asp-for="CategoryId" class="form-control">
                     @foreach (var category in Model.Categories)
                     {
-                        <option value="@category.Id">@category.Title</option>
+                        <partial name="_ProductCategoryPartial" model="category"/>
                     }
                 </select>
             </div>

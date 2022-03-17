@@ -50,6 +50,6 @@
         public string Description { get; init; }
 
         [BindNever]
-        public IEnumerable<ProductCategoryEditModel> Categories { get; set; } = new List<ProductCategoryEditModel>();
+        public IEnumerable<ProductCategoryModel> Categories { get; set; } = new List<ProductCategoryModel>();
     }
 }

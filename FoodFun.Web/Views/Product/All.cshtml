@@ -32,7 +32,7 @@
                     <option value="0">All</option>
                     @foreach (var category in Model.Categories)
                     {
-                        <option value="@category.Id">@category.Title</option>
+                        <partial name="_ProductCategoryPartial" model="category"/>
                     }
                 </select>
 
@@ -74,17 +74,5 @@
 </div>
 
 @section Scripts{
-    <script>
-        let previousButton = document.querySelector("#previous");
-
-        previousButton.addEventListener('click', () => {
-            document.querySelector("#pageNumberInput").value = @(Model.CurrentPageNumber - 1);
-        });
-
-        let nextButton = document.querySelector("#next");
-
-        nextButton.addEventListener('click', () => {
-            document.querySelector("#pageNumberInput").value = @(Model.CurrentPageNumber + 1);
-        });
-    </script>
+    <partial name="_PaginationButtonScriptPartial" model="@Model.CurrentPageNumber"/>
 }

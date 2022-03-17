@@ -42,6 +42,6 @@
         public string Description { get; init; }
 
         [BindNever]
-        public IEnumerable<ProductCategoryEditModel> Categories { get; init; } = new List<ProductCategoryEditModel>();
+        public IEnumerable<ProductCategoryModel> Categories { get; init; } = new List<ProductCategoryModel>();
     }
 }

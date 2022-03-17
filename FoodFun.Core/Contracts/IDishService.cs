@@ -8,6 +8,14 @@
 
         Task<DishServiceModel> GetByIdOrDefault(string id);
 
+        Task<bool> Update(
+            string id,
+            string name,
+            string imageUrl,
+            int categoryId,
+            decimal price,
+            string description);
+
         Task<bool> Add(
             string name,
             string imageUrl,

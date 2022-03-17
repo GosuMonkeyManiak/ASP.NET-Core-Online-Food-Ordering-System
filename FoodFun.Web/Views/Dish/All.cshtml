@@ -4,6 +4,13 @@
     ViewData[Title] = "All";
 }
 
+@if (TempData[nameof(Error)] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData[nameof(Error)]
+    </div>
+}
+
 <div class="row">
     @foreach (var product in Model)
     {

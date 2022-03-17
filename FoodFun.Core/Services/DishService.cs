@@ -43,6 +43,38 @@
             return this.mapper.Map<DishServiceModel>(dishWithCategory);
         }
 
+        public async Task<bool> Update(
+            string id, 
+            string name, 
+            string imageUrl, 
+            int categoryId, 
+            decimal price, 
+            string description)
+        {
+            if (!await this.IsDishExist(id) ||
+                !await this.dishCategoryService.IsCategoryExist(categoryId))
+            {
+                return false;
+            }
+
+            var dish = new Dish()
+            {
+                Id = id,
+                Name = name,
+                ImageUrl = imageUrl,
+                CategoryId = categoryId,
+                Price = price,
+                Description = description
+            };
+
+            this.dishRepository
+                .Update(dish);
+
+            await this.dishRepository.SaveChangesAsync();
+
+            return true;
+        }
+
         public async Task<bool> Add(
             string name, 
             string imageUrl, 

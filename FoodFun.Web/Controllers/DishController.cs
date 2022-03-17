@@ -8,9 +8,9 @@
     using Models.Dish;
     using Models.DishCategory;
 
-    using static Constants.GlobalConstants.Roles;
-    using static Constants.GlobalConstants.Redirect;
     using static Constants.GlobalConstants.Messages;
+    using static Constants.GlobalConstants.Redirect;
+    using static Constants.GlobalConstants.Roles;
 
     public class DishController : Controller
     {
@@ -82,13 +82,43 @@
 
             if (dishWithCategory == null)
             {
-                return Redirect(HomeIndexUrl);
+                this.TempData[nameof(Error)] = DishNotExit;
+                
+                return RedirectToAction(nameof(All));
             }
 
             var dishEditModel = this.mapper.Map<DishEditModel>(dishWithCategory);
             dishEditModel.Categories = await GetDishCategories();
 
             return View(dishEditModel);
+        }
+
+        [Authorize(Roles = Administrator)]
+        [HttpPost]
+        public async Task<IActionResult> Edit(DishEditModel editModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                editModel.Categories = await GetDishCategories();
+
+                return View(editModel);
+            }
+
+            var isSucceed = await this.dishService
+                .Update(
+                    editModel.Id,
+                    editModel.Name,
+                    editModel.ImageUrl,
+                    editModel.CategoryId,
+                    editModel.Price,
+                    editModel.Description);
+
+            if (!isSucceed)
+            {
+                this.TempData[nameof(Error)] = DishAndCategoryNotExit;
+            }
+
+            return RedirectToAction(nameof(All));
         }
 
         private async Task<IEnumerable<DishCategoryModel>> GetDishCategories()

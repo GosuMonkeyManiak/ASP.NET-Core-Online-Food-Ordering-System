@@ -12,10 +12,10 @@
         public DishCategoryService(FoodFunDbContext dbContext)
             => this.dbContext = dbContext;
 
-        public async Task<bool> IsCategoryExist(int categoryId)
+        public async Task<bool> IsCategoryExist(int Id)
             => await this.dbContext
                 .DishesCategories
-                .AnyAsync(dc => dc.Id == categoryId);
+                .AnyAsync(dc => dc.Id == Id);
 
         public async Task<IEnumerable<DishCategoryServiceModel>> All()
             => await this.dbContext

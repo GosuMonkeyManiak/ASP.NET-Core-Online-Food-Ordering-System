@@ -5,6 +5,9 @@
         private const string ProductNotExistBase = "Product doesn't exist";
         private const string ProductCategoryNotExistBase = "Product category doesn't exist";
 
+        private const string DishNotExistBase = "Dish doesn't exist";
+        private const string DishCategoryNotExistBase = "Dish category doesn't exist";
+
         public const string Title = nameof(Title);
         public const int DefaultIdLength = 36;
 
@@ -41,7 +44,9 @@
 
             public const string DishNameError = "{0} of dish must be between {2} and {1} characters.";
             public const string DishPriceError = ProductPriceError;
-            public const string DishCategoryNotExist = "Dish category doesn't exist!";
+            public const string DishNotExit = $"{DishNotExistBase}!";
+            public const string DishCategoryNotExist = $"{DishCategoryNotExistBase}!";
+            public const string DishAndCategoryNotExit = $"{DishNotExistBase} or {DishCategoryNotExistBase}!";
         }
 
         public static class Roles

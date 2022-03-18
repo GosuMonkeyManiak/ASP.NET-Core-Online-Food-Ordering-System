@@ -8,9 +8,10 @@
     using Models.Product;
     using Models.ProductCategory;
 
+    using static Constants.GlobalConstants;
     using static Constants.GlobalConstants.Roles;
     using static Constants.GlobalConstants.Messages;
-    
+
     public class ProductController : Controller
     {
         private readonly IProductService productService;
@@ -29,14 +30,10 @@
 
         [Authorize(Roles = Administrator)]
         public async Task<IActionResult> Add()
-        {
-            var categoriesForProduct = await this.productCategoryService.All();
-
-            return View(new ProductFormModel()
+            => View(new ProductFormModel()
             {
-                Categories = categoriesForProduct.ProjectTo<ProductCategoryModel>(this.mapper)
+                Categories = await GetProductCategories()
             });
-        }
 
         [Authorize(Roles = Administrator)]
         [HttpPost]
@@ -44,7 +41,9 @@
         {
             if (!this.ModelState.IsValid)
             {
-                return Add().GetAwaiter().GetResult();
+                formModel.Categories = await GetProductCategories();
+
+                return View(formModel);
             }
              
             var isSucceed = await this.productService
@@ -57,9 +56,11 @@
 
             if (!isSucceed)
             { 
-                this.ModelState.AddModelError(string.Empty, ProductCategoryNotExist);
+                this.ModelState.AddModelError(CategoryId, ProductCategoryNotExist);
 
-                return Add().GetAwaiter().GetResult();
+                formModel.Categories = await GetProductCategories();
+
+                return View(formModel);
             }
 
             return RedirectToAction(nameof(All));
@@ -108,10 +109,7 @@
 
             var productEditModel = this.mapper.Map<ProductEditModel>(productServiceModel);
 
-            var categoriesForProduct = await this.productCategoryService
-                .All();
-
-            productEditModel.Categories = categoriesForProduct.ProjectTo<ProductCategoryModel>(this.mapper);
+            productEditModel.Categories = await GetProductCategories();
 
             return View(productEditModel);
         }
@@ -120,8 +118,10 @@
         [HttpPost]
         public async Task<IActionResult> Edit(ProductEditModel editModel)
         {
-            if (!ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
+                editModel.Categories = await GetProductCategories();
+
                 return View(editModel);
             }
 
@@ -140,6 +140,13 @@
             }
 
             return RedirectToAction(nameof(All));
+        }
+
+        private async Task<IEnumerable<ProductCategoryModel>> GetProductCategories()
+        {
+            var categoriesForProduct = await this.productCategoryService.All();
+
+            return categoriesForProduct.ProjectTo<ProductCategoryModel>(this.mapper);
         }
     }
 }

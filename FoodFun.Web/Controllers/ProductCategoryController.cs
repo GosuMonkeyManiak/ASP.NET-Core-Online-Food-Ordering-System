@@ -49,10 +49,10 @@
                 .ProjectTo<ProductCategoryListingModel>(this.mapper));
         }
 
-        public async Task<IActionResult> Edit(int categoryId)
+        public async Task<IActionResult> Edit(int productCategoryId)
         {
             var (isSucceed, productCategoryServiceModel) = await this.productCategoryService
-                .GetById(categoryId);
+                .GetById(productCategoryId);
 
             if (!isSucceed)
             {

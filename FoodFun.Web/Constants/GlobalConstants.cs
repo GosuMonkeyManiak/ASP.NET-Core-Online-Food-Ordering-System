@@ -10,6 +10,7 @@
 
         public const string Title = nameof(Title);
         public const int DefaultIdLength = 36;
+        public const string CategoryId = nameof(CategoryId);
 
         public static class Redirect
         {

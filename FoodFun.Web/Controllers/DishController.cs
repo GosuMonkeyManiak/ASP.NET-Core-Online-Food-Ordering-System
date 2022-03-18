@@ -8,14 +8,13 @@
     using Models.Dish;
     using Models.DishCategory;
 
+    using static Constants.GlobalConstants;
     using static Constants.GlobalConstants.Messages;
     using static Constants.GlobalConstants.Redirect;
     using static Constants.GlobalConstants.Roles;
 
     public class DishController : Controller
     {
-        private const string CategoryId = nameof(CategoryId);
-
         private readonly IDishService dishService;
         private readonly IDishCategoryService dishCategoryService;
         private readonly IMapper mapper;

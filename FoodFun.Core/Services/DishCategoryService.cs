@@ -34,6 +34,14 @@
             return categories.ProjectTo<DishCategoryServiceModel>(this.mapper);
         }
 
+        public async Task<IEnumerable<DishCategoryWithDishCountServiceModel>> AllWithDishesCount()
+        {
+            var categoriesWithDishes = await this.dishCategoryRepository
+                .GetAllWithDishes();
+
+            return categoriesWithDishes.ProjectTo<DishCategoryWithDishCountServiceModel>(this.mapper);
+        }
+
         public async Task<bool> Add(string title)
         {
             var isCategoryExist = this.dishCategoryRepository

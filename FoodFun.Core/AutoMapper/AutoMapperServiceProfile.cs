@@ -21,6 +21,9 @@
            
             CreateMap<Dish, DishServiceModel>();
             CreateMap<DishCategory, DishCategoryServiceModel>();
+            CreateMap<DishCategory, DishCategoryWithDishCountServiceModel>()
+                .ForMember(x => x.Count, options => options
+                    .MapFrom(x => x.Dishes.Count));
         }
     }
 }

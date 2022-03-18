@@ -1,0 +1,40 @@
+﻿@model IEnumerable<DishCategoryListingModel>
+
+@{
+    ViewData[Title] = "All categories for dish";
+}
+
+@if (TempData[nameof(Error)] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData[nameof(Error)]
+    </div>
+}
+
+
+<div class="row">
+    <div class="offset-3 col-5">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Title</th>
+                <th scope="col">Dishes in category</th>
+                <th scope="col">Operations</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var category in Model)
+            {
+                <tr>
+                    <td>@category.Title</td>
+                    <td>@category.DishCount</td>
+                    <td>
+                        <a asp-area="" asp-controller="DishCategory" asp-action="Edit" asp-route-dishCategoryId="@category.Id" class="btn btn-warning">Edit</a> |
+                        <a>Disable</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>

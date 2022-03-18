@@ -1,6 +1,8 @@
 ﻿namespace FoodFun.Web.Controllers
 {
     using Core.Contracts;
+    using Core.Extensions;
+    using global::AutoMapper;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Models.DishCategory;
@@ -12,9 +14,15 @@
     public class DishCategoryController : Controller
     {
         private readonly IDishCategoryService dishCategoryService;
+        private readonly IMapper mapper;
 
-        public DishCategoryController(IDishCategoryService dishCategoryService) 
-            => this.dishCategoryService = dishCategoryService;
+        public DishCategoryController(
+            IDishCategoryService dishCategoryService, 
+            IMapper mapper)
+        {
+            this.dishCategoryService = dishCategoryService;
+            this.mapper = mapper;
+        }
 
         public IActionResult Add()
             => View();
@@ -35,7 +43,15 @@
                 this.TempData[nameof(Error)] = DishCategoryAlreadyExist;
             }
 
-            return RedirectToAction(); //All
+            return RedirectToAction(nameof(All));
+        }
+
+        public async Task<IActionResult> All()
+        {
+            var categoriesWithDishCount = await this.dishCategoryService
+                .AllWithDishesCount();
+
+            return View(categoriesWithDishCount.ProjectTo<DishCategoryListingModel>(this.mapper));
         }
     }
 }

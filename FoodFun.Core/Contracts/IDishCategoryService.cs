@@ -8,6 +8,8 @@
 
         Task<IEnumerable<DishCategoryServiceModel>> All();
 
+        Task<IEnumerable<DishCategoryWithDishCountServiceModel>> AllWithDishesCount();
+
         Task<bool> Add(string title);
     }
 }

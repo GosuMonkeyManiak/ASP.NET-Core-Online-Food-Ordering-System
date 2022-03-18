@@ -9,6 +9,10 @@
         <h1 class="text-center">@ViewData[Title]</h1>
 
         <form method="post">
+            <div class="text-center">
+                <img class="rounded img-fluid" id="image"/>
+            </div>
+
             <div class="form-group mb-3">
                 <label asp-for="Name" class="mb-1"></label>
                 <input asp-for="Name" class="form-control" placeholder="Chicken soup">
@@ -16,7 +20,7 @@
             </div>
             <div class="form-group mb-3">
                 <label asp-for="ImageUrl" class="mb-1"></label>
-                <input asp-for="ImageUrl" class="form-control" placeholder="https://...">
+                <input asp-for="ImageUrl" class="form-control" placeholder="https://..." id="imageInput">
                 <span asp-validation-for="ImageUrl" class="text-danger"></span>
             </div>
             <div class="form-group mb-3">

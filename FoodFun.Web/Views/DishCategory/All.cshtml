@@ -4,10 +4,10 @@
     ViewData[Title] = "All categories for dish";
 }
 
-@if (TempData[nameof(Error)] != null)
+@if (TempData[Error] != null)
 {
     <div class="alert alert-danger" role="alert">
-        @TempData[nameof(Error)]
+        @TempData[Error]
     </div>
 }
 

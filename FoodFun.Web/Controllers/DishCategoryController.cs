@@ -40,7 +40,9 @@
 
             if (!isSucceed)
             {
-                this.TempData[nameof(Error)] = DishCategoryAlreadyExist;
+                this.TempData[Error] = DishCategoryAlreadyExist;
+
+                return View();
             }
 
             return RedirectToAction(nameof(All));
@@ -61,7 +63,7 @@
 
             if (dishCategory == null)
             {
-                this.TempData[nameof(Error)] = DishCategoryNotExist;
+                this.TempData[Error] = DishCategoryNotExist;
 
                 return RedirectToAction(nameof(All));
             }
@@ -84,7 +86,7 @@
 
             if (!isSucceed)
             {
-                this.TempData[nameof(Error)] = DishCategoryNotExist;
+                this.TempData[Error] = DishCategoryNotExist;
             }
 
             return RedirectToAction(nameof(All));

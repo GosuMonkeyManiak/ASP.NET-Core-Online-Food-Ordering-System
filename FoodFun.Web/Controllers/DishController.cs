@@ -31,7 +31,10 @@
 
         [Authorize(Roles = Administrator)]
         public async Task<IActionResult> Add()
-            => View(new DishFormModel() { Categories = await GetDishCategories() });
+            => View(new DishFormModel()
+            {
+                Categories = await GetDishCategories()
+            });
 
         [HttpPost]
         [Authorize(Roles = Administrator)]
@@ -44,7 +47,8 @@
                 return View(formModel);
             }
 
-            var isSucceed = await this.dishService
+            var (isCategoryExist,
+                isDishInCategory) = await this.dishService
                 .Add(
                     formModel.Name,
                     formModel.ImageUrl,
@@ -52,9 +56,18 @@
                     formModel.Price,
                     formModel.Description);
 
-            if (!isSucceed)
+            if (!isCategoryExist)
             {
                 this.ModelState.AddModelError(CategoryId, DishCategoryNotExist);
+
+                formModel.Categories = await GetDishCategories();
+
+                return View(formModel);
+            }
+
+            if (isDishInCategory)
+            {
+                this.TempData[Error] = DishAlreadyExistInCategory;
 
                 formModel.Categories = await GetDishCategories();
 
@@ -81,7 +94,7 @@
 
             if (dishWithCategory == null)
             {
-                this.TempData[nameof(Error)] = DishNotExit;
+                this.TempData[Error] = DishNotExit;
                 
                 return RedirectToAction(nameof(All));
             }
@@ -96,7 +109,7 @@
         [HttpPost]
         public async Task<IActionResult> Edit(DishEditModel editModel)
         {
-            if (!ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
                 editModel.Categories = await GetDishCategories();
 
@@ -114,7 +127,7 @@
 
             if (!isSucceed)
             {
-                this.TempData[nameof(Error)] = DishAndCategoryNotExit;
+                this.TempData[Error] = DishAndCategoryNotExit;
             }
 
             return RedirectToAction(nameof(All));

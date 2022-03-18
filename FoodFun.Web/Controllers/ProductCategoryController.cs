@@ -40,7 +40,7 @@
 
             if (!isSucceed)
             {
-                this.ModelState.AddModelError(Title, ProductCategoryAlreadyExist);
+                this.TempData[Error] = ProductCategoryAlreadyExist;
 
                 return View();
             }

@@ -16,7 +16,7 @@
             decimal price,
             string description);
 
-        Task<bool> Add(
+        Task<Tuple<bool, bool>> Add(
             string name,
             string imageUrl,
             int categoryId,

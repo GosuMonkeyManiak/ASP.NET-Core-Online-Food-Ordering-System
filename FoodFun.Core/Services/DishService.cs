@@ -75,7 +75,7 @@
             return true;
         }
 
-        public async Task<bool> Add(
+        public async Task<Tuple<bool, bool>> Add(
             string name, 
             string imageUrl, 
             int categoryId, 
@@ -84,7 +84,12 @@
         {
             if (!await this.dishCategoryService.IsCategoryExist(categoryId))
             {
-                return false;
+                return new(false, false);
+            }
+
+            if (await IsDishInCategory(name, categoryId))
+            {
+                return new(true, true);
             }
 
             var dish = new Dish()
@@ -102,11 +107,18 @@
             await this.dishRepository
                 .SaveChangesAsync();
 
-            return true;
+            return new(true, false);
         }
 
         private async Task<bool> IsDishExist(string id)
             => await this.dishRepository
                 .FindOrDefaultAsync(p => p.Id == id) != null;
+
+        private async Task<bool> IsDishInCategory(
+            string name,
+            int id)
+            => await this.dishRepository
+                .FindOrDefaultAsync(x => x.Name == name
+                                         && x.CategoryId == id) != null;
     }
 }

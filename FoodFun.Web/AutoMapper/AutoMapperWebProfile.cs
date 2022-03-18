@@ -29,10 +29,13 @@
             CreateMap<DishServiceModel, DishListingModel>()
                 .ForMember(x => x.CategoryTitle, options => options
                     .MapFrom(x => x.Category.Title));
-            CreateMap<DishCategoryServiceModel, DishCategoryModel>();
+
             CreateMap<DishServiceModel, DishEditModel>()
                 .ForMember(x => x.CategoryId, options => options
                     .MapFrom(x => x.Category.Id));
+
+            CreateMap<DishCategoryServiceModel, DishCategoryModel>();
+            CreateMap<DishCategoryServiceModel, DishCategoryEditModel>();
             CreateMap<DishCategoryWithDishCountServiceModel, DishCategoryListingModel>();
         }
     }

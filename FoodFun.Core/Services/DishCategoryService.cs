@@ -4,9 +4,7 @@
     using Extensions;
     using global::AutoMapper;
     using Infrastructure.Common.Contracts;
-    using Infrastructure.Data;
     using Infrastructure.Models;
-    using Microsoft.EntityFrameworkCore;
     using Models.DishCategory;
 
     public class DishCategoryService : IDishCategoryService
@@ -40,6 +38,43 @@
                 .GetAllWithDishes();
 
             return categoriesWithDishes.ProjectTo<DishCategoryWithDishCountServiceModel>(this.mapper);
+        }
+
+        public async Task<DishCategoryServiceModel> GetByIdOrDefault(int id)
+        {
+            if (!await IsCategoryExist(id))
+            {
+                return null;
+            }
+
+            var category = await this.dishCategoryRepository
+                .FindOrDefaultAsync(x => x.Id == id);
+
+            return this.mapper.Map<DishCategoryServiceModel>(category);
+        }
+
+        public async Task<bool> Update(
+            int id,
+            string title)
+        {
+            if (!await IsCategoryExist(id))
+            {
+                return false;
+            }
+
+            var dishCategory = new DishCategory()
+            {
+                Id = id,
+                Title = title
+            };
+
+            this.dishCategoryRepository
+                .Update(dishCategory);
+
+            await this.dishCategoryRepository
+                .SaveChangesAsync();
+
+            return true;
         }
 
         public async Task<bool> Add(string title)

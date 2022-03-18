@@ -11,7 +11,7 @@
         [StringLength(
             TitleMaxLength,
             MinimumLength = TitleMinLength,
-            ErrorMessage = ProductCategoryTitleError)]
+            ErrorMessage = CategoryTitleError)]
         public string Title { get; init; }
     }
 }

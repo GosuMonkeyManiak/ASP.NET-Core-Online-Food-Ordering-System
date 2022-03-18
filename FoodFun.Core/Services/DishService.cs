@@ -107,6 +107,6 @@
 
         private async Task<bool> IsDishExist(string id)
             => await this.dishRepository
-                .FindOrDefault(p => p.Id == id) != null;
+                .FindOrDefaultAsync(p => p.Id == id) != null;
     }
 }

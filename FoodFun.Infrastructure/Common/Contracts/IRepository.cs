@@ -17,7 +17,7 @@
 
         void Update(TEntity entity);
 
-        Task<TEntity> FindOrDefault(Expression<Func<TEntity, bool>> predicate);
+        Task<TEntity> FindOrDefaultAsync(Expression<Func<TEntity, bool>> predicate);
 
         Task<int> SaveChangesAsync();
     }

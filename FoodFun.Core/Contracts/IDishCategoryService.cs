@@ -4,8 +4,10 @@
 
     public interface IDishCategoryService
     {
-        Task<bool> IsCategoryExist(int Id);
+        Task<bool> IsCategoryExist(int id);
 
         Task<IEnumerable<DishCategoryServiceModel>> All();
+
+        Task<bool> Add(string title);
     }
 }

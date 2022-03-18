@@ -49,7 +49,7 @@
             entry.State = EntityState.Modified;
         }
 
-        public async Task<TEntity> FindOrDefault(Expression<Func<TEntity, bool>> predicate)
+        public async Task<TEntity> FindOrDefaultAsync(Expression<Func<TEntity, bool>> predicate)
             => await this.DbSet
                 .AsNoTracking()
                 .FirstOrDefaultAsync(predicate);

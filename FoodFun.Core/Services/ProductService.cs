@@ -128,7 +128,7 @@
 
         private async Task<bool> IsProductExist(string productId)
             => await this.productRepository
-                .FindOrDefault(p => p.Id == productId) != null;
+                .FindOrDefaultAsync(p => p.Id == productId) != null;
 
         private async Task<Tuple<string, int, byte, int>> ValidateAndSetDefaultSearchParameters(
             string searchTerm,

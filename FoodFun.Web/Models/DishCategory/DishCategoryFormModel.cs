@@ -1,14 +1,12 @@
-﻿namespace FoodFun.Web.Models.ProductCategory
+﻿namespace FoodFun.Web.Models.DishCategory
 {
     using System.ComponentModel.DataAnnotations;
 
-    using static Infrastructure.Common.DataConstants.ProductCategory;
+    using static Infrastructure.Common.DataConstants.DishCategory;
     using static Constants.GlobalConstants.Messages;
 
-    public class ProductCategoryEditModel
+    public class DishCategoryFormModel
     {
-        public int Id { get; init; }
-
         [Required]
         [StringLength(
             TitleMaxLength,

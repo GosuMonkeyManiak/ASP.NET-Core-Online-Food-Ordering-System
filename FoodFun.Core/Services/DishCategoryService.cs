@@ -1,30 +1,61 @@
 ﻿namespace FoodFun.Core.Services
 {
     using Contracts;
+    using Extensions;
+    using global::AutoMapper;
+    using Infrastructure.Common.Contracts;
     using Infrastructure.Data;
+    using Infrastructure.Models;
     using Microsoft.EntityFrameworkCore;
     using Models.DishCategory;
 
     public class DishCategoryService : IDishCategoryService
     {
-        private readonly FoodFunDbContext dbContext;
+        private readonly IDishCategoryRepository dishCategoryRepository;
+        private readonly IMapper mapper;
 
-        public DishCategoryService(FoodFunDbContext dbContext)
-            => this.dbContext = dbContext;
+        public DishCategoryService(
+            IDishCategoryRepository dishCategoryRepository,
+            IMapper mapper)
+        {
+            this.dishCategoryRepository = dishCategoryRepository;
+            this.mapper = mapper;
+        }
 
-        public async Task<bool> IsCategoryExist(int Id)
-            => await this.dbContext
-                .DishesCategories
-                .AnyAsync(dc => dc.Id == Id);
+        public async Task<bool> IsCategoryExist(int id)
+            => await this.dishCategoryRepository
+                .FindOrDefaultAsync(x => x.Id == id) != null;
 
         public async Task<IEnumerable<DishCategoryServiceModel>> All()
-            => await this.dbContext
-                .DishesCategories
-                .Select(dc => new DishCategoryServiceModel()
-                {
-                    Id = dc.Id,
-                    Title = dc.Title
-                })
-                .ToListAsync();
+        {
+            var categories = await this.dishCategoryRepository
+                .AllAsNoTracking();
+
+            return categories.ProjectTo<DishCategoryServiceModel>(this.mapper);
+        }
+
+        public async Task<bool> Add(string title)
+        {
+            var isCategoryExist = this.dishCategoryRepository
+                .FindOrDefaultAsync(x => x.Title == title) != null;
+
+            if (isCategoryExist)
+            {
+                return false;
+            }
+
+            var dishCategory = new DishCategory()
+            {
+                Title = title
+            };
+
+            await this.dishCategoryRepository
+                .AddAsync(dishCategory);
+
+            await this.dishCategoryRepository
+                .SaveChangesAsync();
+
+            return true;
+        }
     }
 }

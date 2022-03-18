@@ -47,7 +47,7 @@
 
         public async Task<bool> IsCategoryExist(int id)
             => await this.productCategoryRepository
-                .FindOrDefault(c => c.Id == id) != null;
+                .FindOrDefaultAsync(c => c.Id == id) != null;
 
         public async Task<Tuple<bool, ProductCategoryServiceModel>> GetById(int id)
         {
@@ -57,7 +57,7 @@
             }
 
             var productCategory = await this.productCategoryRepository
-                .FindOrDefault(x => x.Id == id);
+                .FindOrDefaultAsync(x => x.Id == id);
 
             return new(true, this.mapper.Map<ProductCategoryServiceModel>(productCategory));
         }

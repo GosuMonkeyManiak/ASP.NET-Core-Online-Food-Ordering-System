@@ -26,7 +26,7 @@
 
         private double LastPageNumber { get; set; }
 
-        public async Task<bool> AddProduct(
+        public async Task<Tuple<bool, bool>> AddProduct(
             string name, 
             string imageUrl, 
             int categoryId, 
@@ -35,7 +35,12 @@
         {
             if (!await this.productCategoryService.IsCategoryExist(categoryId))
             {
-                return false;
+                return new(false, false);
+            }
+
+            if (await IsProductExistInCategory(name, categoryId))
+            {
+                return new(true, true);
             }
 
             var product = new Product()
@@ -53,7 +58,7 @@
             await this.productRepository
                 .SaveChangesAsync();
 
-            return true;
+            return new(true, false);
         }
 
         public async Task<Tuple<IEnumerable<ProductServiceModel>, int, int, int>> All(
@@ -82,17 +87,17 @@
                 categoryFilterIdResult);
         }
 
-        public async Task<Tuple<bool, ProductServiceModel>> GetById(string id)
+        public async Task<ProductServiceModel> GetByIdOrDefault(string id)
         {
             if (!await IsProductExist(id))
             {
-                return new(false, null);
+                return null;
             }
 
             var product = await this.productRepository
                 .GetProductWithCategoryById(id);
 
-            return new(true, this.mapper.Map<ProductServiceModel>(product));
+            return this.mapper.Map<ProductServiceModel>(product);
         }
 
         public async Task<bool> Update(
@@ -180,5 +185,12 @@
 
             this.LastPageNumber = Math.Ceiling(numberOfPagesByFilter / (DataConstants.ItemPerPage * 1.0));
         }
+
+        private async Task<bool> IsProductExistInCategory(
+            string productName,
+            int categoryId)
+            => await this.productRepository
+                .FindOrDefaultAsync(x => x.Name == productName 
+                                         && x.CategoryId == categoryId) != null;
     }
 }

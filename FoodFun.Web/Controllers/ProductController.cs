@@ -46,7 +46,8 @@
                 return View(formModel);
             }
              
-            var isSucceed = await this.productService
+            var (isCategoryExist,
+                isProductExist) = await this.productService
                 .AddProduct(
                     formModel.Name,
                     formModel.ImageUrl,
@@ -54,9 +55,18 @@
                     formModel.Price,
                     formModel.Description);
 
-            if (!isSucceed)
+            if (!isCategoryExist)
             { 
                 this.ModelState.AddModelError(CategoryId, ProductCategoryNotExist);
+
+                formModel.Categories = await GetProductCategories();
+
+                return View(formModel);
+            }
+
+            if (isProductExist)
+            {
+                this.TempData[Error] = ProductAlreadyExistInCategory;
 
                 formModel.Categories = await GetProductCategories();
 
@@ -97,12 +107,12 @@
         [Authorize(Roles = Administrator)]
         public async Task<IActionResult> Edit(string productId)
         {
-            var (isSucceed, productServiceModel) = await this.productService
-                .GetById(productId);
+            var productServiceModel = await this.productService
+                .GetByIdOrDefault(productId);
 
-            if (!isSucceed)
+            if (productServiceModel == null)
             {
-                this.TempData[nameof(Error)] = ProductNotExist;
+                this.TempData[Error] = ProductNotExist;
 
                 return RedirectToAction(nameof(All));
             }
@@ -136,7 +146,7 @@
 
             if (!isSucceed)
             {
-                this.TempData[nameof(Error)] = ProductAndCategoryNotExist;
+                this.TempData[Error] = ProductAndCategoryNotExist;
             }
 
             return RedirectToAction(nameof(All));

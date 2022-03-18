@@ -4,6 +4,13 @@
     ViewData[Title] = "Add Product";
 }
 
+@if (TempData[Error] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData[Error]
+    </div>
+}
+
 <div class="row">
     <div class="offset-xl-3 col-xl-6">
         <h1 class="text-center">@ViewData[Title]</h1>

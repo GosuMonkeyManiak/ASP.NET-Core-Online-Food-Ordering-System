@@ -39,6 +39,7 @@
             public const string ProductNotExist = $"{ProductNotExistBase}!";
             public const string ProductCategoryNotExist = $"{ProductCategoryNotExistBase}!";
             public const string ProductAndCategoryNotExist = $"{ProductNotExistBase} or {ProductCategoryNotExistBase}!";
+            public const string ProductAlreadyExistInCategory = $"Product already exists in category!";
 
             public const string ProductCategoryIdError = "{0} must be between {1} and {2}.";
             public const string CategoryTitleError = "{0} of category must be between {2} and {1} characters.";

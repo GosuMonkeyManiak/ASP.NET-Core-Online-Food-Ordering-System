@@ -59,17 +59,17 @@
             => await this.productCategoryRepository
                 .FindOrDefaultAsync(c => c.Id == id) != null;
 
-        public async Task<Tuple<bool, ProductCategoryServiceModel>> GetById(int id)
+        public async Task<ProductCategoryServiceModel> GetByIdOrDefault(int id)
         {
             if (!await IsCategoryExist(id))
             {
-                return new(false, null);
+                return null;
             }
 
             var productCategory = await this.productCategoryRepository
                 .FindOrDefaultAsync(x => x.Id == id);
 
-            return new(true, this.mapper.Map<ProductCategoryServiceModel>(productCategory));
+            return this.mapper.Map<ProductCategoryServiceModel>(productCategory);
         }
 
         public async Task<bool> Update(int categoryId, string title)

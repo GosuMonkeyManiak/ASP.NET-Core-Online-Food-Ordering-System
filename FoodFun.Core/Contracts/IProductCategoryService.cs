@@ -12,7 +12,7 @@
 
         Task<bool> IsCategoryExist(int id);
 
-        Task<Tuple<bool, ProductCategoryServiceModel>> GetById(int id);
+        Task<ProductCategoryServiceModel> GetByIdOrDefault(int id);
 
         Task<bool> Update(
             int categoryId,

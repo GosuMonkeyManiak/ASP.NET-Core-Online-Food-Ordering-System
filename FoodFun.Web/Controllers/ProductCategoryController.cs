@@ -59,10 +59,10 @@
 
         public async Task<IActionResult> Edit(int productCategoryId)
         {
-            var (isSucceed, productCategoryServiceModel) = await this.productCategoryService
-                .GetById(productCategoryId);
+            var productCategoryServiceModel = await this.productCategoryService
+                .GetByIdOrDefault(productCategoryId);
 
-            if (!isSucceed)
+            if (productCategoryServiceModel == null)
             {
                 TempData[Error] = ProductCategoryNotExist;
 

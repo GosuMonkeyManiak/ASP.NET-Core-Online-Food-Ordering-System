@@ -39,6 +39,7 @@
             public const string ProductNotExist = $"{ProductNotExistBase}!";
             public const string ProductCategoryNotExist = $"{ProductCategoryNotExistBase}!";
             public const string ProductAndCategoryNotExist = $"{ProductNotExistBase} or {ProductCategoryNotExistBase}!";
+            public const string ProductCategoryAlreadyExist = "Product category already exists!";
             public const string ProductAlreadyExistInCategory = $"Product already exists in category!";
 
             public const string ProductCategoryIdError = "{0} must be between {1} and {2}.";
@@ -47,6 +48,7 @@
             public const string DishNameError = "{0} of dish must be between {2} and {1} characters.";
             public const string DishPriceError = ProductPriceError;
             public const string DishNotExit = $"{DishNotExistBase}!";
+
             public const string DishCategoryNotExist = $"{DishCategoryNotExistBase}!";
             public const string DishAndCategoryNotExit = $"{DishNotExistBase} or {DishCategoryNotExistBase}!";
             public const string DishCategoryAlreadyExist = "Dish category already exist!";

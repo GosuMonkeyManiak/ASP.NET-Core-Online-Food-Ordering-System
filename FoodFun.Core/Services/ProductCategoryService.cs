@@ -20,13 +20,23 @@
             this.mapper = mapper;
         }
 
-        public async Task Add(string title)
+        public async Task<bool> Add(string title)
         {
+            var isCategoryExist = this.productCategoryRepository
+                .FindOrDefaultAsync(x => x.Title == title) != null;
+
+            if (isCategoryExist)
+            {
+                return false;
+            }
+
             await this.productCategoryRepository
                 .AddAsync(new() { Title = title });
 
             await this.productCategoryRepository
                 .SaveChangesAsync();
+
+            return true;
         }
 
         public async Task<IEnumerable<ProductCategoryServiceModel>> All()

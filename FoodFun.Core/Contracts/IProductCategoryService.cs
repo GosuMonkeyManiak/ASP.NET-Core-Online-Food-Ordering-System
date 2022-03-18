@@ -4,7 +4,7 @@
 
     public interface IProductCategoryService
     {
-        Task Add(string title);
+        Task<bool> Add(string title);
 
         Task<IEnumerable<ProductCategoryWithProductCountServiceModel>> AllWithProductsCount();
 

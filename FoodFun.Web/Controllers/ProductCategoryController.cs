@@ -7,6 +7,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Models.ProductCategory;
 
+    using static Constants.GlobalConstants;
     using static Constants.GlobalConstants.Roles;
     using static Constants.GlobalConstants.Messages;
 
@@ -30,12 +31,19 @@
         [HttpPost]
         public async Task<IActionResult> Add(ProductCategoryFormModel formModel)
         {
-            if (!ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
                 return View();
             }
 
-            await this.productCategoryService.Add(formModel.Title);
+            var isSucceed = await this.productCategoryService.Add(formModel.Title);
+
+            if (!isSucceed)
+            {
+                this.ModelState.AddModelError(Title, ProductCategoryAlreadyExist);
+
+                return View();
+            }
 
             return RedirectToAction(nameof(All));
         }
@@ -56,7 +64,7 @@
 
             if (!isSucceed)
             {
-                TempData[nameof(Error)] = ProductCategoryNotExist;
+                TempData[Error] = ProductCategoryNotExist;
 
                 return RedirectToAction(nameof(All));
             }
@@ -67,7 +75,7 @@
         [HttpPost]
         public async Task<IActionResult> Edit(ProductCategoryEditModel productCategoryModel)
         {
-            if (!ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
                 return View(productCategoryModel);
             }
@@ -79,7 +87,7 @@
 
             if (!isSucceed)
             {
-                TempData[nameof(Error)] = ProductCategoryNotExist;
+                TempData[Error] = ProductCategoryNotExist;
             }
 
             return RedirectToAction(nameof(All));

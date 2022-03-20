@@ -37,7 +37,7 @@ namespace FoodFun.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Addresses");
+                    b.ToTable("Addresses", (string)null);
                 });
 
             modelBuilder.Entity("FoodFun.Infrastructure.Data.Models.Dish", b =>
@@ -70,7 +70,7 @@ namespace FoodFun.Infrastructure.Data.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Dishes");
+                    b.ToTable("Dishes", (string)null);
                 });
 
             modelBuilder.Entity("FoodFun.Infrastructure.Data.Models.DishCategory", b =>
@@ -88,7 +88,7 @@ namespace FoodFun.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DishesCategories");
+                    b.ToTable("DishesCategories", (string)null);
                 });
 
             modelBuilder.Entity("FoodFun.Infrastructure.Data.Models.Order", b =>
@@ -122,7 +122,7 @@ namespace FoodFun.Infrastructure.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("FoodFun.Infrastructure.Data.Models.OrderDish", b =>
@@ -138,7 +138,7 @@ namespace FoodFun.Infrastructure.Data.Migrations
 
                     b.HasIndex("DishId");
 
-                    b.ToTable("OrdersDishes");
+                    b.ToTable("OrdersDishes", (string)null);
                 });
 
             modelBuilder.Entity("FoodFun.Infrastructure.Data.Models.OrderProduct", b =>
@@ -154,7 +154,7 @@ namespace FoodFun.Infrastructure.Data.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrdersProducts");
+                    b.ToTable("OrdersProducts", (string)null);
                 });
 
             modelBuilder.Entity("FoodFun.Infrastructure.Data.Models.Product", b =>
@@ -187,7 +187,7 @@ namespace FoodFun.Infrastructure.Data.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("FoodFun.Infrastructure.Data.Models.ProductCategory", b =>
@@ -205,7 +205,7 @@ namespace FoodFun.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProductsCategories");
+                    b.ToTable("ProductsCategories", (string)null);
                 });
 
             modelBuilder.Entity("FoodFun.Infrastructure.Data.Models.Reservation", b =>
@@ -238,7 +238,7 @@ namespace FoodFun.Infrastructure.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Reservations");
+                    b.ToTable("Reservations", (string)null);
                 });
 
             modelBuilder.Entity("FoodFun.Infrastructure.Data.Models.ReservationDish", b =>
@@ -254,7 +254,7 @@ namespace FoodFun.Infrastructure.Data.Migrations
 
                     b.HasIndex("DishId");
 
-                    b.ToTable("ReservationsDishes");
+                    b.ToTable("ReservationsDishes", (string)null);
                 });
 
             modelBuilder.Entity("FoodFun.Infrastructure.Data.Models.Table", b =>
@@ -275,7 +275,7 @@ namespace FoodFun.Infrastructure.Data.Migrations
 
                     b.HasIndex("TableSizeId");
 
-                    b.ToTable("Tables");
+                    b.ToTable("Tables", (string)null);
                 });
 
             modelBuilder.Entity("FoodFun.Infrastructure.Data.Models.TablePosition", b =>
@@ -293,7 +293,7 @@ namespace FoodFun.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TablePositions");
+                    b.ToTable("TablePositions", (string)null);
                 });
 
             modelBuilder.Entity("FoodFun.Infrastructure.Data.Models.TableSize", b =>
@@ -309,7 +309,7 @@ namespace FoodFun.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TableSizes");
+                    b.ToTable("TableSizes", (string)null);
                 });
 
             modelBuilder.Entity("FoodFun.Infrastructure.Data.Models.User", b =>
@@ -390,7 +390,7 @@ namespace FoodFun.Infrastructure.Data.Migrations
 
                     b.HasIndex("AddressId");
 
-                    b.ToTable("UsersAddresses");
+                    b.ToTable("UsersAddresses", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

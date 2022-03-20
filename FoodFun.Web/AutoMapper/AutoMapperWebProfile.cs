@@ -1,12 +1,13 @@
 ﻿namespace FoodFun.Web.AutoMapper
 {
     using Areas.Administration.Models;
+    using Areas.Administration.Models.User;
     using Core.Models.Dish;
     using Core.Models.DishCategory;
     using Core.Models.Product;
     using Core.Models.ProductCategory;
-    using Core.Models.User;
     using global::AutoMapper;
+    using Infrastructure.Models;
     using Models.Dish;
     using Models.DishCategory;
     using Models.Product;
@@ -40,7 +41,7 @@
             CreateMap<DishCategoryServiceModel, DishCategoryEditModel>();
             CreateMap<DishCategoryWithDishCountServiceModel, DishCategoryListingModel>();
 
-            CreateMap<UserServiceModel, UserListingModel>();
+            CreateMap<User, UserListingModel>();
         }
     }
 }

@@ -6,7 +6,6 @@
     using Models.DishCategory;
     using Models.Product;
     using Models.ProductCategory;
-    using Models.User;
 
     public class AutoMapperServiceProfile : Profile
     {
@@ -25,8 +24,6 @@
             CreateMap<DishCategory, DishCategoryWithDishCountServiceModel>()
                 .ForMember(x => x.Count, options => options
                     .MapFrom(x => x.Dishes.Count));
-
-            CreateMap<User, UserServiceModel>();
         }
     }
 }

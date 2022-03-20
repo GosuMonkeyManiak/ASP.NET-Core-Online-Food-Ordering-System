@@ -29,7 +29,7 @@ builder
     .Services
     .AddDefaultIdentity<User>(options => 
     { 
-        options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromHours(1); 
+        options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromHours(1);
     })
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<FoodFunDbContext>();
@@ -43,7 +43,10 @@ builder
 
 builder
     .Services
-    .AddControllersWithViews(options => { options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>(); });
+    .AddControllersWithViews(options =>
+    {
+        options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
+    });
 
 builder
     .Services
@@ -91,5 +94,7 @@ app.MapControllerRoute(
 app.MapControllerRoute(
     "default",
     "{controller=Home}/{action=Index}/{id?}");
+
+app.MapRazorPages();
 
 app.Run();

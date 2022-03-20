@@ -60,6 +60,7 @@
         public static class Roles
         {
             public const string Administrator = nameof(Administrator);
+            public const string SupermarketManager = "Supermarket Manager";
             public const string OrderManager = "Order Manager";
             public const string RestaurantManager = "Restaurant Manager";
             public const string Customer = nameof(Customer);
@@ -67,8 +68,8 @@
 
         public static class Areas
         {
-            public const string Products = nameof(Products);
             public const string Administration = nameof(Administration);
+            public const string Supermarket = nameof(Supermarket);
         }
     }
 }

@@ -10,6 +10,7 @@
     using Microsoft.EntityFrameworkCore;
     using Models;
     using Models.User;
+
     using static Constants.GlobalConstants.Roles;
     using static Constants.GlobalConstants.Areas;
 
@@ -19,14 +20,16 @@
     {
         private readonly IMapper mapper;
         private readonly UserManager<User> userManager;
-        private readonly RoleManager<User> roleManager;
+        private readonly RoleManager<IdentityRole> roleManager;
 
         public UserController(
             IMapper mapper, 
-            UserManager<User> userManager)
+            UserManager<User> userManager, 
+            RoleManager<IdentityRole> roleManager)
         {
             this.mapper = mapper;
             this.userManager = userManager;
+            this.roleManager = roleManager;
         }
 
         public async Task<IActionResult> All(UserSearchModel searchModel)
@@ -51,44 +54,40 @@
             });
         }
 
-        //public async Task<IActionResult> Details(string id)
-        //{
+        public async Task<IActionResult> Details(string id)
+        {
+            var user = await this.userManager.FindByIdAsync(id);
 
-        //    //var userWithRoles = await this.userService.GetByIdWithRolesOrDefault(id);
+            if (user == null)
+            {
+                //TODO: add error
+                return RedirectToAction(nameof(All));
+            }
 
-        //    if (userWithRoles == null)
-        //    {
-        //        //TODO: Add alert to all for user not exist
-        //        return RedirectToAction(nameof(All));
-        //    }
+            var allRoles = await this.roleManager.Roles.ToListAsync();
 
-        //    var selectedRoles = new List<SelectListItem>(userWithRoles.Roles.Count());
+            var selectedRoles = new List<SelectListItem>(allRoles.Count);
 
-        //    foreach (var role in userWithRoles.Roles)
-        //    {
-        //        selectedRoles.Add(new()
-        //        {
-        //            Text = role.Title,
-        //            Value = role.Id,
-        //            Selected = true
-        //        });
-        //    }
+            foreach (var role in allRoles)
+            {
+                var selectItem = new SelectListItem()
+                {
+                    Text = role.Name,
+                    Value = role.Id,
+                    Selected = await this.userManager.IsInRoleAsync(user, role.Name)
+                };
 
-        //    var userDetailModel = new UserDetailsModel()
-        //    {
-        //        Id = userWithRoles.Id,
-        //        Username = userWithRoles.Username,
-        //        Roles = selectedRoles
-        //    };
+                selectedRoles.Add(selectItem);
+            }
 
+            var userDetailModel = new UserDetailsModel()
+            {
+                Id = user.Id,
+                Username = user.UserName,
+                Roles = selectedRoles
+            };
 
-        //    return View(userDetailModel);
-        //}
-
-        //[HttpPost]
-        //public IActionResult Details(UserDetailsModel detailsModel)
-        //{
-        //    return null;
-        //}
+            return View(userDetailModel);
+        }
     }
 }

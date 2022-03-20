@@ -23,6 +23,8 @@
         {
             public const string Error = nameof(Error);
 
+            public const string UserNotExist = "User doesn't exist!";
+
             public const string UsernameError = "{0} must be between {2} and {1} characters.";
             public const string PasswordError = "{0} must be with minimum length of {1} characters.";
 

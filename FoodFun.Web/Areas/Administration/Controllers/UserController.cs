@@ -13,6 +13,7 @@
 
     using static Constants.GlobalConstants.Roles;
     using static Constants.GlobalConstants.Areas;
+    using static Constants.GlobalConstants.Messages;
 
     [Area(Administration)]
     [Authorize(Roles = Administrator)]
@@ -60,13 +61,72 @@
 
             if (user == null)
             {
-                //TODO: add error
+                this.TempData.Add(Error, UserNotExist);
+                
                 return RedirectToAction(nameof(All));
             }
 
             var allRoles = await this.roleManager.Roles.ToListAsync();
 
-            var selectedRoles = new List<SelectListItem>(allRoles.Count);
+            var selectListItem = await CreateSelectListItemsForRoles(user, allRoles);
+
+            var userDetailModel = new UserDetailsModel()
+            {
+                Id = user.Id,
+                Username = user.UserName,
+                Roles = selectListItem.ToList()
+            };
+
+            return View(userDetailModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Details(UserDetailsModel detailsModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(detailsModel);
+            }
+
+            var user = await this.userManager.FindByIdAsync(detailsModel.Id);
+
+            if (user == null)
+            {
+                this.TempData[Error] = UserNotExist;
+
+                return RedirectToAction(nameof(All));
+            }
+
+            foreach (var item in detailsModel.Roles)
+            {
+                var role = await this.roleManager.FindByIdAsync(item.Value);
+
+                if (role != null)
+                {
+                    var isInRoleUser = await this.userManager.IsInRoleAsync(user, role.Name);
+
+                    if (item.Selected)
+                    {
+                        if (!isInRoleUser)
+                        {
+                            await this.userManager.AddToRoleAsync(user, role.Name);
+                        }
+                    }
+                    else if (isInRoleUser)
+                    {
+                        await this.userManager.RemoveFromRoleAsync(user, role.Name);
+                    }
+                }
+            }
+
+            return RedirectToAction(nameof(All));
+        }
+
+        public async Task<IEnumerable<SelectListItem>> CreateSelectListItemsForRoles(
+            User user,
+            IEnumerable<IdentityRole> allRoles)
+        {
+            var selectedRoles = new List<SelectListItem>(allRoles.Count());
 
             foreach (var role in allRoles)
             {
@@ -80,14 +140,7 @@
                 selectedRoles.Add(selectItem);
             }
 
-            var userDetailModel = new UserDetailsModel()
-            {
-                Id = user.Id,
-                Username = user.UserName,
-                Roles = selectedRoles
-            };
-
-            return View(userDetailModel);
+            return selectedRoles;
         }
     }
 }

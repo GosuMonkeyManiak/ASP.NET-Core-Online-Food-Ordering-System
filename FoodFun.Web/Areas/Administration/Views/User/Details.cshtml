@@ -12,6 +12,7 @@
             <div class="form-group mb-4">
                 <label asp-for="Username" class="form-label"></label>
                 <input asp-for="Username" class="form-control" value="@Model.Username"/>
+                <span asp-validation-for="Username" class="text-danger"></span>
             </div>
             
             <h3>Roles</h3>

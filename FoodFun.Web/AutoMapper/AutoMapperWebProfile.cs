@@ -1,6 +1,7 @@
 ﻿namespace FoodFun.Web.AutoMapper
 {
     using Areas.Administration.Models;
+    using Areas.Administration.Models.Role;
     using Areas.Administration.Models.User;
     using Core.Models.Dish;
     using Core.Models.DishCategory;
@@ -8,6 +9,7 @@
     using Core.Models.ProductCategory;
     using global::AutoMapper;
     using Infrastructure.Models;
+    using Microsoft.AspNetCore.Identity;
     using Models.Dish;
     using Models.DishCategory;
     using Models.Product;
@@ -42,6 +44,10 @@
             CreateMap<DishCategoryWithDishCountServiceModel, DishCategoryListingModel>();
 
             CreateMap<User, UserListingModel>();
+
+            CreateMap<IdentityRole, RoleListingModel>()
+                .ForMember(x => x.Title, options => options
+                    .MapFrom(x => x.Name));
         }
     }
 }

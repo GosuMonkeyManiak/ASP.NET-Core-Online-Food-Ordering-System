@@ -1,0 +1,31 @@
+﻿@model IEnumerable<RoleListingModel>
+
+@{
+    ViewData[Title] = "All Roles";
+}
+
+<div class="row">
+    <div class="offset-2 col-8">
+       <h1 class="text-center">@ViewData[Title]</h1>
+
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">Title</th>
+                <th scope="col">Operations</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var role in Model)
+            {
+                <tr>
+                    <td>@role.Title</td>
+                    <td>
+                        <a asp-area="Administration" asp-controller="Role" asp-action="Edit" asp-route-id="@role.Id" class="btn btn-warning">Edit</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>

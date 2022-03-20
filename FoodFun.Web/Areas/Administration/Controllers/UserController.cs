@@ -47,6 +47,7 @@
             }
 
             var users = await usersAsQuery
+                .AsNoTracking()
                 .ToListAsync();
 
             return View(new UserSearchModel()
@@ -55,7 +56,7 @@
             });
         }
 
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Edit(string id)
         {
             var user = await this.userManager.FindByIdAsync(id);
 
@@ -66,7 +67,10 @@
                 return RedirectToAction(nameof(All));
             }
 
-            var allRoles = await this.roleManager.Roles.ToListAsync();
+            var allRoles = await this.roleManager
+                .Roles
+                .AsNoTracking()
+                .ToListAsync();
 
             var selectListItem = await CreateSelectListItemsForRoles(user, allRoles);
 
@@ -81,7 +85,7 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> Details(UserDetailsModel detailsModel)
+        public async Task<IActionResult> Edit(UserDetailsModel detailsModel)
         {
             if (!ModelState.IsValid)
             {

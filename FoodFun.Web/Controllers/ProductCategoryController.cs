@@ -6,8 +6,6 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Models.ProductCategory;
-
-    using static Constants.GlobalConstants;
     using static Constants.GlobalConstants.Roles;
     using static Constants.GlobalConstants.Messages;
 

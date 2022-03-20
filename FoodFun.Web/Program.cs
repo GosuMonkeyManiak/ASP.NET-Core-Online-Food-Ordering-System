@@ -27,7 +27,11 @@ builder
 
 builder
     .Services
-    .AddIdentity<User, IdentityRole>(options => { options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromHours(1); })
+    .AddDefaultIdentity<User>(options => 
+    { 
+        options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromHours(1); 
+    })
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<FoodFunDbContext>();
 
 builder
@@ -35,8 +39,6 @@ builder
     .ConfigureApplicationCookie(options =>
     {
         options.ExpireTimeSpan = TimeSpan.FromDays(10);
-        options.LoginPath = "/Identity/Account/Login";
-        options.AccessDeniedPath = "/Identity/Account/AccessDenied";
     });
 
 builder

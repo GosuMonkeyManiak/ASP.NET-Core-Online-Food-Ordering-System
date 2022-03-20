@@ -1,4 +1,4 @@
-﻿namespace FoodFun.Web.Areas.Identity.Models
+﻿namespace FoodFun.Web.Areas.Admin.Models
 {
     using System.ComponentModel.DataAnnotations;
 

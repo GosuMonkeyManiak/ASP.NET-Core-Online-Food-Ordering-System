@@ -1,4 +1,4 @@
-﻿namespace FoodFun.Web.Areas.Identity.Controllers
+﻿namespace FoodFun.Web.Areas.Admin.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
     using FoodFun.Infrastructure.Models;
@@ -8,10 +8,8 @@
 
     using static Constants.GlobalConstants.Redirect;
     using static Constants.GlobalConstants.Roles;
-    using static Constants.GlobalConstants.Areas;
     using static Constants.GlobalConstants.Messages;
 
-    [Area(Identity)]
     public class AccountController : Controller
     {
         private readonly SignInManager<User> signInManger;

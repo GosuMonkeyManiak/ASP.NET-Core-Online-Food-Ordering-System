@@ -54,6 +54,7 @@
             public const string DishCategoryAlreadyExist = "Dish category already exist!";
 
             public const string RoleTitleError = "{0} must be between {2} and {1} characters!";
+            public const string RoleNotExit = "Role doesn't exist!";
         }
 
         public static class Roles

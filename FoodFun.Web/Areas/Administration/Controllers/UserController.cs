@@ -97,7 +97,7 @@
                 return RedirectToAction(nameof(All));
             }
 
-            await AddingToAppropriateRoles(detailsModel, user);
+            await ChangeRolesForUser(detailsModel, user);
 
             return RedirectToAction(nameof(All));
         }
@@ -123,7 +123,7 @@
             return selectedRoles;
         }
 
-        private async Task AddingToAppropriateRoles(
+        private async Task ChangeRolesForUser(
             UserDetailsModel detailsModel,
             User user)
         {

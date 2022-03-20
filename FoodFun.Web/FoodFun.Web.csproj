@@ -28,4 +28,10 @@
     <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Administration\Controllers\" />
+    <Folder Include="Areas\Administration\Models\" />
+    <Folder Include="Areas\Administration\Views\Shared\" />
+  </ItemGroup>
+
 </Project>

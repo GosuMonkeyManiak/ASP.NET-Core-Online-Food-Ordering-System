@@ -97,6 +97,36 @@
                 return RedirectToAction(nameof(All));
             }
 
+            await AddingToAppropriateRoles(detailsModel, user);
+
+            return RedirectToAction(nameof(All));
+        }
+
+        private async Task<IEnumerable<SelectListItem>> CreateSelectListItemsForRoles(
+            User user,
+            IEnumerable<IdentityRole> allRoles)
+        {
+            var selectedRoles = new List<SelectListItem>(allRoles.Count());
+
+            foreach (var role in allRoles)
+            {
+                var selectItem = new SelectListItem()
+                {
+                    Text = role.Name,
+                    Value = role.Id,
+                    Selected = await this.userManager.IsInRoleAsync(user, role.Name)
+                };
+
+                selectedRoles.Add(selectItem);
+            }
+
+            return selectedRoles;
+        }
+
+        private async Task AddingToAppropriateRoles(
+            UserDetailsModel detailsModel,
+            User user)
+        {
             foreach (var item in detailsModel.Roles)
             {
                 var role = await this.roleManager.FindByIdAsync(item.Value);
@@ -118,29 +148,6 @@
                     }
                 }
             }
-
-            return RedirectToAction(nameof(All));
-        }
-
-        public async Task<IEnumerable<SelectListItem>> CreateSelectListItemsForRoles(
-            User user,
-            IEnumerable<IdentityRole> allRoles)
-        {
-            var selectedRoles = new List<SelectListItem>(allRoles.Count());
-
-            foreach (var role in allRoles)
-            {
-                var selectItem = new SelectListItem()
-                {
-                    Text = role.Name,
-                    Value = role.Id,
-                    Selected = await this.userManager.IsInRoleAsync(user, role.Name)
-                };
-
-                selectedRoles.Add(selectItem);
-            }
-
-            return selectedRoles;
         }
     }
 }

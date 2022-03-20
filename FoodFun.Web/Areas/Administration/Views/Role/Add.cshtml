@@ -1,0 +1,26 @@
+﻿@model RoleFormModel
+
+@{
+    ViewData[Title] = "Add Role";
+}
+
+<div class="row">
+    <div class="offset-3 col-5">
+        <h1 class="text-center">@ViewData[Title]</h1>
+        <form method="post">
+            <div class="form-group mb-2">
+                <label asp-for="Title" class="form-label"></label>
+                <input asp-for="Title" class="form-control"/>
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Add</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial"/>
+}

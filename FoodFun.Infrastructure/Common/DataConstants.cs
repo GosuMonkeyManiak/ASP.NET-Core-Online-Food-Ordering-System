@@ -53,5 +53,11 @@
         {
             public const int NameMaxLength = 50;
         }
+
+        public class Role
+        {
+            public const int TitleMinLength = 4;
+            public const int TitleMaxLength = 256;
+        }
     }
 }

@@ -29,8 +29,6 @@
             public const string PasswordError = "{0} must be with minimum length of {1} characters.";
 
             public const string AccountExist = "Account already exist!";
-            public const string AccountLockOut = "Account locked out for one hour.Please try again later.";
-            public const string InvalidCredentials = "Invalid credentials.";
 
             public const string ProductNameError = "{0} of product must be between {2} and {1} characters.";
             public const string UrlError = "{0} is not valid.";
@@ -43,8 +41,7 @@
             public const string ProductAndCategoryNotExist = $"{ProductNotExistBase} or {ProductCategoryNotExistBase}!";
             public const string ProductCategoryAlreadyExist = "Product category already exist!";
             public const string ProductAlreadyExistInCategory = "Product already exists in category!";
-
-            public const string ProductCategoryIdError = "{0} must be between {1} and {2}.";
+            
             public const string CategoryTitleError = "{0} of category must be between {2} and {1} characters.";
 
             public const string DishNameError = "{0} of dish must be between {2} and {1} characters.";
@@ -55,6 +52,8 @@
             public const string DishCategoryNotExist = $"{DishCategoryNotExistBase}!";
             public const string DishAndCategoryNotExit = $"{DishNotExistBase} or {DishCategoryNotExistBase}!";
             public const string DishCategoryAlreadyExist = "Dish category already exist!";
+
+            public const string RoleTitleError = "{0} must be between {2} and {1} characters!";
         }
 
         public static class Roles
@@ -68,7 +67,6 @@
         public static class Areas
         {
             public const string Products = nameof(Products);
-            public const string Identity = nameof(Identity);
             public const string Administration = nameof(Administration);
         }
     }

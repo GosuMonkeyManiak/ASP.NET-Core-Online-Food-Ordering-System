@@ -57,14 +57,16 @@ builder
     .AddScoped<IProductRepository, ProductRepository>()
     .AddScoped<IProductCategoryRepository, ProductCategoryRepository>()
     .AddScoped<IDishRepository, DishRepository>()
-    .AddScoped<IDishCategoryRepository, DishCategoryRepository>();
+    .AddScoped<IDishCategoryRepository, DishCategoryRepository>()
+    .AddScoped<IUserRepository, UserRepository>();
 
 builder
     .Services
     .AddTransient<IProductService, ProductService>()
     .AddTransient<IProductCategoryService, ProductCategoryService>()
     .AddTransient<IDishService, DishService>()
-    .AddTransient<IDishCategoryService, DishCategoryService>();
+    .AddTransient<IDishCategoryService, DishCategoryService>()
+    .AddTransient<IUserService, UserService>();
 
 var app = builder.Build();
 

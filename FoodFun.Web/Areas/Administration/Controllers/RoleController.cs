@@ -94,5 +94,21 @@
 
             return RedirectToAction(nameof(All));
         }
+
+        public async Task<IActionResult> Delete(string id)
+        {
+            var role = await this.roleManager.FindByIdAsync(id);
+
+            if (role == null)
+            {
+                this.TempData[Error] = RoleNotExit;
+
+                return RedirectToAction(nameof(All));
+            }
+
+            await this.roleManager.DeleteAsync(role);
+
+            return RedirectToAction(nameof(All));
+        }
     }
 }

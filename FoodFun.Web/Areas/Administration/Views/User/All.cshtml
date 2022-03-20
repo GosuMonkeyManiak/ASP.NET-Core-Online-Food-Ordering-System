@@ -4,12 +4,7 @@
     ViewData[Title] = "All Users";
 }
 
-@if (TempData[Error] != null)
-{
-    <div class="alert alert-danger" role="alert">
-        @TempData[Error]
-    </div>
-}
+<partial name="_ErrorMessagePartial"/>
 
 <div class="row">
     <div class="offset-2 col-8">

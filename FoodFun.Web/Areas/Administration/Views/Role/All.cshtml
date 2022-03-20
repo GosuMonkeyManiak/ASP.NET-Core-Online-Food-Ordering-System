@@ -4,12 +4,7 @@
     ViewData[Title] = "All Roles";
 }
 
-@if (TempData[Error] != null)
-{
-    <div class="alert alert-danger" role="alert">
-        @TempData[Error]
-    </div>
-}
+<partial name="_ErrorMessagePartial"/>
 
 <div class="row">
     <div class="offset-2 col-8">
@@ -29,6 +24,7 @@
                     <td>@role.Title</td>
                     <td>
                         <a asp-area="Administration" asp-controller="Role" asp-action="Edit" asp-route-id="@role.Id" class="btn btn-warning">Edit</a>
+                        <a asp-area="Administration" asp-controller="Role" asp-action="Delete" asp-route-id="@role.Id" class="btn btn-danger">Delete</a>
                     </td>
                 </tr>
             }

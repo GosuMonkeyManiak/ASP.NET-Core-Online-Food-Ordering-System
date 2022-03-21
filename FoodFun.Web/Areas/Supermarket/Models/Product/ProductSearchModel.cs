@@ -1,4 +1,4 @@
-﻿namespace FoodFun.Web.Models.Product
+﻿namespace FoodFun.Web.Areas.Supermarket.Models.Product
 {
     using System.ComponentModel.DataAnnotations;
     using Microsoft.AspNetCore.Mvc.ModelBinding;

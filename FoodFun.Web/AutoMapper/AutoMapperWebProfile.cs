@@ -2,7 +2,8 @@
 {
     using Areas.Administration.Models;
     using Areas.Administration.Models.Role;
-    using Areas.Administration.Models.User;
+    using Areas.Supermarket.Models.Product;
+    using Areas.Supermarket.Models.ProductCategory;
     using Core.Models.Dish;
     using Core.Models.DishCategory;
     using Core.Models.Product;
@@ -12,8 +13,6 @@
     using Microsoft.AspNetCore.Identity;
     using Models.Dish;
     using Models.DishCategory;
-    using Models.Product;
-    using Models.ProductCategory;
 
     public class AutoMapperWebProfile : Profile
     {

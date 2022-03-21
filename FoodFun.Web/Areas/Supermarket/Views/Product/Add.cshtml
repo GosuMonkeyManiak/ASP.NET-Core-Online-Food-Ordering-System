@@ -1,28 +1,28 @@
-﻿@model ProductEditModel
+﻿@model ProductFormModel
 
 @{
-    ViewData[Title] = "Edit";
+    ViewData[Title] = "Add Product";
 }
+
+<partial name="_ErrorMessagePartial"/>
 
 <div class="row">
     <div class="offset-xl-3 col-xl-6">
         <h1 class="text-center">@ViewData[Title]</h1>
 
         <form method="post">
-            <input asp-for="Id" type="hidden" value="@Model.Id"/>
-            
             <div class="text-center">
                 <img class="rounded img-fluid" id="image"/>
             </div>
 
             <div class="form-group mb-3">
                 <label asp-for="Name" class="mb-1"></label>
-                <input asp-for="Name" class="form-control" value="@Model.Name">
+                <input asp-for="Name" class="form-control" placeholder="Bananas">
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group mb-3">
                 <label asp-for="ImageUrl" class="mb-1"></label>
-                <input asp-for="ImageUrl" class="form-control" value="@Model.ImageUrl" id="imageInput">
+                <input asp-for="ImageUrl" class="form-control" placeholder="https://..." id="imageInput">
                 <span asp-validation-for="ImageUrl" class="text-danger"></span>
             </div>
             <div class="form-group mb-3">
@@ -30,11 +30,6 @@
                 <select asp-for="CategoryId" class="form-control">
                     @foreach (var category in Model.Categories)
                     {
-                        @if (category.Id == Model.CategoryId)
-                        {
-                            <option value="@category.Id" selected>@category.Title</option>
-                            continue;
-                        }
                         <partial name="_ProductCategoryPartial" model="category"/>
                     }
                 </select>
@@ -42,17 +37,17 @@
             </div>
             <div class="form-group mb-3">
                 <label asp-for="Price" class="mb-1"></label>
-                <input asp-for="Price" class="form-control" value="@Model.Price">
+                <input asp-for="Price" class="form-control" placeholder="8.99">
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
             <div class="form-group mb-3">
                 <label asp-for="Description" class="mb-1"></label>
-                <textarea asp-for="Description" class="form-control" rows="3">@Model.Description</textarea>
+                <textarea asp-for="Description" class="form-control" rows="3" placeholder="Best product ever..."></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
 
             <div class="text-center">
-                <button type="submit" class="btn btn-warning">Edit</button>
+                <button type="submit" class="btn btn-primary">Add</button>
             </div>
         </form>
     </div>

@@ -1,4 +1,4 @@
-﻿namespace FoodFun.Web.Models.ProductCategory
+﻿namespace FoodFun.Web.Areas.Supermarket.Models.ProductCategory
 {
     public class ProductCategoryListingModel
     {

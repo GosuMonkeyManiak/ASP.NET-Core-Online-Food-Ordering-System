@@ -1,15 +1,22 @@
-﻿namespace FoodFun.Web.Models.Product
+﻿namespace FoodFun.Web.Areas.Supermarket.Models.Product
 {
+    using System.ComponentModel.DataAnnotations;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
     using ProductCategory;
-    using System.ComponentModel.DataAnnotations;
 
+    using static Constants.GlobalConstants;
     using static Constants.GlobalConstants.Messages;
     using static Infrastructure.Common.DataConstants;
     using static Infrastructure.Common.DataConstants.Product;
 
-    public class ProductFormModel
+    public class ProductEditModel
     {
+        [Required]
+        [StringLength(
+            DefaultIdLength, 
+            MinimumLength = DefaultIdLength)]
+        public string Id { get; init; }
+
         [Required]
         [StringLength(
             NameMaxLength,
@@ -29,12 +36,12 @@
         public int CategoryId { get; init; }
 
         [Range(
-            typeof(decimal), 
-            PriceMinLength, 
+            typeof(decimal),
+            PriceMinLength,
             PriceMaxLength,
             ErrorMessage = ProductPriceError)]
         public decimal Price { get; init; }
-        
+
         [Required]
         [MinLength(
             DescriptionMinLength,

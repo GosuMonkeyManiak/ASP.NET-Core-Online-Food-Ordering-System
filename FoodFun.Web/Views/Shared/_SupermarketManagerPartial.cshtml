@@ -1,0 +1,5 @@
+﻿@if (this.User.IsInRole(SupermarketManager))
+{
+    <li><a class="dropdown-item" asp-area="Supermarket" asp-controller="Home" asp-action="Index" >To Supermarket</a></li>
+    <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Index" >To Web site</a></li>
+}

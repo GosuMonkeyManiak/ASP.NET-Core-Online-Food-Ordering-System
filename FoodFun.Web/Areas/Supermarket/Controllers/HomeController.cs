@@ -2,13 +2,8 @@
 {
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-
-    using static Constants.GlobalConstants.Areas;
-    using static Constants.GlobalConstants.Roles;
-
-    [Area(Supermarket)]
-    [Authorize(Roles = SupermarketManager)]
-    public class HomeController : Controller
+    
+    public class HomeController : SupermarketBaseController
     {
         public IActionResult Index() 
             => View();

@@ -1,25 +1,23 @@
-﻿namespace FoodFun.Web.Controllers
+﻿namespace FoodFun.Web.Areas.Supermarket.Controllers
 {
     using Core.Contracts;
     using Core.Extensions;
     using global::AutoMapper;
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Models.Product;
     using Models.ProductCategory;
 
     using static Constants.GlobalConstants;
-    using static Constants.GlobalConstants.Roles;
     using static Constants.GlobalConstants.Messages;
 
-    public class ProductController : Controller
+    public class ProductController : SupermarketBaseController
     {
         private readonly IProductService productService;
         private readonly IProductCategoryService productCategoryService;
         private readonly IMapper mapper;
 
         public ProductController(
-            IProductService productService, 
+            IProductService productService,
             IProductCategoryService productCategoryService,
             IMapper mapper)
         {
@@ -27,15 +25,13 @@
             this.productCategoryService = productCategoryService;
             this.mapper = mapper;
         }
-
-        [Authorize(Roles = Administrator)]
+        
         public async Task<IActionResult> Add()
             => View(new ProductFormModel()
             {
                 Categories = await GetProductCategories()
             });
 
-        [Authorize(Roles = Administrator)]
         [HttpPost]
         public async Task<IActionResult> Add(ProductFormModel formModel)
         {
@@ -45,7 +41,7 @@
 
                 return View(formModel);
             }
-             
+
             var (isCategoryExist,
                 isProductExist) = await this.productService
                 .AddProduct(
@@ -56,7 +52,7 @@
                     formModel.Description);
 
             if (!isCategoryExist)
-            { 
+            {
                 this.ModelState.AddModelError(CategoryId, ProductCategoryNotExist);
 
                 formModel.Categories = await GetProductCategories();
@@ -76,7 +72,6 @@
             return RedirectToAction(nameof(All));
         }
 
-        [Authorize(Roles = $"{Administrator}, {Customer}")]
         public async Task<IActionResult> All([FromQuery] ProductSearchModel searchModel)
         {
             var (productsWithCategories,
@@ -104,11 +99,10 @@
             return View(productSearchModel);
         }
 
-        [Authorize(Roles = Administrator)]
-        public async Task<IActionResult> Edit(string productId)
+        public async Task<IActionResult> Edit(string id)
         {
             var productServiceModel = await this.productService
-                .GetByIdOrDefault(productId);
+                .GetByIdOrDefault(id);
 
             if (productServiceModel == null)
             {
@@ -123,8 +117,7 @@
 
             return View(productEditModel);
         }
-
-        [Authorize(Roles = Administrator)]
+        
         [HttpPost]
         public async Task<IActionResult> Edit(ProductEditModel editModel)
         {

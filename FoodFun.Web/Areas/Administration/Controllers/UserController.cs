@@ -3,16 +3,15 @@
     using Core.Extensions;
     using global::AutoMapper;
     using Infrastructure.Models;
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.EntityFrameworkCore;
     using Models;
     using Models.User;
-   
+
     using static Constants.GlobalConstants.Messages;
-    
+
     public class UserController : AdminBaseController
     {
         private readonly IMapper mapper;

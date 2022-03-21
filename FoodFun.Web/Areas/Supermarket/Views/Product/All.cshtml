@@ -1,15 +1,10 @@
 ﻿@model ProductSearchModel
 
 @{
-    ViewData[Title] = "All";
+    ViewData[Title] = "All Products";
 }
 
-@if (TempData[Error] != null)
-{
-    <div class="alert alert-danger" role="alert">
-        @TempData[Error]
-    </div>
-}
+<partial name="_ErrorMessagePartial"/>
 
 <div class="row mb-4">
     <div class="offset-3 col-6">
@@ -71,7 +66,8 @@
                     <h5 class="card-title">@product.Name - (@product.CategoryTitle)</h5>
                     <p class="card-text">@product.Price $</p>
                     <p class="card-text">@product.Description</p>
-                    <partial name="_PermissionsByRolesForAllProductsPartial" model="@product.Id"/>
+                    <a class="btn btn-warning" asp-area="Supermarket" asp-controller="Product" asp-action="Edit" asp-route-id="@Model">Edit</a>
+                    <a class="btn btn-danger">Delete</a>
                 </div>
             </div>
         </div>

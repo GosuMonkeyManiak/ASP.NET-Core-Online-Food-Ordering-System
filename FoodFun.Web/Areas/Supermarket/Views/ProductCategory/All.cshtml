@@ -1,15 +1,10 @@
 ﻿@model IEnumerable<ProductCategoryListingModel>
 
 @{
-    ViewData[Title] = "All Categories for product";
+    ViewData[Title] = "All Categories";
 }
 
-@if (TempData[Error] != null)
-{
-    <div class="alert alert-danger" role="alert">
-        @TempData[Error]
-    </div>
-}
+<partial name="_ErrorMessagePartial"/>
 
 <div class="row">
     <div class="offset-3 col-5">
@@ -28,7 +23,7 @@
                         <td>@category.Title</td>
                         <td>@category.ProductsCount</td>
                         <td>
-                            <a asp-area="" asp-controller="ProductCategory" asp-action="Edit" asp-route-productCategoryId="@category.Id" class="btn btn-warning">Edit</a> |
+                            <a asp-area="Supermarket" asp-controller="ProductCategory" asp-action="Edit" asp-route-id="@category.Id" class="btn btn-warning">Edit</a> |
                             <a>Disable</a>
                         </td>
                     </tr>

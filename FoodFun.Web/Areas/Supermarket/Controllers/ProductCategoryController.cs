@@ -1,22 +1,20 @@
-﻿namespace FoodFun.Web.Controllers
+﻿namespace FoodFun.Web.Areas.Supermarket.Controllers
 {
     using Core.Contracts;
     using Core.Extensions;
     using global::AutoMapper;
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Models.ProductCategory;
-    using static Constants.GlobalConstants.Roles;
+
     using static Constants.GlobalConstants.Messages;
 
-    [Authorize(Roles = Administrator)]
-    public class ProductCategoryController : Controller
+    public class ProductCategoryController : SupermarketBaseController
     {
         private readonly IProductCategoryService productCategoryService;
         private readonly IMapper mapper;
 
         public ProductCategoryController(
-            IProductCategoryService productCategoryService, 
+            IProductCategoryService productCategoryService,
             IMapper mapper)
         {
             this.productCategoryService = productCategoryService;
@@ -55,10 +53,10 @@
                 .ProjectTo<ProductCategoryListingModel>(this.mapper));
         }
 
-        public async Task<IActionResult> Edit(int productCategoryId)
+        public async Task<IActionResult> Edit(int id)
         {
             var productCategoryServiceModel = await this.productCategoryService
-                .GetByIdOrDefault(productCategoryId);
+                .GetByIdOrDefault(id);
 
             if (productCategoryServiceModel == null)
             {

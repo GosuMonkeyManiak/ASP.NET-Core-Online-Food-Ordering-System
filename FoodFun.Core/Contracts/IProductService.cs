@@ -9,7 +9,8 @@
             string imageUrl,
             int categoryId,
             decimal price,
-            string description);
+            string description,
+            long quantity);
 
         Task<Tuple<IEnumerable<ProductServiceModel>, int, int, int>> All(
             string searchTerm, 

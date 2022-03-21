@@ -49,7 +49,8 @@
                     formModel.ImageUrl,
                     formModel.CategoryId,
                     formModel.Price,
-                    formModel.Description);
+                    formModel.Description,
+                    formModel.Quantity);
 
             if (!isCategoryExist)
             {
@@ -70,7 +71,7 @@
 
         public async Task<IActionResult> All([FromQuery] ProductSearchModel searchModel)
         {
-            var (productsWithCategories,
+            var (filteredProducts,
                 currentPageNumber,
                 lastPageNumber,
                 selectedCategoryId) = await this.productService
@@ -80,15 +81,14 @@
                     searchModel.OrderNumber,
                     searchModel.CurrentPageNumber);
 
-            var categoriesForProduct = await this.productCategoryService
-                .All();
+            var categoriesForProduct = await GetProductCategories();
 
             var productSearchModel = new ProductSearchModel()
             {
                 CurrentPageNumber = currentPageNumber,
                 LastPageNumber = lastPageNumber,
                 SelectedCategoryId = selectedCategoryId,
-                Products = productsWithCategories.ProjectTo<ProductListingModel>(this.mapper),
+                Products = filteredProducts.ProjectTo<ProductListingModel>(this.mapper),
                 Categories = categoriesForProduct.ProjectTo<ProductCategoryModel>(this.mapper)
             };
 
@@ -174,7 +174,8 @@
 
         private async Task<IEnumerable<ProductCategoryModel>> GetProductCategories()
         {
-            var categoriesForProduct = await this.productCategoryService.All();
+            var categoriesForProduct = await this.productCategoryService.
+                AllNotDisabled();
 
             return categoriesForProduct.ProjectTo<ProductCategoryModel>(this.mapper);
         }

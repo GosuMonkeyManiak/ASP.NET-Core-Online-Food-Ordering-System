@@ -31,9 +31,15 @@
             string imageUrl, 
             int categoryId, 
             decimal price, 
-            string description)
+            string description,
+            long quantity)
         {
             if (!await this.productCategoryService.IsCategoryExist(categoryId))
+            {
+                return new(false, false);
+            }
+
+            if (!await this.productCategoryService.IsCategoryActive(categoryId))
             {
                 return new(false, false);
             }
@@ -49,7 +55,8 @@
                 ImageUrl = imageUrl,
                 CategoryId = categoryId,
                 Price = price,
-                Description = description
+                Description = description,
+                Quantity = quantity
             };
 
             await this.productRepository
@@ -97,6 +104,11 @@
             var product = await this.productRepository
                 .GetProductWithCategoryById(id);
 
+            if (product.Category.IsDisable)
+            {
+                return null;
+            }
+
             return this.mapper.Map<ProductServiceModel>(product);
         }
 
@@ -109,6 +121,11 @@
             string description)
         {
             if (!await this.productCategoryService.IsCategoryExist(categoryId))
+            {
+                return new(false, false, false);
+            }
+
+            if (!await this.productCategoryService.IsCategoryActive(categoryId))
             {
                 return new(false, false, false);
             }
@@ -176,7 +193,8 @@
                 searchTermResult = searchTerm;
             }
 
-            if (await this.productCategoryService.IsCategoryExist(categoryFilterId))
+            if (await this.productCategoryService.IsCategoryExist(categoryFilterId)
+                && await this.productCategoryService.IsCategoryActive(categoryFilterId))
             {
                 categoryFilterIdResult = categoryFilterId;
             }

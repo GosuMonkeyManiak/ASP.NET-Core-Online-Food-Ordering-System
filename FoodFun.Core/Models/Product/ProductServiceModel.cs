@@ -15,5 +15,7 @@
         public decimal Price { get; init; }
 
         public string Description { get; init; }
+
+        public long Quantity { get; init; }
     }
 }

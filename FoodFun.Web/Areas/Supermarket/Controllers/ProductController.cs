@@ -133,7 +133,8 @@
                     editModel.ImageUrl,
                     editModel.CategoryId,
                     editModel.Price,
-                    editModel.Description);
+                    editModel.Description,
+                    editModel.Quantity);
 
             if (!isCategoryExist)
             {

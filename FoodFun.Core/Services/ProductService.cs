@@ -118,7 +118,8 @@
             string imageUrl, 
             int categoryId,
             decimal price, 
-            string description)
+            string description,
+            long quantity)
         {
             if (!await this.productCategoryService.IsCategoryExist(categoryId))
             {
@@ -147,7 +148,8 @@
                 ImageUrl = imageUrl,
                 CategoryId = categoryId,
                 Price = price,
-                Description = description
+                Description = description,
+                Quantity = quantity
             };
 
             this.productRepository.Update(product);

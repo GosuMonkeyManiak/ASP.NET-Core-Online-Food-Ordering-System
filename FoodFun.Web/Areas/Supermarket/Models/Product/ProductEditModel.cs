@@ -48,6 +48,12 @@
             ErrorMessage = DescriptionError)]
         public string Description { get; init; }
 
+        [Range(
+            QuantityMinLength,
+            long.MaxValue,
+            ErrorMessage = ProductQuantityError)]
+        public long Quantity { get; init; }
+
         [BindNever]
         public IEnumerable<ProductCategoryModel> Categories { get; set; } = new List<ProductCategoryModel>();
     }

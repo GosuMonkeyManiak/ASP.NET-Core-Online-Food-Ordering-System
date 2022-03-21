@@ -26,7 +26,8 @@
             string imageUrl,
             int categoryId,
             decimal price,
-            string description);
+            string description,
+            long quantity);
 
         Task<bool> Delete(string id);
     }

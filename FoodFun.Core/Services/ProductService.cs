@@ -6,6 +6,7 @@
     using Infrastructure.Common;
     using Infrastructure.Common.Contracts;
     using Infrastructure.Models;
+    using Microsoft.EntityFrameworkCore.Storage;
     using Models.Product;
 
     public class ProductService : IProductService
@@ -100,7 +101,7 @@
             return this.mapper.Map<ProductServiceModel>(product);
         }
 
-        public async Task<bool> Update(
+        public async Task<Tuple<bool, bool, bool>> Update(
             string id, 
             string name, 
             string imageUrl, 
@@ -108,10 +109,19 @@
             decimal price, 
             string description)
         {
-            if (!await this.productCategoryService.IsCategoryExist(categoryId)
-                || !await IsProductExist(id))
+            if (!await this.productCategoryService.IsCategoryExist(categoryId))
             {
-                return false;
+                return new(false, false, false);
+            }
+
+            if (!await IsProductExist(id))
+            {
+                return new(true, false, false);
+            }
+
+            if (await this.productCategoryService.IsProductInCategory(categoryId, name))
+            {
+                return new(true, true, true);
             }
 
             var product = new Product()
@@ -128,7 +138,7 @@
 
             await this.productRepository.SaveChangesAsync();
 
-            return true;
+            return new(true, true, false);
         }
 
         private async Task<bool> IsProductExist(string productId)

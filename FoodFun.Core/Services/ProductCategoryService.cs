@@ -72,11 +72,19 @@
             return this.mapper.Map<ProductCategoryServiceModel>(productCategory);
         }
 
-        public async Task<bool> Update(int categoryId, string title)
+        public async Task<Tuple<bool, bool>> Update(int categoryId, string title)
         {
             if (!await IsCategoryExist(categoryId))
             {
-                return false;
+                return new(false, false);
+            }
+
+            var isCategoryExistWithThatTitle = await this.productCategoryRepository
+                .FindOrDefaultAsync(x => x.Title == title) != null;
+
+            if (isCategoryExistWithThatTitle)
+            {
+                return new(true, true);
             }
 
             var productCategory = new ProductCategory()
@@ -89,7 +97,13 @@
 
             await this.productCategoryRepository.SaveChangesAsync();
 
-            return true;
+            return new(true, false);
         }
+
+        public async Task<bool> IsProductInCategory(int categoryId, string productName)
+            => (await this.productCategoryRepository
+                    .GetCategoryWithProductsById(categoryId))
+                .Products
+                .Any(x => x.Name == productName);
     }
 }

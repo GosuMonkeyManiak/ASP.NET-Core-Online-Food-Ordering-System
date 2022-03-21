@@ -63,10 +63,6 @@
             if (isProductExist)
             {
                 this.TempData[Error] = ProductAlreadyExistInCategory;
-
-                formModel.Categories = await GetProductCategories();
-
-                return View(formModel);
             }
 
             return RedirectToAction(nameof(All));
@@ -128,7 +124,9 @@
                 return View(editModel);
             }
 
-            var isSucceed = await this.productService
+            var (isCategoryExist,
+                isProductExist,
+                isProductExistInCategoryAlready) = await this.productService
                 .Update(
                     editModel.Id,
                     editModel.Name,
@@ -137,9 +135,25 @@
                     editModel.Price,
                     editModel.Description);
 
-            if (!isSucceed)
+            if (!isCategoryExist)
             {
-                this.TempData[Error] = ProductAndCategoryNotExist;
+                this.ModelState.AddModelError(CategoryId, ProductCategoryNotExist);
+
+                editModel.Categories = await GetProductCategories();
+
+                return View(editModel);
+            }
+
+            if (!isProductExist)
+            {
+                this.TempData[Error] = ProductNotExist;
+
+               return RedirectToAction(nameof(All));
+            }
+
+            if (isProductExistInCategoryAlready)
+            {
+                this.TempData[Error] = ProductAlreadyExistInCategory;
             }
 
             return RedirectToAction(nameof(All));

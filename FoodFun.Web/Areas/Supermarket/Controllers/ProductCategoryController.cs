@@ -37,8 +37,6 @@
             if (!isSucceed)
             {
                 this.TempData[Error] = ProductCategoryAlreadyExist;
-
-                return View();
             }
 
             return RedirectToAction(nameof(All));
@@ -60,7 +58,7 @@
 
             if (productCategoryServiceModel == null)
             {
-                TempData[Error] = ProductCategoryNotExist;
+                this.TempData[Error] = ProductCategoryNotExist;
 
                 return RedirectToAction(nameof(All));
             }
@@ -76,14 +74,22 @@
                 return View(productCategoryModel);
             }
 
-            var isSucceed = await this.productCategoryService
+            var (isCategoryExist,
+                isHaveCategoryWithThatTitle) = await this.productCategoryService
                 .Update(
                     productCategoryModel.Id,
                     productCategoryModel.Title);
 
-            if (!isSucceed)
+            if (!isCategoryExist)
             {
-                TempData[Error] = ProductCategoryNotExist;
+                this.TempData[Error] = ProductCategoryNotExist;
+
+                return RedirectToAction(nameof(All));
+            }
+
+            if (isHaveCategoryWithThatTitle)
+            {
+                this.TempData[Error] = ProductCategoryWithThatTitleAlreadyExist;
             }
 
             return RedirectToAction(nameof(All));

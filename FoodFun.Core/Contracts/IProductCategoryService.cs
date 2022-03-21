@@ -14,8 +14,12 @@
 
         Task<ProductCategoryServiceModel> GetByIdOrDefault(int id);
 
-        Task<bool> Update(
+        Task<Tuple<bool, bool>> Update(
             int categoryId,
             string title);
+
+        Task<bool> IsProductInCategory(
+            int categoryId, 
+            string productName);
     }
 }

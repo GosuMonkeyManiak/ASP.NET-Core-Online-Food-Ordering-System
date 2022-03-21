@@ -19,7 +19,7 @@
 
         Task<ProductServiceModel> GetByIdOrDefault(string id);
 
-        Task<bool> Update(
+        Task<Tuple<bool, bool, bool>> Update(
             string id,
             string name,
             string imageUrl,

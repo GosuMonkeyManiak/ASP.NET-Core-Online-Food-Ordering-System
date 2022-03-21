@@ -15,5 +15,11 @@
             => await this.DbSet
                 .Include(c => c.Products)
                 .ToListAsync();
+
+        public async Task<ProductCategory> GetCategoryWithProductsById(int id)
+            => await this.DbSet
+                .Include(x => x.Products)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.Id == id);
     }
 }

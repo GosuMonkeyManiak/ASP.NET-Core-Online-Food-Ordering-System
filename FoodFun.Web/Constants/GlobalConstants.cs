@@ -41,6 +41,9 @@
             public const string ProductAndCategoryNotExist = $"{ProductNotExistBase} or {ProductCategoryNotExistBase}!";
             public const string ProductCategoryAlreadyExist = "Product category already exist!";
             public const string ProductAlreadyExistInCategory = "Product already exists in category!";
+
+            public const string ProductCategoryWithThatTitleAlreadyExist =
+                "Product category with that title already exist!";
             
             public const string CategoryTitleError = "{0} of category must be between {2} and {1} characters.";
 

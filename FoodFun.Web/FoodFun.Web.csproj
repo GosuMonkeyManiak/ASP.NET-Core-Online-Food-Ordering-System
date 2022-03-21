@@ -32,7 +32,6 @@
     <Folder Include="Areas\Order\Controllers\" />
     <Folder Include="Areas\Order\Models\" />
     <Folder Include="Areas\Order\Views\" />
-    <Folder Include="Areas\Supermarket\Models\Home\" />
   </ItemGroup>
 
 </Project>

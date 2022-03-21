@@ -1,26 +1,23 @@
-﻿namespace FoodFun.Web.Controllers
+﻿namespace FoodFun.Web.Areas.Restaurant.Controllers
 {
     using Core.Contracts;
     using Core.Extensions;
     using global::AutoMapper;
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Models.Dish;
     using Models.DishCategory;
 
     using static Constants.GlobalConstants;
     using static Constants.GlobalConstants.Messages;
-    using static Constants.GlobalConstants.Redirect;
-    using static Constants.GlobalConstants.Roles;
 
-    public class DishController : Controller
+    public class DishController : RestaurantBaseController
     {
         private readonly IDishService dishService;
         private readonly IDishCategoryService dishCategoryService;
         private readonly IMapper mapper;
 
         public DishController(
-            IDishService dishService, 
+            IDishService dishService,
             IDishCategoryService dishCategoryService,
             IMapper mapper)
         {
@@ -28,8 +25,7 @@
             this.dishCategoryService = dishCategoryService;
             this.mapper = mapper;
         }
-
-        [Authorize(Roles = Administrator)]
+        
         public async Task<IActionResult> Add()
             => View(new DishFormModel()
             {
@@ -37,7 +33,6 @@
             });
 
         [HttpPost]
-        [Authorize(Roles = Administrator)]
         public async Task<IActionResult> Add(DishFormModel formModel)
         {
             if (!this.ModelState.IsValid)
@@ -74,10 +69,9 @@
                 return View(formModel);
             }
 
-            return Redirect(HomeIndexUrl);
+            return RedirectToAction(nameof(All));
         }
-
-        [Authorize(Roles = $"{Administrator}, {Customer}")]
+        
         public async Task<IActionResult> All()
         {
             var dishesWithCategoriesFromService = await this.dishService
@@ -85,17 +79,16 @@
 
             return View(dishesWithCategoriesFromService.ProjectTo<DishListingModel>(this.mapper));
         }
-
-        [Authorize(Roles = Administrator)]
-        public async Task<IActionResult> Edit(string dishId)
+        
+        public async Task<IActionResult> Edit(string id)
         {
             var dishWithCategory = await this.dishService
-                .GetByIdOrDefault(dishId);
+                .GetByIdOrDefault(id);
 
             if (dishWithCategory == null)
             {
                 this.TempData[Error] = DishNotExit;
-                
+
                 return RedirectToAction(nameof(All));
             }
 
@@ -105,7 +98,6 @@
             return View(dishEditModel);
         }
 
-        [Authorize(Roles = Administrator)]
         [HttpPost]
         public async Task<IActionResult> Edit(DishEditModel editModel)
         {

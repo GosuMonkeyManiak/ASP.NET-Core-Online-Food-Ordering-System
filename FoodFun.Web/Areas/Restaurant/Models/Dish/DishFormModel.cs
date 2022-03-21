@@ -1,4 +1,4 @@
-﻿namespace FoodFun.Web.Models.Dish
+﻿namespace FoodFun.Web.Areas.Restaurant.Models.Dish
 {
     using System.ComponentModel.DataAnnotations;
     using DishCategory;

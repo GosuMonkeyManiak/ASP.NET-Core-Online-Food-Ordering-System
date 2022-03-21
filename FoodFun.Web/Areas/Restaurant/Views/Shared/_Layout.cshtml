@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData[Title] - Food Fun Administration</title>
+    <title>@ViewData[Title] - Food Fun Restaurant</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
@@ -12,7 +12,7 @@
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
 
-                <a class="navbar-brand" asp-area="Administration" asp-controller="Home" asp-action="Index">Food Fun Administration</a>
+                <a class="navbar-brand" asp-area="Restaurant" asp-controller="Home" asp-action="Index">Food Fun Restaurant</a>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -25,19 +25,20 @@
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarWhiteDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Users
+                                Dishes
                             </a>
                             <ul class="dropdown-menu dropdown-menu-white" aria-labelledby="navbarWhiteDropdownMenuLink">
-                                <li><a class="dropdown-item" asp-area="Administration" asp-controller="User" asp-action="All">All</a></li>
+                                <li><a class="dropdown-item" asp-area="Restaurant" asp-controller="Dish" asp-action="Add">Add</a></li>
+                                <li><a class="dropdown-item" asp-area="Restaurant" asp-controller="Dish" asp-action="All">All</a></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarWhiteDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Roles
+                                Dish Categories
                             </a>
                             <ul class="dropdown-menu dropdown-menu-white" aria-labelledby="navbarWhiteDropdownMenuLink">
-                                <li><a class="dropdown-item" asp-area="Administration" asp-controller="Role" asp-action="Add">Add</a></li>
-                                <li><a class="dropdown-item" asp-area="Administration" asp-controller="Role" asp-action="All">All</a></li>
+                                <li><a class="dropdown-item" asp-area="Restaurant" asp-controller="DishCategory" asp-action="Add">Add</a></li>
+                                <li><a class="dropdown-item" asp-area="Restaurant" asp-controller="DishCategory" asp-action="All">All</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -55,11 +56,12 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; @DateTime.UtcNow.Year - Food Fun Administration
+            &copy; @DateTime.UtcNow.Year - Food Fun Restaurant
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="https://kit.fontawesome.com/be25d551c7.js" crossorigin="anonymous"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

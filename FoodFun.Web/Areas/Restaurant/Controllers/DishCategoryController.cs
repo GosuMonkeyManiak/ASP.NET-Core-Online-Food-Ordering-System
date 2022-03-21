@@ -1,17 +1,14 @@
-﻿namespace FoodFun.Web.Controllers
+﻿namespace FoodFun.Web.Areas.Restaurant.Controllers
 {
     using Core.Contracts;
     using Core.Extensions;
     using global::AutoMapper;
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Models.DishCategory;
-    
-    using static Constants.GlobalConstants.Roles;
+
     using static Constants.GlobalConstants.Messages;
 
-    [Authorize(Roles = Administrator)]
-    public class DishCategoryController : Controller
+    public class DishCategoryController : RestaurantBaseController
     {
         private readonly IDishCategoryService dishCategoryService;
         private readonly IMapper mapper;
@@ -56,10 +53,10 @@
             return View(categoriesWithDishCount.ProjectTo<DishCategoryListingModel>(this.mapper));
         }
 
-        public async Task<IActionResult> Edit(int dishCategoryId)
+        public async Task<IActionResult> Edit(int id)
         {
             var dishCategory = await this.dishCategoryService
-                .GetByIdOrDefault(dishCategoryId);
+                .GetByIdOrDefault(id);
 
             if (dishCategory == null)
             {

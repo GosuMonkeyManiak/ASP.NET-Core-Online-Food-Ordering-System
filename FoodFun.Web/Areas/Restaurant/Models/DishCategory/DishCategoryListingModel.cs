@@ -1,4 +1,4 @@
-﻿namespace FoodFun.Web.Models.DishCategory
+﻿namespace FoodFun.Web.Areas.Restaurant.Models.DishCategory
 {
     public class DishCategoryListingModel
     {

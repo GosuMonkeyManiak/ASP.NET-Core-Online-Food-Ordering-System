@@ -20,6 +20,9 @@
 
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Back to web site</a>
+                        </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarWhiteDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Products
@@ -27,7 +30,7 @@
                             <ul class="dropdown-menu dropdown-menu-white" aria-labelledby="navbarWhiteDropdownMenuLink">
                                 <li><a class="dropdown-item" asp-area="Supermarket" asp-controller="Product" asp-action="Add">Add</a></li>
                                 <li><a class="dropdown-item" asp-area="Supermarket" asp-controller="Product" asp-action="All">All</a></li>
-                                
+
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
@@ -35,8 +38,8 @@
                                 Product Categories
                             </a>
                             <ul class="dropdown-menu dropdown-menu-white" aria-labelledby="navbarWhiteDropdownMenuLink">
-                                <li><a class="dropdown-item" asp-area="Supermarket" asp-controller="ProductCategory" asp-action="Add" >Add</a></li>
-                                <li><a class="dropdown-item" asp-area="Supermarket" asp-controller="ProductCategory" asp-action="All">All</a></li>        
+                                <li><a class="dropdown-item" asp-area="Supermarket" asp-controller="ProductCategory" asp-action="Add">Add</a></li>
+                                <li><a class="dropdown-item" asp-area="Supermarket" asp-controller="ProductCategory" asp-action="All">All</a></li>
                             </ul>
                         </li>
                     </ul>

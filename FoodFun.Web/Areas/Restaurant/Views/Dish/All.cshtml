@@ -1,15 +1,10 @@
 ﻿@model IEnumerable<DishListingModel>
 
 @{
-    ViewData[Title] = "All";
+    ViewData[Title] = "All Dishes";
 }
 
-@if (TempData[Error] != null)
-{
-    <div class="alert alert-danger" role="alert">
-        @TempData[Error]
-    </div>
-}
+<partial name="_ErrorMessagePartial"/>
 
 <div class="row">
     @foreach (var product in Model)
@@ -21,7 +16,8 @@
                     <h5 class="card-title">@product.Name - (@product.CategoryTitle)</h5>
                     <p class="card-text">@product.Price $</p>
                     <p class="card-text">@product.Description</p>
-                    <partial name="_PermissionsByRolesForAllDishesPartial" model="@product.Id"/>
+                    <a class="btn btn-warning" asp-area="Restaurant" asp-controller="Dish" asp-action="Edit" asp-route-id="@Model">Edit</a>
+                    <a class="btn btn-danger">Delete</a>
                 </div>
             </div>
         </div>

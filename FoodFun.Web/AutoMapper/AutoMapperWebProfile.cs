@@ -2,6 +2,8 @@
 {
     using Areas.Administration.Models;
     using Areas.Administration.Models.Role;
+    using Areas.Restaurant.Models.Dish;
+    using Areas.Restaurant.Models.DishCategory;
     using Areas.Supermarket.Models.Product;
     using Areas.Supermarket.Models.ProductCategory;
     using Core.Models.Dish;
@@ -11,8 +13,6 @@
     using global::AutoMapper;
     using Infrastructure.Models;
     using Microsoft.AspNetCore.Identity;
-    using Models.Dish;
-    using Models.DishCategory;
 
     public class AutoMapperWebProfile : Profile
     {

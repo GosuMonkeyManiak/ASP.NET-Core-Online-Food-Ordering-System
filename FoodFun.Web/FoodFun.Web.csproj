@@ -32,9 +32,6 @@
     <Folder Include="Areas\Order\Controllers\" />
     <Folder Include="Areas\Order\Models\" />
     <Folder Include="Areas\Order\Views\" />
-    <Folder Include="Areas\Restaurant\Controllers\" />
-    <Folder Include="Areas\Restaurant\Models\" />
-    <Folder Include="Areas\Restaurant\Views\" />
     <Folder Include="Areas\Supermarket\Models\Home\" />
   </ItemGroup>
 

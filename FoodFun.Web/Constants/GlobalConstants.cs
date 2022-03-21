@@ -61,8 +61,8 @@
         {
             public const string Administrator = nameof(Administrator);
             public const string SupermarketManager = "Supermarket Manager";
-            public const string OrderManager = "Order Manager";
             public const string RestaurantManager = "Restaurant Manager";
+            public const string OrderManager = "Order Manager";
             public const string Customer = nameof(Customer);
         }
 
@@ -70,6 +70,7 @@
         {
             public const string Administration = nameof(Administration);
             public const string Supermarket = nameof(Supermarket);
+            public const string Restaurant = nameof(Restaurant);
         }
     }
 }

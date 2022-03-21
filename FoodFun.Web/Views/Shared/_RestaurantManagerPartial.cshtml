@@ -1,0 +1,4 @@
+﻿@if (this.User.IsInRole(RestaurantManager))
+{
+    <li><a class="dropdown-item" asp-area="Restaurant" asp-controller="Home" asp-action="Index" >To Restaurant</a></li>
+}

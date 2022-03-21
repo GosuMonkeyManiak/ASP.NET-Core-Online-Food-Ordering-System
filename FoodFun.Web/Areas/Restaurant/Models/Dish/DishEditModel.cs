@@ -1,8 +1,9 @@
-﻿namespace FoodFun.Web.Models.Dish
+﻿namespace FoodFun.Web.Areas.Restaurant.Models.Dish
 {
     using System.ComponentModel.DataAnnotations;
     using DishCategory;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
+
     using static Constants.GlobalConstants.Messages;
     using static Infrastructure.Common.DataConstants;
     using static Infrastructure.Common.DataConstants.Dish;

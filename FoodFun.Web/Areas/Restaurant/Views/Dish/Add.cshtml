@@ -4,12 +4,7 @@
     ViewData[Title] = "Add Dish";
 }
 
-@if (TempData[Error] != null)
-{
-    <div class="alert alert-danger" role="alert">
-        @TempData[Error]
-    </div>
-}
+<partial name="_ErrorMessagePartial"/>
 
 <div class="row">
     <div class="offset-xl-3 col-xl-6">

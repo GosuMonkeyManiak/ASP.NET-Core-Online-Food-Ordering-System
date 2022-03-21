@@ -1,16 +1,10 @@
 ﻿@model IEnumerable<DishCategoryListingModel>
 
 @{
-    ViewData[Title] = "All categories for dish";
+    ViewData[Title] = "All categories";
 }
 
-@if (TempData[Error] != null)
-{
-    <div class="alert alert-danger" role="alert">
-        @TempData[Error]
-    </div>
-}
-
+<partial name="_ErrorMessagePartial"/>
 
 <div class="row">
     <div class="offset-3 col-5">
@@ -29,7 +23,7 @@
                     <td>@category.Title</td>
                     <td>@category.DishCount</td>
                     <td>
-                        <a asp-area="" asp-controller="DishCategory" asp-action="Edit" asp-route-dishCategoryId="@category.Id" class="btn btn-warning">Edit</a> |
+                        <a asp-area="Restaurant" asp-controller="DishCategory" asp-action="Edit" asp-route-id="@category.Id" class="btn btn-warning">Edit</a> |
                         <a>Disable</a>
                     </td>
                 </tr>

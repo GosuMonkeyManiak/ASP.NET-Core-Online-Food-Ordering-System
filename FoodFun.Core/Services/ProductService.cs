@@ -6,6 +6,7 @@
     using Infrastructure.Common;
     using Infrastructure.Common.Contracts;
     using Infrastructure.Models;
+    using Microsoft.EntityFrameworkCore.Storage;
     using Models.Product;
 
     public class ProductService : IProductService
@@ -136,21 +137,27 @@
                 return new(true, false, false);
             }
 
-            if (await this.productCategoryService.IsProductInCategory(categoryId, name))
+            var product = await this.productRepository
+                .GetProductWithCategoryById(id);
+
+            var category = await this.productCategoryService
+                .GetByIdOrDefault(categoryId);
+
+            if (product.Category.Title != category.Title
+                || product.Name != name)
             {
-                return new(true, true, true);
+                if (await this.productCategoryService.IsProductInCategory(categoryId, name))
+                {
+                    return new(true, true, true);
+                }
             }
 
-            var product = new Product()
-            {
-                Id = id,
-                Name = name,
-                ImageUrl = imageUrl,
-                CategoryId = categoryId,
-                Price = price,
-                Description = description,
-                Quantity = quantity
-            };
+            product.Name = name;
+            product.ImageUrl = imageUrl;
+            product.CategoryId = categoryId;
+            product.Price = price;
+            product.Description = description;
+            product.Quantity = quantity;
 
             this.productRepository.Update(product);
 

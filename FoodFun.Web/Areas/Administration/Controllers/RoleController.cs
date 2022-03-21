@@ -2,19 +2,14 @@
 {
     using Core.Extensions;
     using global::AutoMapper;
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using Models.Role;
 
     using static Constants.GlobalConstants.Messages;
-    using static Constants.GlobalConstants.Areas;
-    using static Constants.GlobalConstants.Roles;
 
-    [Area(Administration)]
-    [Authorize(Roles = Administrator)]
-    public class RoleController : Controller
+    public class RoleController : AdminBaseController
     {
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly IMapper mapper;

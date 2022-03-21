@@ -10,14 +10,10 @@
     using Microsoft.EntityFrameworkCore;
     using Models;
     using Models.User;
-
-    using static Constants.GlobalConstants.Roles;
-    using static Constants.GlobalConstants.Areas;
+   
     using static Constants.GlobalConstants.Messages;
-
-    [Area(Administration)]
-    [Authorize(Roles = Administrator)]
-    public class UserController : Controller
+    
+    public class UserController : AdminBaseController
     {
         private readonly IMapper mapper;
         private readonly UserManager<User> userManager;

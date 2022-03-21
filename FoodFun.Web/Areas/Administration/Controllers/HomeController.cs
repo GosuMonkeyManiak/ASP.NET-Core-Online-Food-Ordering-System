@@ -1,17 +1,11 @@
 ﻿namespace FoodFun.Web.Areas.Administration.Controllers
 {
     using Infrastructure.Models;
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
 
-    using static Constants.GlobalConstants.Roles;
-    using static Constants.GlobalConstants.Areas;
-
-    [Area(Administration)]
-    [Authorize(Roles = Administrator)]
-    public class HomeController : Controller
+    public class HomeController : AdminBaseController
     {
         private readonly UserManager<User> userManager;
 

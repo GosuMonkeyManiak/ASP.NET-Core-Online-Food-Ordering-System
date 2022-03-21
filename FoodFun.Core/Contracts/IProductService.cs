@@ -26,5 +26,7 @@
             int categoryId,
             decimal price,
             string description);
+
+        Task<bool> Delete(string id);
     }
 }

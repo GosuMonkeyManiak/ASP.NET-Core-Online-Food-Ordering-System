@@ -6,7 +6,6 @@
     using Infrastructure.Common;
     using Infrastructure.Common.Contracts;
     using Infrastructure.Models;
-    using Microsoft.EntityFrameworkCore.Storage;
     using Models.Product;
 
     public class ProductService : IProductService
@@ -139,6 +138,22 @@
             await this.productRepository.SaveChangesAsync();
 
             return new(true, true, false);
+        }
+
+        public async Task<bool> Delete(string id)
+        {
+            if (!await IsProductExist(id))
+            {
+                return false;
+            }
+
+            this.productRepository
+                .Remove(new Product() { Id = id} );
+
+            await this.productRepository
+                .SaveChangesAsync();
+
+            return true;
         }
 
         private async Task<bool> IsProductExist(string productId)

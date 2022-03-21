@@ -159,6 +159,19 @@
             return RedirectToAction(nameof(All));
         }
 
+        public async Task<IActionResult> Delete(string id)
+        {
+            var isSucceed = await this.productService
+                .Delete(id);
+
+            if (!isSucceed)
+            {
+                this.TempData[Error] = ProductNotExist;
+            }
+
+            return RedirectToAction(nameof(All));
+        }
+
         private async Task<IEnumerable<ProductCategoryModel>> GetProductCategories()
         {
             var categoriesForProduct = await this.productCategoryService.All();

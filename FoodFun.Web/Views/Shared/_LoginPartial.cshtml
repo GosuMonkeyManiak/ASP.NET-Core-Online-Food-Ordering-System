@@ -1,11 +1,16 @@
-﻿<ul class="navbar-nav">
+﻿<ul class="navbar-nav me-5">
     @if (this.User.Identity.IsAuthenticated)
     {
-        <li class="nav-item">
-            <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index">Hello @User.Identity?.Name!</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Logout">Logout</a>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarWhiteDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Hello @User.Identity?.Name!
+            </a>
+            <ul class="dropdown-menu dropdown-menu-white" aria-labelledby="navbarWhiteDropdownMenuLink">
+                <li><a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index">Account</a></li>
+                <li><a class="dropdown-item" asp-area="Administration" asp-controller="Home" asp-action="Index" >To Admin</a></li>
+                <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Index" >To Web site</a></li>
+                <li><a class="dropdown-item" asp-area="Identity" asp-page="/Account/Logout">Log out</a></li>
+            </ul>
         </li>
     }
     else

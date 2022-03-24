@@ -1,8 +1,9 @@
-﻿namespace FoodFun.Web.Areas.Supermarket.Models.Product
+﻿namespace FoodFun.Web.Models.Product
 {
     using System.ComponentModel.DataAnnotations;
+    using Areas.Supermarket.Models.Product;
+    using Areas.Supermarket.Models.ProductCategory;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
-    using ProductCategory;
 
     public class ProductSearchModel
     {

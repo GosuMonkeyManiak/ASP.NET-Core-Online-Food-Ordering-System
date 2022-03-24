@@ -6,7 +6,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Models.Product;
     using Models.ProductCategory;
-
+    using Web.Models.Product;
     using static Constants.GlobalConstants;
     using static Constants.GlobalConstants.Messages;
 

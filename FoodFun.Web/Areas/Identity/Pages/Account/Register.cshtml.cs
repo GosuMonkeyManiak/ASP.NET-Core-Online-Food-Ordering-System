@@ -95,8 +95,6 @@
 
                 if (result.Succeeded)
                 {
-                    await this._userManager.AddToRoleAsync(user, Customer);
-
                     return RedirectToPage("Login", new { returnUrl });
                 }
 

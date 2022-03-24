@@ -7,7 +7,7 @@
 
     using static Constants.GlobalConstants.Roles;
 
-    public static class ApplicationExtension
+    public static class ApplicationExtensions
     {
         public static void MigrateDatabaseAndSeed(this WebApplication app)
         {
@@ -57,7 +57,6 @@
             await roleManager.CreateAsync(new IdentityRole(Administrator));
             await roleManager.CreateAsync(new IdentityRole(OrderManager));
             await roleManager.CreateAsync(new IdentityRole(RestaurantManager));
-            await roleManager.CreateAsync(new IdentityRole(Customer));
         }
 
         private async static Task SeedUsers(

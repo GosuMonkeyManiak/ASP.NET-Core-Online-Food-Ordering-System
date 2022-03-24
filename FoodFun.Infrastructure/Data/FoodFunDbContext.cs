@@ -55,6 +55,18 @@
 
             builder.Entity<UserAddress>()
                 .HasKey(k => new { k.UserId, k.AddressId });
+
+            builder
+                .Entity<ProductCategory>()
+                .HasMany(x => x.Products)
+                .WithOne(x => x.Category)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder
+                .Entity<Product>()
+                .HasMany(x => x.ProductInOrders)
+                .WithOne(x => x.Product)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

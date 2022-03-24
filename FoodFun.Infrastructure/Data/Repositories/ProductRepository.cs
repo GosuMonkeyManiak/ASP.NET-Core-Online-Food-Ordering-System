@@ -89,7 +89,8 @@
                     .Where(x => x.CategoryId == categoryFilterId);
             }
 
-            return query;
+            return query
+                .Where(x => !x.Category.IsDisable);
         }
     }
 }

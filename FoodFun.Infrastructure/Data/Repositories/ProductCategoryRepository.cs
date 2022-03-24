@@ -21,5 +21,11 @@
                 .Include(x => x.Products)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == id);
+
+        public async Task<IEnumerable<ProductCategory>> GetAllNotDisabled()
+            => await this.DbSet
+                .Where(x => !x.IsDisable)
+                .AsNoTracking()
+                .ToListAsync();
     }
 }

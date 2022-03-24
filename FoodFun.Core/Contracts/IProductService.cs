@@ -4,7 +4,7 @@
 
     public interface IProductService
     {
-        Task<Tuple<bool, bool>> AddProduct(
+        Task<Tuple<bool, bool>> Add(
             string name,
             string imageUrl,
             int categoryId,

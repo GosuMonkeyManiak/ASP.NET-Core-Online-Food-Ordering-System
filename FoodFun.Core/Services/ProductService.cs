@@ -27,7 +27,7 @@
 
         private double LastPageNumber { get; set; }
 
-        public async Task<Tuple<bool, bool>> AddProduct(
+        public async Task<Tuple<bool, bool>> Add(
             string name, 
             string imageUrl, 
             int categoryId, 

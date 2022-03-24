@@ -44,7 +44,7 @@
 
             var (isCategoryExist,
                 isProductExist) = await this.productService
-                .AddProduct(
+                .Add(
                     formModel.Name,
                     formModel.ImageUrl,
                     formModel.CategoryId,
@@ -155,19 +155,6 @@
             if (isProductExistInCategoryAlready)
             {
                 this.TempData[Error] = ProductAlreadyExistInCategory;
-            }
-
-            return RedirectToAction(nameof(All));
-        }
-
-        public async Task<IActionResult> Delete(string id)
-        {
-            var isSucceed = await this.productService
-                .Delete(id);
-
-            if (!isSucceed)
-            {
-                this.TempData[Error] = ProductNotExist;
             }
 
             return RedirectToAction(nameof(All));

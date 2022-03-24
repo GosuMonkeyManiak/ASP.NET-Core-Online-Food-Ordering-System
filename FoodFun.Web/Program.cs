@@ -23,6 +23,24 @@ builder
 
 builder
     .Services
+    .AddStackExchangeRedisCache(options =>
+    {
+        options.Configuration = builder.Configuration.GetConnectionString("Redis");
+        options.InstanceName = "Redis-Store";
+    });
+
+builder
+    .Services
+    .AddSession(options =>
+    {
+        options.Cookie.Name = "sid";
+        options.IdleTimeout = TimeSpan.FromHours(10);
+        options.Cookie.HttpOnly = true;
+        options.Cookie.IsEssential = true;
+    });
+
+builder
+    .Services
     .AddDatabaseDeveloperPageExceptionFilter();
 
 builder
@@ -86,6 +104,8 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseSession();
 
 app.MapControllerRoute(
     "DefaultArea",

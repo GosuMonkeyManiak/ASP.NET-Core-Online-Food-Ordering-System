@@ -7,5 +7,7 @@
         Task<IEnumerable<ProductCategory>> GetAllCategoriesWithProducts();
 
         Task<ProductCategory> GetCategoryWithProductsById(int id);
+
+        Task<IEnumerable<ProductCategory>> GetAllNotDisabled();
     }
 }

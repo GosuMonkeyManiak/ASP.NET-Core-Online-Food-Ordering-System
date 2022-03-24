@@ -47,6 +47,19 @@
             return categoriesForProduct.ProjectTo<ProductCategoryServiceModel>(this.mapper);
         }
 
+        public async Task<IEnumerable<ProductCategoryServiceModel>> AllNotDisabled()
+        {
+            var notDisableCategories = await this.productCategoryRepository
+                .GetAllNotDisabled();
+
+            return notDisableCategories.ProjectTo<ProductCategoryServiceModel>(this.mapper);
+        }
+
+        public async Task<bool> IsCategoryActive(int id)
+            => !(await this.productCategoryRepository
+                    .FindOrDefaultAsync(x => x.Id == id))
+                .IsDisable;
+
         public async Task<IEnumerable<ProductCategoryWithProductCountServiceModel>> AllWithProductsCount()
         {
             var categoriesWithProducts = await this.productCategoryRepository
@@ -105,5 +118,47 @@
                     .GetCategoryWithProductsById(categoryId))
                 .Products
                 .Any(x => x.Name == productName);
+
+        public async Task<bool> Disable(int id)
+        {
+            if (!await IsCategoryExist(id))
+            {
+                return false;
+            }
+
+            var category = await this.productCategoryRepository
+                .FindOrDefaultAsync(x => x.Id == id);
+
+            category.IsDisable = true;
+
+            this.productCategoryRepository
+                .Update(category);
+
+            await this.productCategoryRepository
+                .SaveChangesAsync();
+
+            return true;
+        }
+
+        public async Task<bool> Enable(int id)
+        {
+            if (!await IsCategoryExist(id))
+            {
+                return false;
+            }
+
+            var category = await this.productCategoryRepository
+                .FindOrDefaultAsync(x => x.Id == id);
+
+            category.IsDisable = false;
+
+            this.productCategoryRepository
+                .Update(category);
+
+            await this.productCategoryRepository
+                .SaveChangesAsync();
+
+            return true;
+        }
     }
 }

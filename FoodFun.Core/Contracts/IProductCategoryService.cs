@@ -10,6 +10,10 @@
 
         Task<IEnumerable<ProductCategoryServiceModel>> All();
 
+        Task<IEnumerable<ProductCategoryServiceModel>> AllNotDisabled();
+
+        Task<bool> IsCategoryActive(int id);
+
         Task<bool> IsCategoryExist(int id);
 
         Task<ProductCategoryServiceModel> GetByIdOrDefault(int id);
@@ -21,5 +25,9 @@
         Task<bool> IsProductInCategory(
             int categoryId, 
             string productName);
+
+        Task<bool> Disable(int id);
+
+        Task<bool> Enable(int id);
     }
 }

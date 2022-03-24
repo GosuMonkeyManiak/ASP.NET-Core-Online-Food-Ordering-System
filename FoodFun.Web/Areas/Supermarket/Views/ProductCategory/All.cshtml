@@ -24,7 +24,8 @@
                         <td>@category.ProductsCount</td>
                         <td>
                             <a asp-area="Supermarket" asp-controller="ProductCategory" asp-action="Edit" asp-route-id="@category.Id" class="btn btn-warning">Edit</a> |
-                            <a>Disable</a>
+                            <a asp-area="Supermarket" asp-controller="ProductCategory" asp-action="Disable" asp-route-id="@category.Id" class="btn btn-danger @(category.IsDisable ? "disabled" : "")">Disable</a> |
+                            <a asp-area="Supermarket" asp-controller="ProductCategory" asp-action="Enable" asp-route-id="@category.Id" class="btn btn-success @(category.IsDisable == false ? "disabled" : "")">Enable</a>
                         </td>
                     </tr>
                 }

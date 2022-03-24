@@ -21,7 +21,7 @@
             this.mapper = mapper;
         }
 
-        public async Task<IActionResult> Add()
+        public IActionResult Add()
             => View();
 
         [HttpPost]
@@ -90,6 +90,30 @@
             if (isHaveCategoryWithThatTitle)
             {
                 this.TempData[Error] = ProductCategoryWithThatTitleAlreadyExist;
+            }
+
+            return RedirectToAction(nameof(All));
+        }
+
+        public async Task<IActionResult> Disable(int id)
+        {
+            var isSucceed = await this.productCategoryService.Disable(id);
+
+            if (!isSucceed)
+            {
+                this.TempData[Error] = ProductCategoryNotExist;
+            }
+
+            return RedirectToAction(nameof(All));
+        }
+
+        public async Task<IActionResult> Enable(int id)
+        {
+            var isSucceed = await this.productCategoryService.Enable(id);
+
+            if (!isSucceed)
+            {
+                this.TempData[Error] = ProductCategoryNotExist;
             }
 
             return RedirectToAction(nameof(All));

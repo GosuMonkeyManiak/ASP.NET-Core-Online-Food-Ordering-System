@@ -456,6 +456,7 @@
         [Test]
         [TestCase("ba ba", 1, 1, 1, 2, true)]
         [TestCase("bana", 2, 0, 1, 2, false)]
+        [TestCase("a", 2, 0, 1, 2, false)]
         public async Task When_PassValidSearchParameters_ShouldBeSetted(
             string searchTerm,
             int categoryFilterId,

@@ -14,6 +14,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
+    using System.Reflection;
     using System.Threading.Tasks;
 
     [TestFixture]
@@ -53,6 +54,12 @@
             this.products = new List<Product>();
             this.productCategories = new List<ProductCategory>();
 
+            MockProductCategoryServiceMethods();
+            MockProductRepositoryMethods();
+        }
+
+        private void MockProductRepositoryMethods()
+        {
             this.productRepoMock
                 .Setup(x => x.FindOrDefaultAsync(It.IsAny<Expression<Func<Product, bool>>>()))
                 .Returns<Expression<Func<Product, bool>>>(async x => await Task.FromResult(this.products.FirstOrDefault(x.Compile())));
@@ -60,6 +67,108 @@
             this.productRepoMock
                 .Setup(x => x.GetProductWithCategoryById(It.IsAny<string>()))
                 .Returns<string>(async x => await Task.FromResult(this.products.First(a => a.Id == x)));
+
+            this.productRepoMock
+                .Setup(x => x.Update(It.IsAny<Product>()))
+                .Callback<Product>(x =>
+                {
+                    var product = this.products.FirstOrDefault(a => a.Id == x.Id);
+
+                    product.Name = x.Name;
+                    product.ImageUrl = x.ImageUrl;
+                    product.CategoryId = x.CategoryId;
+                    product.Price = x.Price;
+                    product.Description = x.Description;
+                    product.Quantity = x.Quantity;
+                });
+
+            this.productRepoMock
+                .Setup(x => x.GetCountOfProductsByFilters(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<bool>()))
+                .Returns<string, int, bool>(async (searchTerm, categoryFilterId, onlyAvailable) =>
+                {
+                    if (searchTerm != null)
+                    {
+                        this.products = this.products
+                            .Where(x => x.Name.Contains(searchTerm) || x.Description.Contains(searchTerm))
+                            .ToList();
+                    }
+
+                    if (categoryFilterId != 0)
+                    {
+                        this.products = this.products
+                            .Where(x => x.CategoryId == categoryFilterId)
+                            .ToList();
+                    }
+
+                    if (onlyAvailable)
+                    {
+                        this.products = this.products
+                            .Where(x => !x.Category.IsDisable)
+                            .Where(x => x.Quantity > 0)
+                            .ToList();
+                    }
+
+                    return this.products.Count;
+                });
+
+            this.productRepoMock
+                .Setup(x => x.GetAllProductsWithCategories(
+                    It.IsAny<string>(),
+                    It.IsAny<int>(),
+                    It.IsAny<byte>(),
+                    It.IsAny<int>(),
+                    It.IsAny<int>(),
+                    It.IsAny<bool>()))
+                .Returns<string, int, byte, int, int, bool>(
+                    async (searchTerm, categoryFilterId, orderNumber, pageNumber, pageSize, onlyAvailable) =>
+                    {
+                        if (searchTerm != null)
+                        {
+                            this.products = this.products
+                                .Where(x => x.Name.Contains(searchTerm) || x.Description.Contains(searchTerm))
+                                .ToList();
+                        }
+
+                        if (categoryFilterId != 0)
+                        {
+                            this.products = this.products
+                                .Where(x => x.CategoryId == categoryFilterId)
+                                .ToList();
+                        }
+
+                        if (orderNumber == 1)
+                        {
+                            this.products = products
+                                .OrderByDescending(x => x.Price)
+                                .ToList();
+                        }
+                        else
+                        {
+                            this.products = products
+                                .OrderBy(x => x.Price)
+                                .ToList();
+                        }
+
+                        if (onlyAvailable)
+                        {
+                            this.products = this.products
+                                .Where(x => !x.Category.IsDisable)
+                                .Where(x => x.Quantity > 0)
+                                .ToList();
+                        }
+
+                        return await Task.FromResult(this.products
+                            .Skip((pageNumber - 1) * pageSize)
+                            .Take(pageSize)
+                            .ToList());
+                    });
+        }
+
+        private void MockProductCategoryServiceMethods()
+        {
+            this.productCategoryServiceMock
+                .Setup(x => x.IsCategoryExist(It.IsAny<int>()))
+                .Returns<int>(async x => await Task.FromResult(this.products.Any(a => a.CategoryId == x)));
 
             this.productCategoryServiceMock
                 .Setup(x => x.GetByIdOrDefault(It.IsAny<int>()))
@@ -79,26 +188,34 @@
                         ? await Task.FromResult(true)
                         : await Task.FromResult(false);
                 });
+        }
 
-            this.productRepoMock
-                .Setup(x => x.Update(It.IsAny<Product>()))
-                .Callback<Product>(x =>
-                {
-                    var product = this.products.FirstOrDefault(a => a.Id == x.Id);
-                    
-                    product.Name = x.Name;
-                    product.ImageUrl = x.ImageUrl;
-                    product.CategoryId = x.CategoryId;
-                    product.Price = x.Price;
-                    product.Description = x.Description;
-                    product.Quantity = x.Quantity;
-                });
+        private MethodInfo GetValidationMethodFromProductService()
+            => this.productService
+                .GetType()
+                .GetMethod(
+                    "ValidateAndSetDefaultSearchParameters", 
+                    BindingFlags.NonPublic | BindingFlags.Instance);
+
+        private async Task<Tuple<string, int, byte, int>> GetResultFromInvokeValidationMethod(
+            string searchTerm,
+            int categoryFilterId,
+            byte orderNumber,
+            int pageNumber,
+            int pageSize,
+            bool onlyAvailable)
+        {
+            var validateSearchParametersMethod = GetValidationMethodFromProductService();
+
+             return await (Task<Tuple<string, int, byte, int>>) validateSearchParametersMethod
+                .Invoke(this.productService,
+                    new object?[] { searchTerm, categoryFilterId, orderNumber, pageNumber, pageSize, onlyAvailable });
         }
 
         private void SeedTestProductsAndCategories()
         {
-            var fruitCategory = new ProductCategory() { Id = 1, Title = "Fruits"};
-            var vegetablesCategory = new ProductCategory() { Id = 2,Title = "Vegetables" };
+            var fruitCategory = new ProductCategory() { Id = 1, Title = "Fruits" };
+            var vegetablesCategory = new ProductCategory() { Id = 2,Title = "Vegetables", IsDisable = true };
             var meatCategory = new ProductCategory() { Id = 3, Title = "Meat" };
 
             this.productCategories.Add(fruitCategory);
@@ -273,6 +390,175 @@
             Assert.AreEqual(price, changedProduct.Price);
             Assert.AreEqual(description, changedProduct.Description);
             Assert.AreEqual(quantity, changedProduct.Quantity);
+        }
+
+        [Test]
+        [TestCase(null, 2, 3, true)]
+        [TestCase(null, 2, 3, false)]
+        [TestCase("ba", 1, 1, true)]
+        [TestCase("ka", 3, 1, false)]
+        [TestCase("a", 3, 1, false)]
+        public async Task When_PopulateLastPageNumberWithFiltersWhichExist_ShouldLasPageNumberProperty_ToHaveValueBiggerThanZero(
+            string searchTerm,
+            int categoryFilterId,
+            int pageSize,
+            bool onlyAvailable)
+        {
+            SeedTestProductsAndCategories();
+
+            var productServiceType = this.productService
+                .GetType();
+
+            var method = productServiceType
+                .GetMethod("PopulateLastPageNumberByFilter", BindingFlags.NonPublic | BindingFlags.Instance);
+
+            method.Invoke(this.productService, new object?[] { searchTerm, categoryFilterId, pageSize, onlyAvailable});
+
+            var actualLastPageNumberValue = (int) productServiceType
+                .GetProperty("LastPageNumber", BindingFlags.NonPublic | BindingFlags.Instance)
+                .GetValue(this.productService);
+
+            var countOfProductsByFilters = await this.productRepoMock
+                .Object
+                .GetCountOfProductsByFilters(
+                    searchTerm,
+                    categoryFilterId,
+                    onlyAvailable);
+
+            var expectedLastPageNumberValue = (int) Math.Ceiling(countOfProductsByFilters / (pageSize * 1.0));
+
+            Assert.AreEqual(expectedLastPageNumberValue, actualLastPageNumberValue);
+        }
+
+        [Test]
+        [TestCase("ba ba", 1, 1, 1, 2, true)]
+        [TestCase("bana", 2, 0, 1, 2, false)]
+        public async Task When_PassValidSearchParameters_ShouldBeSetted(
+            string searchTerm,
+            int categoryFilterId,
+            byte orderNumber,
+            int pageNumber,
+            int pageSize,
+            bool onlyAvailable)
+        {
+            SeedTestProductsAndCategories();
+
+            var (actualSearchTermResult,
+                actualCategoryIdResult,
+                actualOrderNumberResult,
+                actualPageNumberResult) = await GetResultFromInvokeValidationMethod(
+                    searchTerm, 
+                    categoryFilterId, 
+                    orderNumber, 
+                    pageNumber, 
+                    pageSize, 
+                    onlyAvailable);
+
+            Assert.AreEqual(searchTerm, actualSearchTermResult);
+            Assert.AreEqual(categoryFilterId, actualCategoryIdResult);
+            Assert.AreEqual(orderNumber, actualOrderNumberResult);
+            Assert.AreEqual(pageNumber, actualPageNumberResult);
+        }
+
+        [Test]
+        [TestCase(null, 120, 2, 121, 120, true)]
+        [TestCase(null, 120, 2, 121, 120, false)]
+        [TestCase(null, 50, 120, 20, 153, true)]
+        [TestCase(null, 50, 120, 20, 153, false)]
+        public async Task When_PassInvalidSearchParameters_ShouldReturnDefault(
+            string searchTerm,
+            int categoryFilterId,
+            byte orderNumber,
+            int pageNumber,
+            int pageSize,
+            bool onlyAvailable)
+        {
+            SeedTestProductsAndCategories();
+
+            var (actualSearchTermResult,
+                actualCategoryIdResult,
+                actualOrderNumberResult,
+                actualPageNumberResult) = await GetResultFromInvokeValidationMethod(
+                    searchTerm,
+                    categoryFilterId,
+                    orderNumber,
+                    pageNumber,
+                    pageSize,
+                    onlyAvailable);
+
+            string expectedSearchTermResult = null;
+            var expectedCategoryIdResult = 0;
+            var expectedOrderNumberResult = 0;
+            var expectedPageNumberResult = 1;
+
+            Assert.AreEqual(expectedSearchTermResult, actualSearchTermResult);
+            Assert.AreEqual(expectedCategoryIdResult, actualCategoryIdResult);
+            Assert.AreEqual(expectedOrderNumberResult, actualOrderNumberResult);
+            Assert.AreEqual(expectedPageNumberResult, actualPageNumberResult);
+        }
+
+        [Test]
+        [TestCase(null, 120, 2, 22, 1, true)]
+        [TestCase(null, 1201, 3, 320, 2, false)]
+        [TestCase("ba ba", 1, 0, 1, 2, true)]
+        [TestCase("ba ba", 1, 0, 1, 2, false)]
+        public async Task When_PassSearchParameters_ShouldReturnProperFilteredProducts(
+            string searchTerm,
+            int categoryFilterId,
+            byte orderNumber,
+            int pageNumber,
+            int pageSize,
+            bool onlyAvailable)
+        {
+            SeedTestProductsAndCategories();
+
+            var (FilteredProducts,
+                actualCurrentPage,
+                actualLastPage,
+                actualSelectedCategoryId) = await this.productService.All(
+                    searchTerm,
+                    categoryFilterId,
+                    orderNumber,
+                    pageNumber,
+                    pageSize,
+                    onlyAvailable);
+
+            var (validSearchTerm,
+                validCategoryFilterId,
+                validOrderNumber,
+                validPageNumber) = await GetResultFromInvokeValidationMethod(
+                    searchTerm,
+                    categoryFilterId,
+                    orderNumber,
+                    pageNumber,
+                    pageSize,
+                    onlyAvailable);
+
+            var expectedFilteredProducts = (await this.productRepoMock.Object.GetAllProductsWithCategories(
+                    validSearchTerm,
+                    validCategoryFilterId,
+                    validOrderNumber,
+                    validPageNumber,
+                    pageSize,
+                    onlyAvailable))
+                .ToList();
+
+            var actualFilteredProducts = FilteredProducts.ToList();
+
+            Assert.AreEqual(expectedFilteredProducts.Count, actualFilteredProducts.Count);
+
+            for (int i = 0; i < expectedFilteredProducts.Count; i++)
+            {
+                Assert.AreEqual(expectedFilteredProducts[i].Id, actualFilteredProducts[i].Id);
+                Assert.AreEqual(expectedFilteredProducts[i].Name, actualFilteredProducts[i].Name);
+                Assert.AreEqual(expectedFilteredProducts[i].ImageUrl, actualFilteredProducts[i].ImageUrl);
+                Assert.AreEqual(expectedFilteredProducts[i].CategoryId, actualFilteredProducts[i].Category.Id);
+                Assert.AreEqual(expectedFilteredProducts[i].Category.Id, actualFilteredProducts[i].Category.Id);
+                Assert.AreEqual(expectedFilteredProducts[i].Category.Title, actualFilteredProducts[i].Category.Title);
+                Assert.AreEqual(expectedFilteredProducts[i].Price, actualFilteredProducts[i].Price);
+                Assert.AreEqual(expectedFilteredProducts[i].Description, actualFilteredProducts[i].Description);
+                Assert.AreEqual(expectedFilteredProducts[i].Quantity, actualFilteredProducts[i].Quantity);
+            }
         }
     }
 }

@@ -14,7 +14,7 @@
             int pageSize,
             bool onlyAvailable);
 
-        Task<int> GetNumberOfPagesByFilter(
+        Task<int> GetCountOfProductsByFilters(
             string searchTerm,
             int categoryFilterId,
             bool onlyAvailable);

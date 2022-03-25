@@ -22,7 +22,7 @@
             this.mapper = mapper;
         }
 
-        private double LastPageNumber { get; set; }
+        private int LastPageNumber { get; set; }
 
         public async Task Add(
             string name, 
@@ -76,8 +76,7 @@
                     pageSize,
                     onlyAvailable);
 
-            return new(productsWithCategories
-                .ProjectTo<ProductServiceModel>(this.mapper),
+            return new(productsWithCategories.ProjectTo<ProductServiceModel>(this.mapper),
                 pageNumberResult,
                 (int) this.LastPageNumber,
                 categoryFilterIdResult);
@@ -191,13 +190,13 @@
             int pageSize,
             bool onlyAvailable)
         {
-            var numberOfPagesByFilter = await this.productRepository
-                .GetNumberOfPagesByFilter(
+            var countOfProductsByFilters = await this.productRepository
+                .GetCountOfProductsByFilters(
                     searchTerm, 
                     categoryFilterId,
                     onlyAvailable);
 
-            this.LastPageNumber = Math.Ceiling(numberOfPagesByFilter / (pageSize * 1.0));
+            this.LastPageNumber = (int) Math.Ceiling(countOfProductsByFilters / (pageSize * 1.0));
         }
     }
 }

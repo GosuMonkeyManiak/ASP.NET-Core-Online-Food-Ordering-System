@@ -54,7 +54,7 @@
                 .ToListAsync();
         }
 
-        public async Task<int> GetNumberOfPagesByFilter(
+        public async Task<int> GetCountOfProductsByFilters(
             string searchTerm, 
             int categoryFilterId,
             bool onlyAvailable)

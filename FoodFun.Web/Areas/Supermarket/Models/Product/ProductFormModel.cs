@@ -1,8 +1,9 @@
 ﻿namespace FoodFun.Web.Areas.Supermarket.Models.Product
 {
     using Microsoft.AspNetCore.Mvc.ModelBinding;
-    using ProductCategory;
     using System.ComponentModel.DataAnnotations;
+    using Core.ValidationAttributes;
+    using Web.Models.Product;
 
     using static Constants.GlobalConstants.Messages;
     using static Infrastructure.Common.DataConstants;
@@ -25,6 +26,8 @@
         [Display(Name = "Image Url")]
         public string ImageUrl { get; init; }
 
+        [ShouldBeExistingProductCategory]
+        [ShouldHaveSingleProductInCategory(nameof(Name))]
         [Display(Name = "Category")]
         public int CategoryId { get; init; }
 

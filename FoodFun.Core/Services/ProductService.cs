@@ -3,10 +3,7 @@
     using Contracts;
     using Extensions;
     using global::AutoMapper;
-    using Infrastructure.Common;
     using Infrastructure.Common.Contracts;
-    using Infrastructure.Models;
-    using Microsoft.EntityFrameworkCore.Storage;
     using Models.Product;
 
     public class ProductService : IProductService
@@ -27,7 +24,7 @@
 
         private double LastPageNumber { get; set; }
 
-        public async Task<Tuple<bool, bool>> Add(
+        public async Task Add(
             string name, 
             string imageUrl, 
             int categoryId, 
@@ -35,58 +32,49 @@
             string description,
             long quantity)
         {
-            if (!await this.productCategoryService.IsCategoryExist(categoryId))
-            {
-                return new(false, false);
-            }
-
-            if (!await this.productCategoryService.IsCategoryActive(categoryId))
-            {
-                return new(false, false);
-            }
-
-            if (await IsProductExistInCategory(name, categoryId))
-            {
-                return new(true, true);
-            }
-
-            var product = new Product()
-            {
-                Name = name,
-                ImageUrl = imageUrl,
-                CategoryId = categoryId,
-                Price = price,
-                Description = description,
-                Quantity = quantity
-            };
-
             await this.productRepository
-                .AddAsync(product);
+                .AddAsync(new()
+                {
+                    Name = name,
+                    ImageUrl = imageUrl,
+                    CategoryId = categoryId,
+                    Price = price,
+                    Description = description,
+                    Quantity = quantity
+                });
 
             await this.productRepository
                 .SaveChangesAsync();
-
-            return new(true, false);
         }
 
         public async Task<Tuple<IEnumerable<ProductServiceModel>, int, int, int>> All(
             string searchTerm, 
             int categoryFilterId,
             byte orderNumber,
-            int pageNumber)
+            int pageNumber,
+            int pageSize,
+            bool onlyAvailable = true)
         {
             var (searchTermResult,
                 categoryFilterIdResult,
                 orderNumberResult,
                 pageNumberResult) = await 
-                ValidateAndSetDefaultSearchParameters(searchTerm, categoryFilterId, orderNumber, pageNumber);
+                ValidateAndSetDefaultSearchParameters(
+                    searchTerm, 
+                    categoryFilterId, 
+                    orderNumber, 
+                    pageNumber,
+                    pageSize,
+                    onlyAvailable);
 
             var productsWithCategories = await this.productRepository
                 .GetAllProductsWithCategories(
                     searchTermResult,
                     categoryFilterIdResult,
                     orderNumberResult,
-                    pageNumberResult);
+                    pageNumberResult,
+                    pageSize,
+                    onlyAvailable);
 
             return new(productsWithCategories
                 .ProjectTo<ProductServiceModel>(this.mapper),
@@ -105,15 +93,10 @@
             var product = await this.productRepository
                 .GetProductWithCategoryById(id);
 
-            if (product.Category.IsDisable)
-            {
-                return null;
-            }
-
             return this.mapper.Map<ProductServiceModel>(product);
         }
 
-        public async Task<Tuple<bool, bool, bool>> Update(
+        public async Task<bool> Update(
             string id, 
             string name, 
             string imageUrl, 
@@ -122,21 +105,6 @@
             string description,
             long quantity)
         {
-            if (!await this.productCategoryService.IsCategoryExist(categoryId))
-            {
-                return new(false, false, false);
-            }
-
-            if (!await this.productCategoryService.IsCategoryActive(categoryId))
-            {
-                return new(false, false, false);
-            }
-
-            if (!await IsProductExist(id))
-            {
-                return new(true, false, false);
-            }
-
             var product = await this.productRepository
                 .GetProductWithCategoryById(id);
 
@@ -146,9 +114,9 @@
             if (product.Category.Title != category.Title
                 || product.Name != name)
             {
-                if (await this.productCategoryService.IsProductInCategory(categoryId, name))
+                if (await this.productCategoryService.IsProductExistInCategory(categoryId, name))
                 {
-                    return new(true, true, true);
+                    return false;
                 }
             }
 
@@ -163,26 +131,10 @@
 
             await this.productRepository.SaveChangesAsync();
 
-            return new(true, true, false);
-        }
-
-        public async Task<bool> Delete(string id)
-        {
-            if (!await IsProductExist(id))
-            {
-                return false;
-            }
-
-            this.productRepository
-                .Remove(new Product() { Id = id} );
-
-            await this.productRepository
-                .SaveChangesAsync();
-
             return true;
         }
 
-        private async Task<bool> IsProductExist(string productId)
+        public async Task<bool> IsProductExist(string productId)
             => await this.productRepository
                 .FindOrDefaultAsync(p => p.Id == productId) != null;
 
@@ -190,7 +142,9 @@
             string searchTerm,
             int categoryFilterId,
             byte orderNumber,
-            int pageNumber)
+            int pageNumber,
+            int pageSize,
+            bool onlyAvailable)
         {
             string searchTermResult = null;
             int categoryFilterIdResult = 0;
@@ -202,8 +156,7 @@
                 searchTermResult = searchTerm;
             }
 
-            if (await this.productCategoryService.IsCategoryExist(categoryFilterId)
-                && await this.productCategoryService.IsCategoryActive(categoryFilterId))
+            if (await this.productCategoryService.IsCategoryExist(categoryFilterId))
             {
                 categoryFilterIdResult = categoryFilterId;
             }
@@ -213,7 +166,11 @@
                 orderNumberResult = orderNumber;
             }
 
-            await PopulateLastPageNumberByFilter(searchTermResult, categoryFilterIdResult);
+            await PopulateLastPageNumberByFilter(
+                searchTermResult, 
+                categoryFilterIdResult,
+                pageSize,
+                onlyAvailable);
 
             if (pageNumber > 0 
                 && pageNumber <= this.LastPageNumber)
@@ -230,19 +187,17 @@
 
         private async Task PopulateLastPageNumberByFilter(
             string searchTerm,
-            int categoryFilterId)
+            int categoryFilterId,
+            int pageSize,
+            bool onlyAvailable)
         {
             var numberOfPagesByFilter = await this.productRepository
-                .GetNumberOfPagesByFilter(searchTerm, categoryFilterId);
+                .GetNumberOfPagesByFilter(
+                    searchTerm, 
+                    categoryFilterId,
+                    onlyAvailable);
 
-            this.LastPageNumber = Math.Ceiling(numberOfPagesByFilter / (DataConstants.ItemPerPage * 1.0));
+            this.LastPageNumber = Math.Ceiling(numberOfPagesByFilter / (pageSize * 1.0));
         }
-
-        private async Task<bool> IsProductExistInCategory(
-            string productName,
-            int categoryId)
-            => await this.productRepository
-                .FindOrDefaultAsync(x => x.Name == productName 
-                                         && x.CategoryId == categoryId) != null;
     }
 }

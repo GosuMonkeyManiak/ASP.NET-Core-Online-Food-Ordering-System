@@ -6,11 +6,11 @@
     using static Constants.ValidationConstants;
 
     [AttributeUsage(AttributeTargets.Property)]
-    public class ShouldBeSingleProductInCategoryAttribute : ValidationAttribute
+    public class ShouldHaveSingleProductInCategoryAttribute : ValidationAttribute
     {
         private readonly string productNameProperty;
 
-        public ShouldBeSingleProductInCategoryAttribute(string productNameProperty) 
+        public ShouldHaveSingleProductInCategoryAttribute(string productNameProperty) 
             => this.productNameProperty = productNameProperty;
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)

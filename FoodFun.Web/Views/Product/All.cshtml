@@ -1,0 +1,79 @@
+﻿@model ProductSearchModel
+
+@{
+    ViewData[Title] = "All Products";
+}
+
+<partial name="_ErrorMessagePartial"/>
+
+<div class="row">
+    <div class="col-3">
+        <form method="get">
+            <div class="input-group">
+                
+                <input type="hidden" asp-for="CurrentPageNumber" value="@Model.CurrentPageNumber" id="pageNumberInput"/>
+                
+                <div class="d-flex flex-column">
+                    
+                    <button @(Model.CurrentPageNumber - 1 <= 0 
+                                ? "disabled"
+                                : "") type="submit" class="btn btn-primary rounded mb-3" id="previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </button>
+                
+                    <button @(Model.CurrentPageNumber + 1 > Model.LastPageNumber 
+                                ? "disabled"
+                                : "") type="submit" class="btn btn-primary rounded mb-3" id="next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </button>
+
+                    <div class="form-outline mb-3">
+                        <input asp-for="SearchTerm" class="form-control" placeholder="Search"/>
+                    </div>
+
+                    <select asp-for="CategoryId" class="form-control mb-3 rounded">
+                        <option value="0">All</option>
+                        @foreach (var category in Model.Categories)
+                        {
+                            if (category.Id == Model.SelectedCategoryId)
+                            {
+                                <option value="@category.Id" selected>@category.Title</option>
+                                continue;
+                            }
+                            <partial name="_ProductCategoryPartial" model="category"/>
+                        }
+                    </select>
+
+                    <select asp-for="OrderNumber" class="form-control mb-3 rounded">
+                        <option value="0">Low to High</option>
+                        <option value="1">High to Low</option>
+                    </select>
+
+                    <button type="submit" class="btn btn-primary rounded">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    @foreach (var product in Model.Products)
+    {
+        <div class="col-xl-3 mb-4">
+            <div class="card text-center" style="width: 18rem;">
+                <img class="card-img-top" src="@product.ImageUrl" alt="@product.Name - (@product.CategoryTitle)">
+                <div class="card-body">
+                    <h5 class="card-title">@product.Name - (@product.CategoryTitle)</h5>
+                    <p class="card-text">@product.Price $</p>
+                    <p class="card-text">@product.Description</p>
+                    <p class="card-text">Quantity: @product.Quantity</p>
+                    <a class="btn btn-primary">Add to Cart</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts{
+    <partial name="_PaginationButtonScriptPartial" model="@Model.CurrentPageNumber"/>
+}

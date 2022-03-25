@@ -10,10 +10,13 @@
             string searchTerm, 
             int categoryFilterId,
             byte orderNumber,
-            int pageNumber);
+            int pageNumber,
+            int pageSize,
+            bool onlyAvailable);
 
         Task<int> GetNumberOfPagesByFilter(
             string searchTerm,
-            int categoryFilterId);
+            int categoryFilterId,
+            bool onlyAvailable);
     }
 }

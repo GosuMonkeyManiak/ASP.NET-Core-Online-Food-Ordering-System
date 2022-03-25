@@ -13,6 +13,7 @@
     using global::AutoMapper;
     using Infrastructure.Models;
     using Microsoft.AspNetCore.Identity;
+    using Models.Product;
 
     public class AutoMapperWebProfile : Profile
     {

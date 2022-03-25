@@ -113,7 +113,7 @@
             return new(true, false);
         }
 
-        public async Task<bool> IsProductInCategory(int categoryId, string productName)
+        public async Task<bool> IsProductExistInCategory(int categoryId, string productName)
             => (await this.productCategoryRepository
                     .GetCategoryWithProductsById(categoryId))
                 .Products

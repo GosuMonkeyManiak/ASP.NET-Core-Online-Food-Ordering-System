@@ -10,6 +10,7 @@
 
         <form method="post">
             <input asp-for="Id" type="hidden" value="@Model.Id"/>
+            <span asp-validation-for="Id" class="text-danger"></span>
             
             <div class="text-center">
                 <img class="rounded img-fluid" id="image"/>

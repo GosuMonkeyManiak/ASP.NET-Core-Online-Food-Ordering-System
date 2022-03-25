@@ -18,23 +18,24 @@
                 .AsNoTracking();
 
         public async Task<Product> GetProductWithCategoryById(string id)
-            => await this.DbSet
-                .Include(p => p.Category)
-                .AsNoTracking()
-                .FirstOrDefaultAsync(p => p.Id == id);
+            => await this.ProductsWithCategories
+                .FirstAsync(x => x.Id == id);
 
         public async Task<IEnumerable<Product>> GetAllProductsWithCategories(
             string searchTerm, 
             int categoryFilterId,
             byte orderNumber,
-            int pageNumber)
+            int pageNumber,
+            int pageSize,
+            bool onlyAvailable)
         {
             var query = this.ProductsWithCategories;
 
             query = AddFilters(
                 query,
                 searchTerm,
-                categoryFilterId);
+                categoryFilterId,
+                onlyAvailable);
 
             if (orderNumber == 1)
             {
@@ -48,21 +49,23 @@
             }
 
             return await query
-                .Skip((pageNumber - 1) * DataConstants.ItemPerPage)
-                .Take(DataConstants.ItemPerPage)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
                 .ToListAsync();
         }
 
         public async Task<int> GetNumberOfPagesByFilter(
             string searchTerm, 
-            int categoryFilterId)
+            int categoryFilterId,
+            bool onlyAvailable)
         {
             var query = this.ProductsWithCategories;
 
             query = AddFilters(
                 query,
                 searchTerm,
-                categoryFilterId);
+                categoryFilterId,
+                onlyAvailable);
 
             var result = await query
                 .ToListAsync();
@@ -73,7 +76,8 @@
         private IQueryable<Product> AddFilters(
             IQueryable<Product> query,
             string searchTerm,
-            int categoryFilterId)
+            int categoryFilterId,
+            bool onlyAvailable)
         {
             if (searchTerm != null)
             {
@@ -89,8 +93,14 @@
                     .Where(x => x.CategoryId == categoryFilterId);
             }
 
-            return query
-                .Where(x => !x.Category.IsDisable);
+            if (onlyAvailable)
+            {
+                query = query
+                    .Where(x => !x.Category.IsDisable)
+                    .Where(x => x.Quantity > 0);
+            }
+
+            return query;
         }
     }
 }

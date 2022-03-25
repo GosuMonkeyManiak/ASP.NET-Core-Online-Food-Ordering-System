@@ -54,6 +54,11 @@
                 .AsNoTracking()
                 .FirstOrDefaultAsync(predicate);
 
+        public async Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> predicate)
+            => await this.DbSet
+                .AsNoTracking()
+                .FirstAsync(predicate);
+
         public async Task<int> SaveChangesAsync()
             => await this.dbContext.SaveChangesAsync();
 

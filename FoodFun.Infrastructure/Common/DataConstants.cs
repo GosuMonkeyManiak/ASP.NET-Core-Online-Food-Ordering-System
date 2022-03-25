@@ -2,7 +2,8 @@
 {
     public class DataConstants
     {
-        public const int ItemPerPage = 8;
+        public const int PublicPageSize = 3;
+        public const int SupermarketPageSize = 8;
 
         public const string PriceMinLength = "0.10";
         public const string PriceMaxLength = "500.0";

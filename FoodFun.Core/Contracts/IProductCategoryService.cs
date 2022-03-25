@@ -22,7 +22,7 @@
             int categoryId,
             string title);
 
-        Task<bool> IsProductInCategory(
+        Task<bool> IsProductExistInCategory(
             int categoryId, 
             string productName);
 

@@ -3,11 +3,11 @@
     using Core.Contracts;
     using Core.Extensions;
     using global::AutoMapper;
+    using Infrastructure.Common;
     using Microsoft.AspNetCore.Mvc;
     using Models.Product;
-    using Models.ProductCategory;
     using Web.Models.Product;
-    using static Constants.GlobalConstants;
+    
     using static Constants.GlobalConstants.Messages;
 
     public class ProductController : SupermarketBaseController
@@ -42,8 +42,7 @@
                 return View(formModel);
             }
 
-            var (isCategoryExist,
-                isProductExist) = await this.productService
+            await this.productService
                 .Add(
                     formModel.Name,
                     formModel.ImageUrl,
@@ -51,20 +50,6 @@
                     formModel.Price,
                     formModel.Description,
                     formModel.Quantity);
-
-            if (!isCategoryExist)
-            {
-                this.ModelState.AddModelError(CategoryId, ProductCategoryNotExist);
-
-                formModel.Categories = await GetProductCategories();
-
-                return View(formModel);
-            }
-
-            if (isProductExist)
-            {
-                this.TempData[Error] = ProductAlreadyExistInCategory;
-            }
 
             return RedirectToAction(nameof(All));
         }
@@ -79,7 +64,9 @@
                     searchModel.SearchTerm,
                     searchModel.CategoryId,
                     searchModel.OrderNumber,
-                    searchModel.CurrentPageNumber);
+                    searchModel.CurrentPageNumber,
+                    DataConstants.SupermarketPageSize,
+                    onlyAvailable: false);
 
             var categoriesForProduct = await GetProductCategories();
 
@@ -108,7 +95,6 @@
             }
 
             var productEditModel = this.mapper.Map<ProductEditModel>(productServiceModel);
-
             productEditModel.Categories = await GetProductCategories();
 
             return View(productEditModel);
@@ -124,9 +110,7 @@
                 return View(editModel);
             }
 
-            var (isCategoryExist,
-                isProductExist,
-                isProductExistInCategoryAlready) = await this.productService
+            var isSucceed = await this.productService
                 .Update(
                     editModel.Id,
                     editModel.Name,
@@ -136,23 +120,7 @@
                     editModel.Description,
                     editModel.Quantity);
 
-            if (!isCategoryExist)
-            {
-                this.ModelState.AddModelError(CategoryId, ProductCategoryNotExist);
-
-                editModel.Categories = await GetProductCategories();
-
-                return View(editModel);
-            }
-
-            if (!isProductExist)
-            {
-                this.TempData[Error] = ProductNotExist;
-
-               return RedirectToAction(nameof(All));
-            }
-
-            if (isProductExistInCategoryAlready)
+            if (!isSucceed)
             {
                 this.TempData[Error] = ProductAlreadyExistInCategory;
             }
@@ -162,8 +130,7 @@
 
         private async Task<IEnumerable<ProductCategoryModel>> GetProductCategories()
         {
-            var categoriesForProduct = await this.productCategoryService.
-                AllNotDisabled();
+            var categoriesForProduct = await this.productCategoryService.All();
 
             return categoriesForProduct.ProjectTo<ProductCategoryModel>(this.mapper);
         }

@@ -5,9 +5,11 @@ VisualStudioVersion = 17.0.32126.317
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodFun.Infrastructure", "FoodFun.Infrastructure\FoodFun.Infrastructure.csproj", "{6A62B09A-C0A1-4F34-8196-762A97F4A563}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodFun.Core", "FoodFun.Core\FoodFun.Core.csproj", "{B572F090-2244-460F-A4B1-4D85934DD6EF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodFun.Core", "FoodFun.Core\FoodFun.Core.csproj", "{B572F090-2244-460F-A4B1-4D85934DD6EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodFun.Web", "FoodFun.Web\FoodFun.Web.csproj", "{544AE3A7-41A5-443A-9E6C-C27BCC8A3B1F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodFun.Web", "FoodFun.Web\FoodFun.Web.csproj", "{544AE3A7-41A5-443A-9E6C-C27BCC8A3B1F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodFun.Tests", "FoodFun.Tests\FoodFun.Tests.csproj", "{52CC949D-A35B-4463-88AC-EF70E03C9E16}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{544AE3A7-41A5-443A-9E6C-C27BCC8A3B1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{544AE3A7-41A5-443A-9E6C-C27BCC8A3B1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{544AE3A7-41A5-443A-9E6C-C27BCC8A3B1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52CC949D-A35B-4463-88AC-EF70E03C9E16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52CC949D-A35B-4463-88AC-EF70E03C9E16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52CC949D-A35B-4463-88AC-EF70E03C9E16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52CC949D-A35B-4463-88AC-EF70E03C9E16}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

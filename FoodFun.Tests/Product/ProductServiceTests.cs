@@ -269,6 +269,29 @@
         }
 
         [Test]
+        public void When_CreatingProductServiceFields_ShouldBeSet()
+        {
+            var productServiceType = this.productService
+                .GetType();
+
+            var valueOfProductRepositoryField = productServiceType
+                .GetField("productRepository", BindingFlags.NonPublic | BindingFlags.Instance)
+                .GetValue(this.productService);
+
+            var valueOfProductCategoryServiceField = productServiceType
+                .GetField("productCategoryService", BindingFlags.NonPublic | BindingFlags.Instance)
+                .GetValue(this.productService);
+
+            var valueOfMapperField = productServiceType
+                .GetField("mapper", BindingFlags.NonPublic | BindingFlags.Instance)
+                .GetValue(this.productService);
+
+            Assert.AreEqual(this.productRepoMock.Object, valueOfProductRepositoryField);
+            Assert.AreEqual(this.productCategoryServiceMock.Object, valueOfProductCategoryServiceField);
+            Assert.AreEqual(this.mapper, valueOfMapperField);
+        }
+
+        [Test]
         [TestCase("Bananas", "bananas.jpg", 1, 10.10, "Test bananas", 120)]
         [TestCase("Apples", "apples.jpg", 2, 11, "Test apples", 300)]
         [TestCase("Oranges", "oranges.jpg", 5, 1.20, "Test oranges", 1)]

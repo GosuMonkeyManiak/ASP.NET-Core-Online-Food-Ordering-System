@@ -7,13 +7,13 @@ builder
     .AddDbContext(builder.Configuration)
     .AddDefaultIdentity()
     .AddRedisCache(builder.Configuration)
-    .AddSession()
+    .AddConfiguredSession()
     .AddAutoMapper()
     .AddRepositories()
     .AddServices()
     .AddDatabaseDeveloperPageExceptionFilter()
-    .ConfigureCookies()
-    .AddAndConfigureControllersWithViews();
+    .AddConfiguredCookies()
+    .AddConfiguredControllersWithViews();
 
 var app = builder.Build();
 

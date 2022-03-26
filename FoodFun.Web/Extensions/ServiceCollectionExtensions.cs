@@ -34,6 +34,13 @@
                     options.InstanceName = "Redis-Store";
                 });
 
+        public static IServiceCollection AddConfiguredSession(this IServiceCollection services)
+            => services
+                .AddSession(options =>
+                {
+                    options.IdleTimeout = TimeSpan.FromHours(10);
+                });
+
         public static IServiceCollection AddDefaultIdentity(this IServiceCollection services)
         {
             services
@@ -65,14 +72,14 @@
                 .AddTransient<IDishService, DishService>()
                 .AddTransient<IDishCategoryService, DishCategoryService>();
 
-        public static IServiceCollection ConfigureCookies(this IServiceCollection services)
+        public static IServiceCollection AddConfiguredCookies(this IServiceCollection services)
             => services
                 .ConfigureApplicationCookie(options =>
                 {
                     options.ExpireTimeSpan = TimeSpan.FromDays(10);
                 });
 
-        public static IServiceCollection AddAndConfigureControllersWithViews(this IServiceCollection services)
+        public static IServiceCollection AddConfiguredControllersWithViews(this IServiceCollection services)
         {
             services
                 .AddControllersWithViews(options =>

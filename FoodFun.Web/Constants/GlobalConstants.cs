@@ -12,6 +12,8 @@
         public const int DefaultIdLength = 36;
         public const string CategoryId = nameof(CategoryId);
 
+        public const string CartItems = nameof(CartItems);
+
         public static class Redirect
         {
             public const string HomeIndexUrl = $"/{Home}/{Index}";

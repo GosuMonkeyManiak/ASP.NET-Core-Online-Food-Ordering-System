@@ -31,7 +31,7 @@
                 .AddStackExchangeRedisCache(options =>
                 {
                     options.Configuration = configuration.GetRedisConnectionString();
-                    options.InstanceName = "Redis-Store";
+                    options.InstanceName = "RedisStore_";
                 });
 
         public static IServiceCollection AddConfiguredSession(this IServiceCollection services)
@@ -39,6 +39,7 @@
                 .AddSession(options =>
                 {
                     options.IdleTimeout = TimeSpan.FromHours(10);
+                    options.Cookie.IsEssential = true;
                 });
 
         public static IServiceCollection AddDefaultIdentity(this IServiceCollection services)

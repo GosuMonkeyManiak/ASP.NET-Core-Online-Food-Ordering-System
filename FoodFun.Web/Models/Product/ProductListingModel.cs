@@ -1,7 +1,15 @@
 ﻿namespace FoodFun.Web.Models.Product
 {
+    using System.ComponentModel.DataAnnotations;
+    using Core.ValidationAttributes;
+    
+    using static Constants.GlobalConstants.Messages;
+
     public class ProductListingModel
     {
+        [Required]
+        [ShouldBeInActiveProductCategory]
+        [ShouldBeExistingProduct]
         public string Id { get; init; }
 
         public string Name { get; init; }
@@ -14,6 +22,10 @@
       
         public string Description { get; init; }
 
-        public long Quantity { get; init; }
+        [Range(
+            1,
+            long.MaxValue,
+            ErrorMessage = ProductQuantityError)]
+        public long Quantity { get; set; }
     }
 }

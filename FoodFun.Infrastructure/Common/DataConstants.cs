@@ -32,7 +32,7 @@
             public const int NameMinLength = 4;
             public const int NameMaxLength = 100;
 
-            public const int QuantityMinLength = 1;
+            public const int QuantityMinLength = 0;
         }
 
         public class DishCategory

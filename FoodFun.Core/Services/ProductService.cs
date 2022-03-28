@@ -82,6 +82,13 @@
                 categoryFilterIdResult);
         }
 
+        public async Task<IEnumerable<ProductServiceModel>> All(string[] ids)
+        {
+            var products = await this.productRepository.All(ids);
+
+            return products.ProjectTo<ProductServiceModel>(this.mapper);
+        }
+
         public async Task<ProductServiceModel> GetByIdOrDefault(string id)
         {
             if (!await IsProductExist(id))

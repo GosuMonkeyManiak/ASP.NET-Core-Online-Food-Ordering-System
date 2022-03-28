@@ -76,6 +76,7 @@
             public const string Administration = nameof(Administration);
             public const string Supermarket = nameof(Supermarket);
             public const string Restaurant = nameof(Restaurant);
+            public const string Order = nameof(Order);
         }
     }
 }

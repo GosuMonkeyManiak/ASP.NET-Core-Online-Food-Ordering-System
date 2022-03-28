@@ -4,6 +4,8 @@
 
     public interface IProductRepository : IRepository<Product>
     {
+        Task<IEnumerable<Product>> All(string[] ids);
+
         Task<Product> GetProductWithCategoryById(string id);
 
         Task<IEnumerable<Product>> GetAllProductsWithCategories(

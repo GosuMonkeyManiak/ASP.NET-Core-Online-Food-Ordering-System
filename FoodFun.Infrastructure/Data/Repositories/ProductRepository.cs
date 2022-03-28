@@ -17,6 +17,11 @@
                 .Include(p => p.Category)
                 .AsNoTracking();
 
+        public async Task<IEnumerable<Product>> All(string[] ids)
+            => await this.ProductsWithCategories
+                .Where(x => ids.Contains(x.Id))
+                .ToListAsync();
+
         public async Task<Product> GetProductWithCategoryById(string id)
             => await this.ProductsWithCategories
                 .FirstAsync(x => x.Id == id);

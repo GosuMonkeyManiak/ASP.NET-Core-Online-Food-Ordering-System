@@ -19,6 +19,7 @@
 .nav-link:active,
 .nav-link:focus,
 .nav-link:hover {
+    /* ReSharper disable once HexColorValueWithAlpha */
     background-color: #ffffff26;
 }
 
@@ -29,6 +30,7 @@
 .dropdown-item:active,
 .dropdown-item:focus,
 .dropdown-item:hover {
+    /* ReSharper disable once HexColorValueWithAlpha */
     background-color: #ffffff26;
 }
 
@@ -50,5 +52,6 @@
 }
 
 #menu-btn:focus {
+    /* ReSharper disable once HexColorValueWithAlpha */
     box-shadow: 0 0 0 0.25rem #7952b344;
 }

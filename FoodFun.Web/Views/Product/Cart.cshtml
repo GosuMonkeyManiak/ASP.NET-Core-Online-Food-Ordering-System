@@ -1,0 +1,68 @@
+﻿@model CartListingModel
+
+@{
+    ViewData[Title] = "Cart";
+}
+
+<section class="h-100">
+    <div class="container h-100 py-5">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-10">
+
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h3 class="fw-normal mb-0 text-black">Shopping Cart</h3>
+                </div>
+
+                <form method="post" asp-area="Order" asp-controller="Order" asp-action="Create">
+
+                    @for (int i = 0; i < Model.Products.Count; i++)
+                    {
+                        <input asp-for="Products[i].Id" type="hidden" value="@Model.Products[i].Id"/>
+
+                        <div class="card rounded-3 mb-4">
+                            <div class="card-body p-4">
+                                <div class="row d-flex justify-content-between align-items-center">
+                                    <div class="col-md-2 col-lg-2 col-xl-2">
+                                        <img src="@Model.Products[i].ImageUrl" class="img-fluid rounded-3" alt="@($"{Model.Products[i].ImageUrl} - {Model.Products[i].Name} - {Model.Products[i].CategoryTitle}")">
+                                    </div>
+                                    <div class="col-md-3 col-lg-3 col-xl-3">
+                                        <p class="lead fw-normal mb-2">@Model.Products[i].Name</p>
+                                        <p><span class="text-muted">Category: </span>@Model.Products[i].CategoryTitle <span class="text-muted">Description: </span>@Model.Products[i].Description</p>
+                                    </div>
+                                    <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                                        <button class="btn btn-link px-2" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+
+                                        <input asp-for="Products[i].Quantity" value="@Model.Products[i].Quantity" class="form-control form-control-sm"/>
+
+                                        <button class="btn btn-link px-2" onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                                            <i class="fas fa-plus"></i>
+                                        </button>
+                                    </div>
+                                    <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                                        <h5 id="calculatedPrice" class="mb-0">$@Model.Products[i].Price</h5>
+                                    </div>
+                                    <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                                        <a asp-area="" asp-controller="Product" asp-action="RemoveFromCart" asp-route-id="@Model.Products[i].Id" class="text-danger"><i class="fas fa-trash fa-lg"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        </div>
+                    }
+
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <button type="submit" class="btn btn-warning btn-block btn-lg">Make a order</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+

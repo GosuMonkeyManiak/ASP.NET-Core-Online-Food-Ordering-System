@@ -1,6 +1,6 @@
 ﻿namespace FoodFun.Web.Models.Cart
 {
-    public class CartItem
+    public class CartItemModel
     {
         public string Id { get; init; }
        

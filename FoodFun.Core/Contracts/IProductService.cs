@@ -20,6 +20,8 @@
             int pageSize,
             bool onlyAvailable = true);
 
+        Task<IEnumerable<ProductServiceModel>> All(string[] ids);
+
         Task<ProductServiceModel> GetByIdOrDefault(string id);
 
         Task<bool> Update(

@@ -64,14 +64,16 @@
                 .AddScoped<IProductRepository, ProductRepository>()
                 .AddScoped<IProductCategoryRepository, ProductCategoryRepository>()
                 .AddScoped<IDishRepository, DishRepository>()
-                .AddScoped<IDishCategoryRepository, DishCategoryRepository>();
+                .AddScoped<IDishCategoryRepository, DishCategoryRepository>()
+                .AddScoped<IOrderRepository, OrderRepository>();
 
         public static IServiceCollection AddServices(this IServiceCollection services)
             => services
                 .AddTransient<IProductService, ProductService>()
                 .AddTransient<IProductCategoryService, ProductCategoryService>()
                 .AddTransient<IDishService, DishService>()
-                .AddTransient<IDishCategoryService, DishCategoryService>();
+                .AddTransient<IDishCategoryService, DishCategoryService>()
+                .AddTransient<IOrderService, OrderService>();
 
         public static IServiceCollection AddConfiguredCookies(this IServiceCollection services)
             => services

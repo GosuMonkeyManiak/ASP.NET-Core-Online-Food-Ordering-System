@@ -20,23 +20,13 @@
             this.mapper = mapper;
         }
 
-        public async Task<bool> Add(string title)
+        public async Task Add(string title)
         {
-            var isCategoryExist = this.productCategoryRepository
-                .FindOrDefaultAsync(x => x.Title == title) != null;
-
-            if (isCategoryExist)
-            {
-                return false;
-            }
-
             await this.productCategoryRepository
                 .AddAsync(new() { Title = title });
 
             await this.productCategoryRepository
                 .SaveChangesAsync();
-
-            return true;
         }
 
         public async Task<IEnumerable<ProductCategoryServiceModel>> All()
@@ -72,6 +62,10 @@
             => await this.productCategoryRepository
                 .FindOrDefaultAsync(c => c.Id == id) != null;
 
+        public async Task<bool> IsCategoryExist(string title)
+            => await this.productCategoryRepository
+                .FindOrDefaultAsync(x => x.Title == title) != null;
+
         public async Task<ProductCategoryServiceModel> GetByIdOrDefault(int id)
         {
             if (!await IsCategoryExist(id))
@@ -85,20 +79,10 @@
             return this.mapper.Map<ProductCategoryServiceModel>(productCategory);
         }
 
-        public async Task<Tuple<bool, bool>> Update(int categoryId, string title)
+        public async Task Update(int categoryId, string title)
         {
-            if (!await IsCategoryExist(categoryId))
-            {
-                return new(false, false);
-            }
-
-            var isCategoryExistWithThatTitle = await this.productCategoryRepository
+            var category = await this.productCategoryRepository
                 .FindOrDefaultAsync(x => x.Title == title) != null;
-
-            if (isCategoryExistWithThatTitle)
-            {
-                return new(true, true);
-            }
 
             var productCategory = new ProductCategory()
             {
@@ -106,11 +90,10 @@
                 Title = title
             };
 
-            this.productCategoryRepository.Update(productCategory);
+            this.productCategoryRepository
+                .Update(productCategory);
 
             await this.productCategoryRepository.SaveChangesAsync();
-
-            return new(true, false);
         }
 
         public async Task<bool> IsProductExistInCategory(int categoryId, string productName)
@@ -119,13 +102,8 @@
                 .Products
                 .Any(x => x.Name == productName);
 
-        public async Task<bool> Disable(int id)
+        public async Task Disable(int id)
         {
-            if (!await IsCategoryExist(id))
-            {
-                return false;
-            }
-
             var category = await this.productCategoryRepository
                 .FindOrDefaultAsync(x => x.Id == id);
 
@@ -136,17 +114,10 @@
 
             await this.productCategoryRepository
                 .SaveChangesAsync();
-
-            return true;
         }
 
-        public async Task<bool> Enable(int id)
+        public async Task Enable(int id)
         {
-            if (!await IsCategoryExist(id))
-            {
-                return false;
-            }
-
             var category = await this.productCategoryRepository
                 .FindOrDefaultAsync(x => x.Id == id);
 
@@ -157,8 +128,6 @@
 
             await this.productCategoryRepository
                 .SaveChangesAsync();
-
-            return true;
         }
     }
 }

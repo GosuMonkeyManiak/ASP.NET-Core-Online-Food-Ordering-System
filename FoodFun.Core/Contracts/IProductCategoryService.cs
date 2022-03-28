@@ -4,7 +4,7 @@
 
     public interface IProductCategoryService
     {
-        Task<bool> Add(string title);
+        Task Add(string title);
 
         Task<IEnumerable<ProductCategoryWithProductCountServiceModel>> AllWithProductsCount();
 
@@ -16,9 +16,11 @@
 
         Task<bool> IsCategoryExist(int id);
 
+        Task<bool> IsCategoryExist(string title);
+
         Task<ProductCategoryServiceModel> GetByIdOrDefault(int id);
 
-        Task<Tuple<bool, bool>> Update(
+        Task Update(
             int categoryId,
             string title);
 
@@ -26,8 +28,8 @@
             int categoryId, 
             string productName);
 
-        Task<bool> Disable(int id);
+        Task Disable(int id);
 
-        Task<bool> Enable(int id);
+        Task Enable(int id);
     }
 }

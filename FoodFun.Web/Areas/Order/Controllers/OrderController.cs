@@ -24,7 +24,7 @@
                 return RedirectToAction("Cart", "Product", new { area = "" });
             }
 
-            this.orderService.MakeOrder()
+            return Ok();
         }
     }
 }

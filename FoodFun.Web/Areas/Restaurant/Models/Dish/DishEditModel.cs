@@ -1,6 +1,8 @@
 ﻿namespace FoodFun.Web.Areas.Restaurant.Models.Dish
 {
     using System.ComponentModel.DataAnnotations;
+    using Core.ValidationAttributes.Dish;
+    using Core.ValidationAttributes.DishCategory;
     using DishCategory;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
 
@@ -10,6 +12,7 @@
 
     public class DishEditModel
     {
+        [MustBeExistingDish]
         public string Id { get; init; }
 
         [Required]
@@ -27,6 +30,7 @@
         [Display(Name = "Image Url")]
         public string ImageUrl { get; init; }
 
+        [MustBeExistingDishCategory]
         [Display(Name = "Category")]
         public int CategoryId { get; init; }
 
@@ -42,6 +46,12 @@
             DescriptionMinLength,
             ErrorMessage = DescriptionError)]
         public string Description { get; init; }
+
+        [Range(
+            QuantityMinLength,
+            long.MaxValue,
+            ErrorMessage = ProductQuantityError)]
+        public long Quantity { get; init; }
 
         [BindNever]
         public IEnumerable<DishCategoryModel> Categories { get; set; } = new List<DishCategoryModel>();

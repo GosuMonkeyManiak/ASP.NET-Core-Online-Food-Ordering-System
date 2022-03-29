@@ -14,23 +14,23 @@
 
         [Required]
         [MaxLength(NameMaxLength)]
-        public string Name { get; init; }
+        public string Name { get; set; }
 
         [Required]
         [MaxLength(UrlMaxLength)]
-        public string ImageUrl { get; init; }
+        public string ImageUrl { get; set; }
 
         [ForeignKey(nameof(Category))]
-        public int CategoryId { get; init; }
+        public int CategoryId { get; set; }
 
         public DishCategory Category { get; init; }
 
-        public decimal Price { get; init; }
+        public decimal Price { get; set; }
 
         [Required]
-        public string Description { get; init; }
+        public string Description { get; set; }
 
-        public long Quantity { get; init; }
+        public long Quantity { get; set; }
 
         public ICollection<OrderDish> DishInOrders { get; init; } = new HashSet<OrderDish>();
 

@@ -50,6 +50,8 @@
                 <textarea asp-for="Description" class="form-control" rows="3" placeholder="Best dish ever...">@Model.Description</textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
+            
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="text-center">
                 <button type="submit" class="btn btn-warning">Edit</button>

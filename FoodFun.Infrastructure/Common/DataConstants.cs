@@ -13,6 +13,8 @@
         public const int DefaultIdMaxLength = 450;
         public const int UrlMaxLength = 2048;
 
+        public const int QuantityMinLength = 0;
+
         public class User
         {
             public const int UserNameMinLength = 3;
@@ -31,8 +33,6 @@
         {
             public const int NameMinLength = 4;
             public const int NameMaxLength = 100;
-
-            public const int QuantityMinLength = 0;
         }
 
         public class DishCategory

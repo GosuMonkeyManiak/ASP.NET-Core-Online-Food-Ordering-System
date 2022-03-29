@@ -42,14 +42,14 @@
                 return View(formModel);
             }
 
-            var (isCategoryExist,
-                isDishInCategory) = await this.dishService
+            await this.dishService
                 .Add(
                     formModel.Name,
                     formModel.ImageUrl,
                     formModel.CategoryId,
                     formModel.Price,
-                    formModel.Description);
+                    formModel.Description,
+                    formModel.Quantity);
 
             return RedirectToAction(nameof(All));
         }
@@ -97,11 +97,12 @@
                     editModel.ImageUrl,
                     editModel.CategoryId,
                     editModel.Price,
-                    editModel.Description);
+                    editModel.Description,
+                    editModel.Quantity);
 
             if (!isSucceed)
             {
-                this.TempData[Error] = DishAndCategoryNotExit;
+                this.TempData[Error] = DishAlreadyExistInCategory;
             }
 
             return RedirectToAction(nameof(All));

@@ -37,11 +37,7 @@
             this.serviceProvider = services.BuildServiceProvider();
 
             this.mapper = this.serviceProvider.GetService<IMapper>();
-        }
 
-        [SetUp]
-        public void SetUp()
-        {
             this.productRepoMock = new Mock<IProductRepository>();
             this.productCategoryServiceMock = new Mock<IProductCategoryService>();
 
@@ -50,7 +46,11 @@
                     this.productRepoMock.Object,
                     this.productCategoryServiceMock.Object,
                     this.mapper);
+        }
 
+        [SetUp]
+        public void SetUp()
+        {
             this.products = new List<Product>();
             this.productCategories = new List<ProductCategory>();
 

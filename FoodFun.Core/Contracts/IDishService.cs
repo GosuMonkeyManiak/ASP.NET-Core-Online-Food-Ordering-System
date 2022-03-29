@@ -14,13 +14,17 @@
             string imageUrl,
             int categoryId,
             decimal price,
-            string description);
+            string description,
+            long quantity);
 
-        Task<Tuple<bool, bool>> Add(
+        Task Add(
             string name,
             string imageUrl,
             int categoryId,
             decimal price,
-            string description);
+            string description,
+            long quantity);
+
+        Task<bool> IsDishExist(string id);
     }
 }

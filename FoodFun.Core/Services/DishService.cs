@@ -49,56 +49,59 @@
             string imageUrl, 
             int categoryId, 
             decimal price, 
-            string description)
+            string description,
+            long quantity)
         {
-            if (!await this.IsDishExist(id) ||
-                !await this.dishCategoryService.IsCategoryExist(categoryId))
+            var dish = await this.dishRepository
+                .GetDishWithCategoryById(id);
+
+            var category = await this.dishCategoryService
+                .GetByIdOrDefault(categoryId);
+
+            if (dish.Category.Title != category.Title
+                || dish.Name != name)
             {
-                return false;
+                if (await this.dishCategoryService.IsItemExistInCategory(categoryId, name))
+                {
+                    return false;
+                }
             }
 
-            var dish = new Dish()
+            var updateDish = new Dish()
             {
                 Id = id,
                 Name = name,
                 ImageUrl = imageUrl,
                 CategoryId = categoryId,
                 Price = price,
-                Description = description
+                Description = description,
+                Quantity = quantity
             };
 
             this.dishRepository
-                .Update(dish);
+                .Update(updateDish);
 
             await this.dishRepository.SaveChangesAsync();
 
             return true;
         }
 
-        public async Task<Tuple<bool, bool>> Add(
+        public async Task Add(
             string name, 
             string imageUrl, 
             int categoryId, 
             decimal price, 
-            string description)
+            string description,
+            long quantity)
         {
-            if (!await this.dishCategoryService.IsCategoryExist(categoryId))
-            {
-                return new(false, false);
-            }
-
-            if (await IsDishInCategory(name, categoryId))
-            {
-                return new(true, true);
-            }
-
             var dish = new Dish()
             {
                 Name = name,
                 ImageUrl = imageUrl,
                 CategoryId = categoryId,
                 Price = price,
-                Description = description
+                Description = description,
+                Quantity = quantity
             };
 
             await this.dishRepository
@@ -106,19 +109,10 @@
 
             await this.dishRepository
                 .SaveChangesAsync();
-
-            return new(true, false);
         }
 
-        private async Task<bool> IsDishExist(string id)
+        public async Task<bool> IsDishExist(string id)
             => await this.dishRepository
                 .FindOrDefaultAsync(p => p.Id == id) != null;
-
-        private async Task<bool> IsDishInCategory(
-            string name,
-            int id)
-            => await this.dishRepository
-                .FindOrDefaultAsync(x => x.Name == name
-                                         && x.CategoryId == id) != null;
     }
 }

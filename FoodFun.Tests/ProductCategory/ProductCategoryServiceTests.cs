@@ -34,16 +34,16 @@
             var serviceProvider = services.BuildServiceProvider();
 
             this.mapper = serviceProvider.GetService<IMapper>();
+
+            this.productCategoryRepositoryMock = new Mock<IProductCategoryRepository>();
+
+            this.productCategoryService = new ProductCategoryService(
+                this.productCategoryRepositoryMock.Object, this.mapper);
         }
 
         [SetUp]
         public void SetUp()
         {
-            this.productCategoryRepositoryMock = new Mock<IProductCategoryRepository>();
-
-            this.productCategoryService = new ProductCategoryService(
-                this.productCategoryRepositoryMock.Object, this.mapper);
-
             this.productCategories = new List<ProductCategory>();
 
             MockRepositoryMethods();

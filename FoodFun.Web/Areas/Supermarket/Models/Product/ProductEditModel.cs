@@ -33,8 +33,7 @@
             ErrorMessage = UrlErrorWithMaxLength)]
         [Display(Name = "Image Url")]
         public string ImageUrl { get; init; }
-
-        [ShouldBeExistingProductCategory]
+        
         [Display(Name = "Category")]
         public int CategoryId { get; init; }
 

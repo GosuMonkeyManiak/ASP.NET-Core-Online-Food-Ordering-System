@@ -96,7 +96,7 @@
         //    return RedirectToAction(nameof(All));
         //}
 
-        public async Task<IActionResult> Disable([ShouldBeExistingProductCategory] int id)
+        public async Task<IActionResult> Disable(int id)
         {
             if (!this.ModelState.IsValid)
             {
@@ -109,7 +109,7 @@
             return RedirectToAction(nameof(All));
         }
 
-        public async Task<IActionResult> Enable([ShouldBeExistingProductCategory] int id)
+        public async Task<IActionResult> Enable(int id)
         {
             if (!this.ModelState.IsValid)
             {

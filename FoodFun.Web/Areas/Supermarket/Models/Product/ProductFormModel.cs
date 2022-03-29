@@ -3,6 +3,7 @@
     using Microsoft.AspNetCore.Mvc.ModelBinding;
     using System.ComponentModel.DataAnnotations;
     using Core.ValidationAttributes;
+    using Core.ValidationAttributes.ProductCategory;
     using Web.Models.Product;
 
     using static Constants.GlobalConstants.Messages;
@@ -25,9 +26,9 @@
             ErrorMessage = UrlErrorWithMaxLength)]
         [Display(Name = "Image Url")]
         public string ImageUrl { get; init; }
-
-        [ShouldBeExistingProductCategory]
-        [ShouldHaveSingleProductInCategory(nameof(Name))]
+        
+        [MustBeExistingProductCategory]
+        [MustHaveUniqueNameProductInCategory(nameof(Name))]
         [Display(Name = "Category")]
         public int CategoryId { get; init; }
 

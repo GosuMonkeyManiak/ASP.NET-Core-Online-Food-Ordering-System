@@ -7,7 +7,6 @@
 
     public class ProductCategoryEditModel
     {
-        [ShouldBeExistingProductCategory]
         public int Id { get; init; }
 
         [Required]

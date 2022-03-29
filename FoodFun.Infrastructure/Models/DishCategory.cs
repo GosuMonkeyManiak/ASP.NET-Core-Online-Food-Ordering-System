@@ -13,6 +13,8 @@
         [MaxLength(TitleMaxLength)]
         public string Title { get; init; }
 
+        public bool IsDisable { get; init; }
+
         public ICollection<Dish> Dishes { get; init; } = new HashSet<Dish>();
     }
 }

@@ -67,6 +67,18 @@
                 .HasMany(x => x.ProductInOrders)
                 .WithOne(x => x.Product)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder
+                .Entity<DishCategory>()
+                .HasMany(x => x.Dishes)
+                .WithOne(x => x.Category)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder
+                .Entity<Dish>()
+                .HasMany(x => x.DishInOrders)
+                .WithOne(x => x.Dish)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

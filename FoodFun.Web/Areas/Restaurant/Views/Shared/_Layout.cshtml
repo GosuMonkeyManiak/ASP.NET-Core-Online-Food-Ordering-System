@@ -5,60 +5,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData[Title] - Food Fun Restaurant</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/restaurant.css" asp-append-version="true" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
+                <a asp-area="Restaurant" asp-controller="Home" asp-action="Index" class="navbar-brand">Food Fun Order</a>
 
-                <a class="navbar-brand" asp-area="Restaurant" asp-controller="Home" asp-action="Index">Food Fun Restaurant</a>
-
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fas fa-bars text-light"></i>
                 </button>
 
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Back to web site</a>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto d-flex flex-row mt-3 mt-lg-0">
+                        <li class="nav-item text-center mx-2 mx-lg-1">
+                            <a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link active" aria-current="page">
+                                Back to web site
+                            </a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarWhiteDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <li class="nav-item dropdown text-center mx-2 mx-lg-1">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Dishes
                             </a>
-                            <ul class="dropdown-menu dropdown-menu-white" aria-labelledby="navbarWhiteDropdownMenuLink">
-                                <li><a class="dropdown-item" asp-area="Restaurant" asp-controller="Dish" asp-action="Add">Add</a></li>
-                                <li><a class="dropdown-item" asp-area="Restaurant" asp-controller="Dish" asp-action="All">All</a></li>
+                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
+                                <li><a asp-area="Restaurant" asp-controller="Dish" asp-action="Add" class="dropdown-item">Add Dish</a></li>
+                                <li><a asp-area="Restaurant" asp-controller="Dish" asp-action="All" class="dropdown-item">All Dishes</a></li>
                             </ul>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarWhiteDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <li class="nav-item dropdown text-center mx-2 mx-lg-1">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Dish Categories
                             </a>
-                            <ul class="dropdown-menu dropdown-menu-white" aria-labelledby="navbarWhiteDropdownMenuLink">
-                                <li><a class="dropdown-item" asp-area="Restaurant" asp-controller="DishCategory" asp-action="Add">Add</a></li>
-                                <li><a class="dropdown-item" asp-area="Restaurant" asp-controller="DishCategory" asp-action="All">All</a></li>
+                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
+                                <li><a asp-area="Restaurant" asp-controller="DishCategory" asp-action="Add" class="dropdown-item">Add Category</a></li>
+                                <li><a asp-area="Restaurant" asp-controller="DishCategory" asp-action="All" class="dropdown-item">All Categories</a></li>
                             </ul>
                         </li>
                     </ul>
-
-                    <partial name="_LoginPartial"/>
                 </div>
             </div>
         </nav>
     </header>
+
     <div class="container">
-        <main role="main" class="pb-3">
+        <main class="mt-4">
             @RenderBody()
         </main>
     </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; @DateTime.UtcNow.Year - Food Fun Restaurant
-        </div>
-    </footer>
+    
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

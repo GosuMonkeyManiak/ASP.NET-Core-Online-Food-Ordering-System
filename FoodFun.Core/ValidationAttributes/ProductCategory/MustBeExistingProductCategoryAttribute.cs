@@ -1,15 +1,18 @@
 ﻿namespace FoodFun.Core.ValidationAttributes.ProductCategory
 {
     using System.ComponentModel.DataAnnotations;
-    using Base;
+    using Category;
+    using Contracts;
+    using Microsoft.Extensions.DependencyInjection;
+
     using static Constants.ValidationConstants;
 
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Parameter)]
-    public class MustBeExistingProductCategoryAttribute : ProductCategoryBaseValidationAttribute
+    public class MustBeExistingProductCategoryAttribute : CategoryBaseValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            var categoryService = GetProductCategoryService(validationContext);
+            var categoryService = validationContext.GetService<IProductCategoryService>();
 
             if (IsCategoryExist((int) value, categoryService))
             {

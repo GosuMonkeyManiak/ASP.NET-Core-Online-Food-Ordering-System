@@ -28,7 +28,7 @@
         public string ImageUrl { get; init; }
         
         [MustBeExistingProductCategory]
-        [MustHaveUniqueNameProductInCategory(nameof(Name))]
+        [MustBeUniqueProductNameInCategory(nameof(Name))]
         [Display(Name = "Category")]
         public int CategoryId { get; init; }
 

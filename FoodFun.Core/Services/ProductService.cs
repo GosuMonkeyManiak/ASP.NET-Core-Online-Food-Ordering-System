@@ -120,7 +120,7 @@
             if (product.Category.Title != category.Title
                 || product.Name != name)
             {
-                if (await this.productCategoryService.IsProductExistInCategory(categoryId, name))
+                if (await this.productCategoryService.IsItemExistInCategory(categoryId, name))
                 {
                     return false;
                 }

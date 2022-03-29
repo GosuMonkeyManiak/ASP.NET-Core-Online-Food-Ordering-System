@@ -1,20 +1,22 @@
 ﻿namespace FoodFun.Core.ValidationAttributes.ProductCategory
 {
     using System.ComponentModel.DataAnnotations;
-    using Base;
+    using Category;
+    using Contracts;
+    using Microsoft.Extensions.DependencyInjection;
 
     using static Constants.ValidationConstants;
 
-    public class MustHaveUniqueNameProductInCategoryAttribute : ProductCategoryBaseValidationAttribute
+    public class MustBeUniqueProductNameInCategoryAttribute : CategoryBaseValidationAttribute
     {
         private readonly string propertyTitleOfProductName;
 
-        public MustHaveUniqueNameProductInCategoryAttribute(string propertyTitleOfProductName) 
+        public MustBeUniqueProductNameInCategoryAttribute(string propertyTitleOfProductName) 
             => this.propertyTitleOfProductName = propertyTitleOfProductName;
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            var categoryService = GetProductCategoryService(validationContext);
+            var categoryService = validationContext.GetService<IProductCategoryService>();
 
             if (IsCategoryExist((int) value, categoryService))
             {
@@ -24,9 +26,7 @@
                     .GetProperty(this.propertyTitleOfProductName)
                     .GetValue(validationContext.ObjectInstance);
 
-                var isProductExistInCategory = categoryService.IsProductExistInCategory((int)value, actualProductName)
-                    .GetAwaiter()
-                    .GetResult();
+                var isProductExistInCategory = IsItemExistInCategory((int)value, actualProductName, categoryService);
 
                 if (!isProductExistInCategory)
                 {

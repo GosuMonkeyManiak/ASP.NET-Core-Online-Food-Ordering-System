@@ -382,7 +382,7 @@
             SeedTestCategories();
 
             var actualResult = await this.productCategoryService
-                .IsProductExistInCategory(categoryId, productName);
+                .IsItemExistInCategory(categoryId, productName);
 
             Assert.IsTrue(actualResult);
         }
@@ -399,7 +399,7 @@
             SeedTestCategories();
 
             var actualResult = await this.productCategoryService
-                .IsProductExistInCategory(categoryId, productName);
+                .IsItemExistInCategory(categoryId, productName);
 
             Assert.IsFalse(actualResult);
         }

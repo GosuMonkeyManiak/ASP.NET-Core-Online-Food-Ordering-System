@@ -20,9 +20,34 @@
             this.mapper = mapper;
         }
 
+        public Task Disable(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task Enable(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> IsCategoryActive(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<bool> IsCategoryExist(int id)
             => await this.dishCategoryRepository
                 .FindOrDefaultAsync(x => x.Id == id) != null;
+
+        public Task<bool> IsCategoryExist(string title)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> IsItemExistInCategory(int categoryId, string itemName)
+        {
+            throw new NotImplementedException();
+        }
 
         public async Task<IEnumerable<DishCategoryServiceModel>> All()
         {

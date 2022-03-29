@@ -1,4 +1,4 @@
-﻿namespace FoodFun.Core.ValidationAttributes.ProductCategory
+﻿namespace FoodFun.Core.ValidationAttributes.DishCategory
 {
     using System.ComponentModel.DataAnnotations;
     using Category;
@@ -7,18 +7,19 @@
 
     using static Constants.ValidationConstants;
 
-    public class MustBeUniqueProductCategoryWithTitleAttribute : CategoryBaseValidationAttribute
+    [AttributeUsage(AttributeTargets.Property)]
+    public class MustBeExistingDishCategoryAttribute : CategoryBaseValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            var categoryService = validationContext.GetService<IProductCategoryService>();
+            var categoryService = validationContext.GetService<IDishCategoryService>();
 
-            if (!IsCategoryExist((string) value, categoryService))
+            if (IsCategoryExist((int) value, categoryService))
             {
                 return ValidationResult.Success;
             }
 
-            this.ErrorMessage = CategoryAlreadyExist;
+            this.ErrorMessage = CategoryNotExist;
 
             return new ValidationResult(this.ErrorMessage);
         }

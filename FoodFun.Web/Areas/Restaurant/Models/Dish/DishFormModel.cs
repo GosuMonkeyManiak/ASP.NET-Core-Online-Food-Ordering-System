@@ -1,6 +1,7 @@
 ﻿namespace FoodFun.Web.Areas.Restaurant.Models.Dish
 {
     using System.ComponentModel.DataAnnotations;
+    using Core.ValidationAttributes.DishCategory;
     using DishCategory;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
 
@@ -25,6 +26,8 @@
         [Display(Name = "Image Url")]
         public string ImageUrl { get; init; }
 
+        [MustBeExistingDishCategory]
+        [MustBeUniqueDishNameInCategory(nameof(Name))]
         [Display(Name = "Category")]
         public int CategoryId { get; init; }
 

@@ -51,24 +51,6 @@
                     formModel.Price,
                     formModel.Description);
 
-            if (!isCategoryExist)
-            {
-                this.ModelState.AddModelError(CategoryId, DishCategoryNotExist);
-
-                formModel.Categories = await GetDishCategories();
-
-                return View(formModel);
-            }
-
-            if (isDishInCategory)
-            {
-                this.TempData[Error] = DishAlreadyExistInCategory;
-
-                formModel.Categories = await GetDishCategories();
-
-                return View(formModel);
-            }
-
             return RedirectToAction(nameof(All));
         }
         

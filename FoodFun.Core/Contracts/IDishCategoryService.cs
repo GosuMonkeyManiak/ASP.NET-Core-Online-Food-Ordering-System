@@ -2,10 +2,8 @@
 {
     using Models.DishCategory;
 
-    public interface IDishCategoryService
+    public interface IDishCategoryService : ICategory
     {
-        Task<bool> IsCategoryExist(int id);
-
         Task<IEnumerable<DishCategoryServiceModel>> All();
 
         Task<IEnumerable<DishCategoryWithDishCountServiceModel>> AllWithDishesCount();

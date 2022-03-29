@@ -183,7 +183,7 @@
                 });
 
             this.productCategoryServiceMock
-                .Setup(x => x.IsProductExistInCategory(It.IsAny<int>(), It.IsAny<string>()))
+                .Setup(x => x.IsItemExistInCategory(It.IsAny<int>(), It.IsAny<string>()))
                 .Returns<int, string>(async (id, name) =>
                 {
                     var isProductExist = this.products.FirstOrDefault(x => x.CategoryId == id && x.Name == name);

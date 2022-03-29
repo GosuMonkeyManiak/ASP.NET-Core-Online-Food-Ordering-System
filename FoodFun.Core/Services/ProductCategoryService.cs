@@ -96,7 +96,7 @@
             await this.productCategoryRepository.SaveChangesAsync();
         }
 
-        public async Task<bool> IsProductExistInCategory(int categoryId, string productName)
+        public async Task<bool> IsItemExistInCategory(int categoryId, string productName)
             => (await this.productCategoryRepository
                     .GetCategoryWithProductsById(categoryId))
                 .Products

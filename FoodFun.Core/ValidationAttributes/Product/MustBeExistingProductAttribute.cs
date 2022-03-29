@@ -1,4 +1,4 @@
-﻿namespace FoodFun.Core.ValidationAttributes
+﻿namespace FoodFun.Core.ValidationAttributes.Product
 {
     using System.ComponentModel.DataAnnotations;
     using Contracts;
@@ -6,17 +6,13 @@
 
     using static Constants.ValidationConstants;
 
-    public class ShouldBeExistingProductAttribute : ValidationAttribute
+    public class MustBeExistingProductAttribute : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             var productService = validationContext.GetService<IProductService>();
 
-            var isProductExist = productService.IsProductExist((string) value)
-                .GetAwaiter()
-                .GetResult();
-
-            if (isProductExist)
+            if (productService.IsProductExist((string) value).GetAwaiter().GetResult())
             {
                 return ValidationResult.Success;
             }

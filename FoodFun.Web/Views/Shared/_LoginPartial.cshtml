@@ -3,7 +3,7 @@
     {
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarWhiteDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Hello @User.Identity?.Name!
+                Hello @this.User.Identity?.Name!
             </a>
             <ul class="dropdown-menu dropdown-menu-white" aria-labelledby="navbarWhiteDropdownMenuLink">
                 <li><a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index">Account</a></li>

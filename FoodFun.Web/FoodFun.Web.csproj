@@ -22,7 +22,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FoodFun.Core\FoodFun.Core.csproj" />
-    <ProjectReference Include="..\FoodFun.Infrastructure\FoodFun.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -162,6 +162,10 @@
                             .Take(pageSize)
                             .ToList());
                     });
+
+            this.productRepoMock
+                .Setup(x => x.All(It.IsAny<string[]>()))
+                .Returns<string[]>(async x => await Task.FromResult(this.products.Where(a => x.Contains(a.Id))));
         }
 
         private void MockProductCategoryServiceMethods()
@@ -583,6 +587,67 @@
                 Assert.AreEqual(expectedFilteredProducts[i].Description, actualFilteredProducts[i].Description);
                 Assert.AreEqual(expectedFilteredProducts[i].Quantity, actualFilteredProducts[i].Quantity);
             }
+        }
+
+        [Test]
+        [TestCase("4da54227-ccf1-4fd5-9fb5-21ae4356da33")]
+        [TestCase(
+            "4da54227-ccf1-4fd5-9fb5-21ae4356da33",
+            "058e7d03-7082-4d92-9fa3-b0458afd484f")]
+        [TestCase(
+            "4da54227-ccf1-4fd5-9fb5-21ae4356da33", 
+            "058e7d03-7082-4d92-9fa3-b0458afd484f",
+            "22164c80-b0de-4633-ada5-a74ac0674843")]
+        public async Task When_PassValidIds_ShouldReturnIEnumerableWithProducts(params string[] ids)
+        {
+            SeedTestProductsAndCategories();
+
+            var actualResult = (await this.productService
+                .All(ids))
+                .ToList();
+
+            var expectedResult = this.products
+                .Where(x => ids.Contains(x.Id))
+                .ToList();
+
+            Assert.AreEqual(expectedResult.Count(), actualResult.Count());
+
+            for (int i = 0; i < expectedResult.Count; i++)
+            {
+                Assert.AreEqual(expectedResult[i].Id, actualResult[i].Id);
+                Assert.AreEqual(expectedResult[i].Name, actualResult[i].Name);
+                Assert.AreEqual(expectedResult[i].ImageUrl, actualResult[i].ImageUrl);
+                Assert.AreEqual(expectedResult[i].CategoryId, actualResult[i].Category.Id);
+                Assert.AreEqual(expectedResult[i].Category.Id, actualResult[i].Category.Id);
+                Assert.AreEqual(expectedResult[i].Category.Title, actualResult[i].Category.Title);
+                Assert.AreEqual(expectedResult[i].Price, actualResult[i].Price);
+                Assert.AreEqual(expectedResult[i].Description, actualResult[i].Description);
+                Assert.AreEqual(expectedResult[i].Quantity, actualResult[i].Quantity);
+            }
+        }
+
+        [Test]
+        [TestCase("4da54227-ccf1-4fd5-9fb5-21ae4356da31")]
+        [TestCase(
+            "4da54227-ccf1-4fd5-9fb5-21ae4356da32",
+            "058e7d03-7082-4d92-9fa3-b0458afd4844")]
+        [TestCase(
+            "4da54227-ccf1-4fd5-9fb5-21ae4356da35",
+            "058e7d03-7082-4d92-9fa3-b0458afd484a",
+            "22164c80-b0de-4633-ada5-a74ac0674841")]
+        public async Task When_PassInValidIds_ShouldReturnEmptyCollection(params string[] ids)
+        {
+            SeedTestProductsAndCategories();
+
+            var actualResult = (await this.productService
+                    .All(ids))
+                .ToList();
+
+            var expectedResult = this.products
+                .Where(x => ids.Contains(x.Id))
+                .ToList();
+
+            Assert.AreEqual(expectedResult.Count, actualResult.Count);
         }
     }
 }

@@ -13,7 +13,7 @@
             TitleMaxLength,
             MinimumLength = TitleMinLength,
             ErrorMessage = CategoryTitleError)]
-        [MustBeUniqueProductCategoryWithTitle]
+        [MustBeUniqueProductCategoryTitle]
         public string Title { get; init; }
     }
 }

@@ -12,8 +12,6 @@
 
         Task<bool> IsCategoryExist(string title);
 
-        Task<bool> IsItemExistInCategory(
-            int categoryId,
-            string itemName);
+        Task<bool> IsItemExistInCategory(int categoryId, string itemName);
     }
 }

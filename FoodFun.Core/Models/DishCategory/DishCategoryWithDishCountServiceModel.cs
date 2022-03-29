@@ -6,6 +6,8 @@
 
         public string Title { get; init; }
 
+        public bool IsDisable { get; init; }
+
         public int Count { get; init; }
     }
 }

@@ -2,6 +2,7 @@
 {
     using Core.Contracts;
     using Core.Extensions;
+    using Core.ValidationAttributes.DishCategory;
     using global::AutoMapper;
     using Microsoft.AspNetCore.Mvc;
     using Models.DishCategory;
@@ -32,15 +33,8 @@
                 return View();
             }
 
-            var isSucceed = await this.dishCategoryService
+            await this.dishCategoryService
                 .Add(formModel.Title);
-
-            if (!isSucceed)
-            {
-                this.TempData[Error] = DishCategoryAlreadyExist;
-
-                return View();
-            }
 
             return RedirectToAction(nameof(All));
         }
@@ -76,15 +70,42 @@
                 return View(editModel);
             }
 
-            var isSucceed = await this.dishCategoryService
-                .Update(
-                    editModel.Id,
-                    editModel.Title);
+            await this.dishCategoryService
+                .Update(editModel.Id, editModel.Title);
 
-            if (!isSucceed)
+            return RedirectToAction(nameof(All));
+        }
+
+        public async Task<IActionResult> Disable([MustBeExistingDishCategory] int id)
+        {
+            if (!this.ModelState.IsValid)
             {
-                this.TempData[Error] = DishCategoryNotExist;
+                this.TempData[Error] = this.ModelState.Values
+                    .First()
+                    .Errors
+                    .First().ErrorMessage;
+
+                return RedirectToAction(nameof(All));
             }
+
+            await this.dishCategoryService.Disable(id);
+
+            return RedirectToAction(nameof(All));
+        }
+
+        public async Task<IActionResult> Enable([MustBeExistingDishCategory] int id)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                this.TempData[Error] = this.ModelState.Values
+                    .First()
+                    .Errors
+                    .First().ErrorMessage;
+
+                return RedirectToAction(nameof(All));
+            }
+
+            await this.dishCategoryService.Enable(id);
 
             return RedirectToAction(nameof(All));
         }

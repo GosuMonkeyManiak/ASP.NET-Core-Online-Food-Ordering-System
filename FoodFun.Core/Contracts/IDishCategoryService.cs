@@ -10,10 +10,10 @@
 
         Task<DishCategoryServiceModel> GetByIdOrDefault(int id);
 
-        Task<bool> Update(
+        Task Update(
             int id,
             string title);
 
-        Task<bool> Add(string title);
+        Task Add(string title);
     }
 }

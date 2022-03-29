@@ -9,8 +9,8 @@
 
     public class DishService : IDishService
     {
-        private readonly IDishRepository dishRepository;
         private readonly IDishCategoryService dishCategoryService;
+        private readonly IDishRepository dishRepository;
         private readonly IMapper mapper;
 
         public DishService(
@@ -21,6 +21,31 @@
             this.dishRepository = dishRepository;
             this.dishCategoryService = dishCategoryService;
             this.mapper = mapper;
+        }
+
+        public async Task Add(
+            string name,
+            string imageUrl,
+            int categoryId,
+            decimal price,
+            string description,
+            long quantity)
+        {
+            var dish = new Dish()
+            {
+                Name = name,
+                ImageUrl = imageUrl,
+                CategoryId = categoryId,
+                Price = price,
+                Description = description,
+                Quantity = quantity
+            };
+
+            await this.dishRepository
+                .AddAsync(dish);
+
+            await this.dishRepository
+                .SaveChangesAsync();
         }
 
         public async Task<IEnumerable<DishServiceModel>> All()
@@ -42,6 +67,10 @@
 
             return this.mapper.Map<DishServiceModel>(dishWithCategory);
         }
+
+        public async Task<bool> IsDishExist(string id)
+            => await this.dishRepository
+                .FindOrDefaultAsync(p => p.Id == id) != null;
 
         public async Task<bool> Update(
             string id, 
@@ -85,34 +114,5 @@
 
             return true;
         }
-
-        public async Task Add(
-            string name, 
-            string imageUrl, 
-            int categoryId, 
-            decimal price, 
-            string description,
-            long quantity)
-        {
-            var dish = new Dish()
-            {
-                Name = name,
-                ImageUrl = imageUrl,
-                CategoryId = categoryId,
-                Price = price,
-                Description = description,
-                Quantity = quantity
-            };
-
-            await this.dishRepository
-                .AddAsync(dish);
-
-            await this.dishRepository
-                .SaveChangesAsync();
-        }
-
-        public async Task<bool> IsDishExist(string id)
-            => await this.dishRepository
-                .FindOrDefaultAsync(p => p.Id == id) != null;
     }
 }

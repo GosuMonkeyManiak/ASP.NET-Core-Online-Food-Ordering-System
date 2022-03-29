@@ -4,7 +4,6 @@
     using Extensions;
     using global::AutoMapper;
     using Infrastructure.Common.Contracts;
-    using Infrastructure.Models;
     using Models.DishCategory;
 
     public class DishCategoryService : IDishCategoryService
@@ -20,33 +19,13 @@
             this.mapper = mapper;
         }
 
-        public Task Disable(int id)
+        public async Task Add(string title)
         {
-            throw new NotImplementedException();
-        }
+            await this.dishCategoryRepository
+                .AddAsync(new() { Title = title });
 
-        public Task Enable(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> IsCategoryActive(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<bool> IsCategoryExist(int id)
-            => await this.dishCategoryRepository
-                .FindOrDefaultAsync(x => x.Id == id) != null;
-
-        public Task<bool> IsCategoryExist(string title)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> IsItemExistInCategory(int categoryId, string itemName)
-        {
-            throw new NotImplementedException();
+            await this.dishCategoryRepository
+                .SaveChangesAsync();
         }
 
         public async Task<IEnumerable<DishCategoryServiceModel>> All()
@@ -65,6 +44,34 @@
             return categoriesWithDishes.ProjectTo<DishCategoryWithDishCountServiceModel>(this.mapper);
         }
 
+        public async Task Disable(int id)
+        {
+            var category = await this.dishCategoryRepository
+                .FindAsync(x => x.Id == id);
+
+            category.IsDisable = true;
+
+            this.dishCategoryRepository
+                .Update(category);
+
+            await this.dishCategoryRepository
+                .SaveChangesAsync();
+        }
+
+        public async Task Enable(int id)
+        {
+            var category = await this.dishCategoryRepository
+                .FindAsync(x => x.Id == id);
+
+            category.IsDisable = false;
+
+            this.dishCategoryRepository
+                .Update(category);
+
+            await this.dishCategoryRepository
+                .SaveChangesAsync();
+        }
+
         public async Task<DishCategoryServiceModel> GetByIdOrDefault(int id)
         {
             if (!await IsCategoryExist(id))
@@ -78,52 +85,32 @@
             return this.mapper.Map<DishCategoryServiceModel>(category);
         }
 
-        public async Task<bool> Update(
-            int id,
-            string title)
-        {
-            if (!await IsCategoryExist(id))
-            {
-                return false;
-            }
+        public async Task<bool> IsCategoryActive(int id)
+            => !(await this.dishCategoryRepository
+                    .FindOrDefaultAsync(x => x.Id == id))
+                .IsDisable;
 
-            var dishCategory = new DishCategory()
-            {
-                Id = id,
-                Title = title
-            };
+        public async Task<bool> IsCategoryExist(int id)
+            => await this.dishCategoryRepository
+                .FindOrDefaultAsync(x => x.Id == id) != null;
 
-            this.dishCategoryRepository
-                .Update(dishCategory);
-
-            await this.dishCategoryRepository
-                .SaveChangesAsync();
-
-            return true;
-        }
-
-        public async Task<bool> Add(string title)
-        {
-            var isCategoryExist = this.dishCategoryRepository
+        public async Task<bool> IsCategoryExist(string title)
+            => await this.dishCategoryRepository
                 .FindOrDefaultAsync(x => x.Title == title) != null;
 
-            if (isCategoryExist)
-            {
-                return false;
-            }
+        public async Task<bool> IsItemExistInCategory(int categoryId, string itemName)
+            => (await this.dishCategoryRepository
+                    .FindOrDefaultAsync(x => x.Id == categoryId))
+                .Dishes
+                .Any(x => x.Name == itemName);
 
-            var dishCategory = new DishCategory()
-            {
-                Title = title
-            };
-
-            await this.dishCategoryRepository
-                .AddAsync(dishCategory);
+        public async Task Update(int id, string title)
+        {
+            this.dishCategoryRepository
+                .Update(new() { Id = id, Title = title});
 
             await this.dishCategoryRepository
                 .SaveChangesAsync();
-
-            return true;
         }
     }
 }

@@ -8,9 +8,9 @@
 
     public class ProductService : IProductService
     {
-        private readonly IProductRepository productRepository;
-        private readonly IProductCategoryService productCategoryService;
         private readonly IMapper mapper;
+        private readonly IProductCategoryService productCategoryService;
+        private readonly IProductRepository productRepository;
 
         public ProductService(
             IProductRepository productRepository,
@@ -102,6 +102,10 @@
             return this.mapper.Map<ProductServiceModel>(product);
         }
 
+        public async Task<bool> IsProductExist(string productId)
+            => await this.productRepository
+                .FindOrDefaultAsync(p => p.Id == productId) != null;
+
         public async Task<bool> Update(
             string id, 
             string name, 
@@ -140,9 +144,20 @@
             return true;
         }
 
-        public async Task<bool> IsProductExist(string productId)
-            => await this.productRepository
-                .FindOrDefaultAsync(p => p.Id == productId) != null;
+        private async Task PopulateLastPageNumberByFilter(
+            string searchTerm,
+            int categoryFilterId,
+            int pageSize,
+            bool onlyAvailable)
+        {
+            var countOfProductsByFilters = await this.productRepository
+                .GetCountOfProductsByFilters(
+                    searchTerm,
+                    categoryFilterId,
+                    onlyAvailable);
+
+            this.LastPageNumber = (int)Math.Ceiling(countOfProductsByFilters / (pageSize * 1.0));
+        }
 
         private async Task<Tuple<string, int, byte, int>> ValidateAndSetDefaultSearchParameters(
             string searchTerm,
@@ -189,21 +204,6 @@
                 categoryFilterIdResult, 
                 orderNumberResult,
                 pageNumberResult);
-        }
-
-        private async Task PopulateLastPageNumberByFilter(
-            string searchTerm,
-            int categoryFilterId,
-            int pageSize,
-            bool onlyAvailable)
-        {
-            var countOfProductsByFilters = await this.productRepository
-                .GetCountOfProductsByFilters(
-                    searchTerm, 
-                    categoryFilterId,
-                    onlyAvailable);
-
-            this.LastPageNumber = (int) Math.Ceiling(countOfProductsByFilters / (pageSize * 1.0));
         }
     }
 }

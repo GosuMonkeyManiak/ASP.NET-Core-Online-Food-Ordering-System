@@ -21,10 +21,11 @@
             {
                 <tr>
                     <td>@category.Title</td>
-                    <td>@category.DishCount</td>
+                    <td>@category.Count</td>
                     <td>
                         <a asp-area="Restaurant" asp-controller="DishCategory" asp-action="Edit" asp-route-id="@category.Id" class="btn btn-warning">Edit</a> |
-                        <a>Disable</a>
+                        <a asp-area="Restaurant" asp-controller="DishCategory" asp-action="Disable" asp-route-id="@category.Id" class="btn btn-danger @(category.IsDisable ? "disabled" : "")">Disable</a> |
+                        <a asp-area="Restaurant" asp-controller="DishCategory" asp-action="Enable" asp-route-id="@category.Id" class="btn btn-success @(category.IsDisable ? "" : "disabled")">Enable</a>
                     </td>
                 </tr>
             }

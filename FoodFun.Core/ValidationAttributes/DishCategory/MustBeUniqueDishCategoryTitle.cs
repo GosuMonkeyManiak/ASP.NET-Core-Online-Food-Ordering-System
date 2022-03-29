@@ -1,19 +1,18 @@
-﻿namespace FoodFun.Core.ValidationAttributes.ProductCategory
+﻿namespace FoodFun.Core.ValidationAttributes.DishCategory
 {
-    using System.ComponentModel.DataAnnotations;
     using Category;
     using Contracts;
     using Microsoft.Extensions.DependencyInjection;
-
+    using System.ComponentModel.DataAnnotations;
     using static Constants.ValidationConstants;
 
-    public class MustBeUniqueProductCategoryWithTitleAttribute : CategoryBaseValidationAttribute
+    public class MustBeUniqueDishCategoryTitle : CategoryBaseValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            var categoryService = validationContext.GetService<IProductCategoryService>();
+            var categoryService = validationContext.GetService<IDishCategoryService>();
 
-            if (!IsCategoryExist((string) value, categoryService))
+            if (!IsCategoryExist((string)value, categoryService))
             {
                 return ValidationResult.Success;
             }

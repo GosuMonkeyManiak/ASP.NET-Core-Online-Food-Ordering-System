@@ -9,8 +9,8 @@
 
     public class ProductCategoryService : IProductCategoryService
     {
-        private readonly IProductCategoryRepository productCategoryRepository;
         private readonly IMapper mapper;
+        private readonly IProductCategoryRepository productCategoryRepository;
 
         public ProductCategoryService(
             IProductCategoryRepository productCategoryRepository, 
@@ -45,11 +45,6 @@
             return notDisableCategories.ProjectTo<ProductCategoryServiceModel>(this.mapper);
         }
 
-        public async Task<bool> IsCategoryActive(int id)
-            => !(await this.productCategoryRepository
-                    .FindOrDefaultAsync(x => x.Id == id))
-                .IsDisable;
-
         public async Task<IEnumerable<ProductCategoryWithProductCountServiceModel>> AllWithProductsCount()
         {
             var categoriesWithProducts = await this.productCategoryRepository
@@ -57,50 +52,6 @@
 
             return categoriesWithProducts.ProjectTo<ProductCategoryWithProductCountServiceModel>(this.mapper);
         }
-
-        public async Task<bool> IsCategoryExist(int id)
-            => await this.productCategoryRepository
-                .FindOrDefaultAsync(c => c.Id == id) != null;
-
-        public async Task<bool> IsCategoryExist(string title)
-            => await this.productCategoryRepository
-                .FindOrDefaultAsync(x => x.Title == title) != null;
-
-        public async Task<ProductCategoryServiceModel> GetByIdOrDefault(int id)
-        {
-            if (!await IsCategoryExist(id))
-            {
-                return null;
-            }
-
-            var productCategory = await this.productCategoryRepository
-                .FindOrDefaultAsync(x => x.Id == id);
-
-            return this.mapper.Map<ProductCategoryServiceModel>(productCategory);
-        }
-
-        public async Task Update(int categoryId, string title)
-        {
-            var category = await this.productCategoryRepository
-                .FindOrDefaultAsync(x => x.Title == title) != null;
-
-            var productCategory = new ProductCategory()
-            {
-                Id = categoryId,
-                Title = title
-            };
-
-            this.productCategoryRepository
-                .Update(productCategory);
-
-            await this.productCategoryRepository.SaveChangesAsync();
-        }
-
-        public async Task<bool> IsItemExistInCategory(int categoryId, string productName)
-            => (await this.productCategoryRepository
-                    .GetCategoryWithProductsById(categoryId))
-                .Products
-                .Any(x => x.Name == productName);
 
         public async Task Disable(int id)
         {
@@ -128,6 +79,55 @@
 
             await this.productCategoryRepository
                 .SaveChangesAsync();
+        }
+
+        public async Task<ProductCategoryServiceModel> GetByIdOrDefault(int id)
+        {
+            if (!await IsCategoryExist(id))
+            {
+                return null;
+            }
+
+            var productCategory = await this.productCategoryRepository
+                .FindOrDefaultAsync(x => x.Id == id);
+
+            return this.mapper.Map<ProductCategoryServiceModel>(productCategory);
+        }
+
+        public async Task<bool> IsCategoryActive(int id)
+                                            => !(await this.productCategoryRepository
+                    .FindOrDefaultAsync(x => x.Id == id))
+                .IsDisable;
+
+        public async Task<bool> IsCategoryExist(int id)
+            => await this.productCategoryRepository
+                .FindOrDefaultAsync(c => c.Id == id) != null;
+
+        public async Task<bool> IsCategoryExist(string title)
+            => await this.productCategoryRepository
+                .FindOrDefaultAsync(x => x.Title == title) != null;
+
+        public async Task<bool> IsItemExistInCategory(int categoryId, string productName)
+            => (await this.productCategoryRepository
+                    .GetCategoryWithProductsById(categoryId))
+                .Products
+                .Any(x => x.Name == productName);
+
+        public async Task Update(int categoryId, string title)
+        {
+            var category = await this.productCategoryRepository
+                .FindOrDefaultAsync(x => x.Title == title) != null;
+
+            var productCategory = new ProductCategory()
+            {
+                Id = categoryId,
+                Title = title
+            };
+
+            this.productCategoryRepository
+                .Update(productCategory);
+
+            await this.productCategoryRepository.SaveChangesAsync();
         }
     }
 }

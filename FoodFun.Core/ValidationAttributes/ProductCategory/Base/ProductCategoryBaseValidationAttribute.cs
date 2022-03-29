@@ -11,5 +11,8 @@
 
         protected bool IsCategoryExist(int categoryId, IProductCategoryService productCategoryService)
             => productCategoryService.IsCategoryExist(categoryId).GetAwaiter().GetResult();
+
+        protected bool IsCategoryExist(string title, IProductCategoryService productCategoryService)
+            => productCategoryService.IsCategoryExist(title).GetAwaiter().GetResult();
     }
 }

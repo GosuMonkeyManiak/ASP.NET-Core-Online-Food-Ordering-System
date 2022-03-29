@@ -2,14 +2,15 @@
 {
     using System.ComponentModel.DataAnnotations;
     using Core.ValidationAttributes;
-    
+    using Core.ValidationAttributes.Product;
+
     using static Constants.GlobalConstants.Messages;
 
     public class ProductListingModel
     {
         [Required]
         [ShouldBeInActiveProductCategory]
-        [ShouldBeExistingProduct]
+        [MustBeExistingProduct]
         public string Id { get; init; }
 
         public string Name { get; init; }

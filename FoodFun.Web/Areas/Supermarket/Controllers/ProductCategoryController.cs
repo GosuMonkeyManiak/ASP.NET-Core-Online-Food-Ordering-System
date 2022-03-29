@@ -2,7 +2,7 @@
 {
     using Core.Contracts;
     using Core.Extensions;
-    using Core.ValidationAttributes;
+    using Core.ValidationAttributes.ProductCategory;
     using global::AutoMapper;
     using Microsoft.AspNetCore.Mvc;
     using Models.ProductCategory;
@@ -25,23 +25,18 @@
         public IActionResult Add()
             => View();
 
-        //[HttpPost]
-        //public async Task<IActionResult> Add(ProductCategoryFormModel formModel)
-        //{
-        //    if (!this.ModelState.IsValid)
-        //    {
-        //        return View();
-        //    }
+        [HttpPost]
+        public async Task<IActionResult> Add(ProductCategoryFormModel formModel)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return View();
+            }
 
-        //    var isSucceed = await this.productCategoryService.Add(formModel.Title);
+            await this.productCategoryService.Add(formModel.Title);
 
-        //    if (!isSucceed)
-        //    {
-        //        this.TempData[Error] = ProductCategoryAlreadyExist;
-        //    }
-
-        //    return RedirectToAction(nameof(All));
-        //}
+            return RedirectToAction(nameof(All));
+        }
 
         public async Task<IActionResult> All()
         {
@@ -67,40 +62,31 @@
             return View(this.mapper.Map<ProductCategoryEditModel>(productCategoryServiceModel));
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> Edit(ProductCategoryEditModel productCategoryModel)
-        //{
-        //    if (!this.ModelState.IsValid)
-        //    {
-        //        return View(productCategoryModel);
-        //    }
-
-        //    var (isCategoryExist,
-        //        isHaveCategoryWithThatTitle) = await this.productCategoryService
-        //        .Update(
-        //            productCategoryModel.Id,
-        //            productCategoryModel.Title);
-
-        //    if (!isCategoryExist)
-        //    {
-        //        this.TempData[Error] = ProductCategoryNotExist;
-
-        //        return RedirectToAction(nameof(All));
-        //    }
-
-        //    if (isHaveCategoryWithThatTitle)
-        //    {
-        //        this.TempData[Error] = ProductCategoryWithThatTitleAlreadyExist;
-        //    }
-
-        //    return RedirectToAction(nameof(All));
-        //}
-
-        public async Task<IActionResult> Disable(int id)
+        [HttpPost]
+        public async Task<IActionResult> Edit(ProductCategoryEditModel productCategoryModel)
         {
             if (!this.ModelState.IsValid)
             {
-                this.TempData[Error] = ProductCategoryNotExist;
+                return View(productCategoryModel);
+            }
+
+            await this.productCategoryService
+                .Update(
+                    productCategoryModel.Id,
+                    productCategoryModel.Title);
+
+            return RedirectToAction(nameof(All));
+        }
+
+        public async Task<IActionResult> Disable([MustBeExistingProductCategory] int id)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                this.TempData[Error] = this.ModelState.Values
+                    .First()
+                    .Errors
+                    .First().ErrorMessage;
+
                 return RedirectToAction(nameof(All));
             }
 
@@ -109,11 +95,15 @@
             return RedirectToAction(nameof(All));
         }
 
-        public async Task<IActionResult> Enable(int id)
+        public async Task<IActionResult> Enable([MustBeExistingProductCategory] int id)
         {
             if (!this.ModelState.IsValid)
             {
-                this.TempData[Error] = ProductCategoryNotExist;
+                this.TempData[Error] = this.ModelState.Values
+                    .First()
+                    .Errors
+                    .First().ErrorMessage;
+
                 return RedirectToAction(nameof(All));
             }
 

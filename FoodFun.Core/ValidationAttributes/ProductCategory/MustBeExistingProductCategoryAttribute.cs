@@ -4,7 +4,7 @@
     using Base;
     using static Constants.ValidationConstants;
 
-    [AttributeUsage(AttributeTargets.Property)]
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Parameter)]
     public class MustBeExistingProductCategoryAttribute : ProductCategoryBaseValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)

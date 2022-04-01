@@ -1,4 +1,9 @@
 ﻿<ul class="navbar-nav me-5">
+    
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="Cart">Cart</a>
+    </li>
+
     @if (this.User.Identity.IsAuthenticated)
     {
         <li class="nav-item dropdown">

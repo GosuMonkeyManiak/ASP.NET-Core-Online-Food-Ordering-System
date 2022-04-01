@@ -2,17 +2,10 @@
 {
     using Core.Contracts;
     using Core.Extensions;
-    using Core.Models.Product;
-    using Extensions;
     using global::AutoMapper;
     using Infrastructure.Common;
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using Models.Cart;
     using Models.Product;
-
-    using static Constants.GlobalConstants;
-    using static Constants.GlobalConstants.Messages;
 
     public class ProductController : Controller
     {
@@ -55,122 +48,6 @@
             };
 
             return View(productSearchModel);
-        }
-
-        [Authorize]
-        public async Task<IActionResult> AddToCard(string id)
-        {
-            if (!await this.productService.IsProductExist(id))
-            {
-                this.TempData[Error] = ProductNotExist;
-
-                return RedirectToAction(nameof(All));
-            }
-
-            //TODO is product in active category
-
-            await this.HttpContext.Session.LoadAsync();
-
-            var isCartItemsExist = this.HttpContext.Session.Keys.Any(x => x == CartItems);
-
-            if (isCartItemsExist)
-            {
-                var cartFromCache = this.HttpContext.Session.Get<CartModel>(CartItems);
-                var isProductExist = cartFromCache.Products.Any(x => x.Id == id);
-
-                if (isProductExist)
-                {
-                    var productFromCache = cartFromCache.Products.First(x => x.Id == id);
-                    productFromCache.Quantity++;
-                }
-                else
-                {
-                    var newProduct = new CartItemModel() { Id = id, Quantity = 1 };
-                    cartFromCache.Products.Add(newProduct);
-                }
-
-                this.HttpContext.Session.Set<CartModel>(CartItems, cartFromCache);
-            }
-            else
-            {
-                var newCart = new CartModel();
-                newCart.Products.Add(new CartItemModel(){ Id = id, Quantity = 1});
-
-                this.HttpContext.Session.Set<CartModel>(CartItems, newCart);
-            }
-            
-            await this.HttpContext.Session.CommitAsync();
-
-            return RedirectToAction(nameof(All));
-        }
-
-        [Authorize]
-        public async Task<IActionResult> Cart()
-        {
-            await this.HttpContext.Session.LoadAsync();
-
-            if (!this.HttpContext.Session.IsAvailable 
-                || !this.HttpContext.Session.Keys.Any(x => x == CartItems))
-            {
-                return View(new CartListingModel());
-            }
-
-            var cart = this.HttpContext.Session.Get<CartModel>(CartItems);
-
-            var productsFromService = await this.productService.All(cart.Products.Select(x => x.Id).ToArray());
-
-            var products = MapToProductListingModels(productsFromService, cart.Products);
-
-            return View(new CartListingModel()
-            {
-                Products = products
-            });
-        }
-
-        [Authorize]
-        public async Task<IActionResult> RemoveFromCart(string id)
-        {
-            await this.HttpContext.Session.LoadAsync();
-
-            if (!this.HttpContext.Session.IsAvailable
-                || !this.HttpContext.Session.Keys.Any(x => x == CartItems))
-            {
-                return RedirectToAction(nameof(Cart));
-            }
-
-            var cart = this.HttpContext.Session.Get<CartModel>(CartItems);
-
-            if (!cart.Products.Any(x => x.Id == id))
-            {
-                return RedirectToAction(nameof(Cart));
-            }
-
-            var product = cart.Products.First(x => x.Id == id);
-            cart.Products.Remove(product);
-
-            this.HttpContext.Session.Set<CartModel>(CartItems, cart);
-
-            await this.HttpContext.Session.CommitAsync();
-
-            return RedirectToAction(nameof(Cart));
-        }
-
-        private IList<ProductListingModel> MapToProductListingModels(
-            IEnumerable<ProductServiceModel> productsFromService,
-            IList<CartItemModel> productsInCart)
-        {
-            var products = new List<ProductListingModel>();
-
-            foreach (var productServiceModel in productsFromService)
-            {
-                var productListingModel = this.mapper.Map<ProductListingModel>(productServiceModel);
-                productListingModel.Quantity =
-                    productsInCart.FirstOrDefault(x => x.Id == productListingModel.Id).Quantity;
-
-                products.Add(productListingModel);
-            }
-
-            return products;
         }
     }
 }

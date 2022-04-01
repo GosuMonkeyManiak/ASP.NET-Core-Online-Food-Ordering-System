@@ -113,6 +113,11 @@
                 .Products
                 .Any(x => x.Name == productName);
 
+        public async Task<bool> IsItemInAnyActiveCategory(string itemId)
+            => (await this.productCategoryRepository
+                    .GetAllCategoriesWithProducts())
+                .Any(x => !x.IsDisable && x.Products.FirstOrDefault(p => p.Id == itemId) != null);
+
         public async Task Update(int categoryId, string title)
         {
             var category = await this.productCategoryRepository

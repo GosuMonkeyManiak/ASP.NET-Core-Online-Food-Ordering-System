@@ -44,7 +44,7 @@
                                         <h5 id="calculatedPrice" class="mb-0">$@Model.Products[i].Price</h5>
                                     </div>
                                     <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                                        <a asp-area="" asp-controller="Product" asp-action="RemoveFromCart" asp-route-id="@Model.Products[i].Id" class="text-danger"><i class="fas fa-trash fa-lg"></i></a>
+                                        <a asp-area="" asp-controller="Cart" asp-action="RemoveFromCart" asp-route-id="@Model.Products[i].Id" class="text-danger"><i class="fas fa-trash fa-lg"></i></a>
                                     </div>
                                 </div>
                             </div>

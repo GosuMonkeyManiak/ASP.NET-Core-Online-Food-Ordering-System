@@ -14,5 +14,8 @@
 
         protected bool IsItemExistInCategory(int categoryId, string itemName, ICategory categoryService)
             => categoryService.IsItemExistInCategory(categoryId, itemName).GetAwaiter().GetResult();
+
+        protected bool IsItemInAnyActiveCategory(string itemId, ICategory categoryService)
+            => categoryService.IsItemInAnyActiveCategory(itemId).GetAwaiter().GetResult();
     }
 }

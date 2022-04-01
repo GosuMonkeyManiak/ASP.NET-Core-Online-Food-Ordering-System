@@ -12,7 +12,7 @@
         public const int DefaultIdLength = 36;
         public const string CategoryId = nameof(CategoryId);
 
-        public const string CartItems = nameof(CartItems);
+        public const string Cart = nameof(Cart);
 
         public static class Redirect
         {

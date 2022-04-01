@@ -296,17 +296,17 @@
         }
 
         [Test]
-        [TestCase("Bananas", "bananas.jpg", 1, 10.10, "Test bananas", 120)]
-        [TestCase("Apples", "apples.jpg", 2, 11, "Test apples", 300)]
-        [TestCase("Oranges", "oranges.jpg", 5, 1.20, "Test oranges", 1)]
-        [TestCase("WaterMelon", "waterMelon.jpg", 10, 12.02, "Test watermelon", 0)]
+        [TestCase("Bananas", "bananas.jpg", 1, 10.10, "Test bananas", 120ul)]
+        [TestCase("Apples", "apples.jpg", 2, 11, "Test apples", 300ul)]
+        [TestCase("Oranges", "oranges.jpg", 5, 1.20, "Test oranges", 1ul)]
+        [TestCase("WaterMelon", "waterMelon.jpg", 10, 12.02, "Test watermelon", 0ul)]
         public async Task When_ProvideProductInfo_ShouldBeCreated(
             string name,
             string imageUrl,
             int categoryId,
             decimal price,
             string description,
-            long quantity)
+            ulong quantity)
         {
             this.productRepoMock
                 .Setup(x => x.AddAsync(It.IsAny<Product>()))
@@ -370,8 +370,8 @@
         }
 
         [Test]
-        [TestCase("4da54227-ccf1-4fd5-9fb5-21ae4356da33", "WaterMelon", "waterMelon.jpg", 1, 12.20, "Test waterMelon", 12)]
-        [TestCase("4da54227-ccf1-4fd5-9fb5-21ae4356da33", "Tomatos", "tomatos.jpg", 2, 12.20, "Test tomatos", 12)]
+        [TestCase("4da54227-ccf1-4fd5-9fb5-21ae4356da33", "WaterMelon", "waterMelon.jpg", 1, 12.20, "Test waterMelon", 12ul)]
+        [TestCase("4da54227-ccf1-4fd5-9fb5-21ae4356da33", "Tomatos", "tomatos.jpg", 2, 12.20, "Test tomatos", 12ul)]
         public async Task When_TryUpdateProductAndAlreadyProductWithThatInfoExist_ShouldReturnFalse(
             string id,
             string name,
@@ -379,7 +379,7 @@
             int categoryId,
             decimal price,
             string description,
-            long quantity)
+            ulong quantity)
         {
             SeedTestProductsAndCategories();
 
@@ -390,9 +390,9 @@
         }
 
         [Test]
-        [TestCase("4da54227-ccf1-4fd5-9fb5-21ae4356da33", "Fish", "fish.jpg", 3, 120, "Test fish", 12)]
-        [TestCase("058e7d03-7082-4d92-9fa3-b0458afd484f", "Melon", "melon.jpg", 2, 100, "Test melon", 3)]
-        [TestCase("999cae77-6db9-4437-bb4f-440bcfcc8772", "Tomatos", "tomatos.jpg", 3, 121, "Test tomatos", 4)]
+        [TestCase("4da54227-ccf1-4fd5-9fb5-21ae4356da33", "Fish", "fish.jpg", 3, 120, "Test fish", 12ul)]
+        [TestCase("058e7d03-7082-4d92-9fa3-b0458afd484f", "Melon", "melon.jpg", 2, 100, "Test melon", 3ul)]
+        [TestCase("999cae77-6db9-4437-bb4f-440bcfcc8772", "Tomatos", "tomatos.jpg", 3, 121, "Test tomatos", 4ul)]
         public async Task When_UpdateProduct_ShouldReturnTrueAndUpdateProduct(
             string id,
             string name,
@@ -400,7 +400,7 @@
             int categoryId,
             decimal price,
             string description,
-            long quantity)
+            ulong quantity)
         {
             SeedTestProductsAndCategories();
 

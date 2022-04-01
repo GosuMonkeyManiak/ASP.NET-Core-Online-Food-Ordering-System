@@ -10,7 +10,7 @@
             int categoryId,
             decimal price,
             string description,
-            long quantity);
+            ulong quantity);
 
         Task<Tuple<IEnumerable<ProductServiceModel>, int, int, int>> All(
             string searchTerm, 
@@ -31,7 +31,7 @@
             int categoryId,
             decimal price,
             string description,
-            long quantity);
+            ulong quantity);
 
         Task<bool> IsProductExist(string productId);
     }

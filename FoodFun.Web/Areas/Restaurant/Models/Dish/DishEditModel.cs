@@ -51,7 +51,7 @@
             QuantityMinLength,
             long.MaxValue,
             ErrorMessage = ProductQuantityError)]
-        public long Quantity { get; init; }
+        public ulong Quantity { get; init; }
 
         [BindNever]
         public IEnumerable<DishCategoryModel> Categories { get; set; } = new List<DishCategoryModel>();

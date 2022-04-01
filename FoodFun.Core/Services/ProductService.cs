@@ -30,7 +30,7 @@
             int categoryId, 
             decimal price, 
             string description,
-            long quantity)
+            ulong quantity)
         {
             await this.productRepository
                 .AddAsync(new()
@@ -113,7 +113,7 @@
             int categoryId,
             decimal price, 
             string description,
-            long quantity)
+            ulong quantity)
         {
             var product = await this.productRepository
                 .GetProductWithCategoryById(id);

@@ -82,7 +82,7 @@
                 return View(new CartListingModel());
             }
 
-            var cart = this.HttpContext.Session.Get<CartModel>(Cart);
+            var cart = this.HttpContext.Session.Get<CartModel>(GlobalConstants.Cart);
 
             var productsFromService = await this.productService.All(cart.Products.Select(x => x.Id).ToArray());
 

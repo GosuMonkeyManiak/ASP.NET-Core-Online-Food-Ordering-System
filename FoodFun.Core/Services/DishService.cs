@@ -29,7 +29,7 @@
             int categoryId,
             decimal price,
             string description,
-            long quantity)
+            ulong quantity)
         {
             var dish = new Dish()
             {
@@ -79,7 +79,7 @@
             int categoryId, 
             decimal price, 
             string description,
-            long quantity)
+            ulong quantity)
         {
             var dish = await this.dishRepository
                 .GetDishWithCategoryById(id);

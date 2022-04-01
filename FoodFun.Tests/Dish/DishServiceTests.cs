@@ -242,17 +242,17 @@
         }
 
         [Test]
-        [TestCase("Chicken soup", "chicken.jpg", 1, 12.20, "chicken soup test", 120)]
-        [TestCase("Pizza", "pizza.jpg", 2, 10.20, "pizza test", 10)]
-        [TestCase("Steak", "steak.jpg", 5, 22.20, "steak test", 25)]
-        [TestCase("Greek Salad", "salad.jpg", 3, 9.20, "greek salad test", 40)]
+        [TestCase("Chicken soup", "chicken.jpg", 1, 12.20, "chicken soup test", 120ul)]
+        [TestCase("Pizza", "pizza.jpg", 2, 10.20, "pizza test", 10ul)]
+        [TestCase("Steak", "steak.jpg", 5, 22.20, "steak test", 25ul)]
+        [TestCase("Greek Salad", "salad.jpg", 3, 9.20, "greek salad test", 40ul)]
         public async Task When_CallAdd_DishShouldBeAddedToStore(
             string name,
             string imageUrl,
             int categoryId,
             decimal price,
             string description,
-            long quantity)
+            ulong quantity)
         {
             await this.dishService
                 .Add(name,
@@ -275,8 +275,8 @@
         }
 
         [Test]
-        [TestCase("c3182fae-c620-4b79-be5c-0f05e104f9ea", "update chicken soup", "chicken.jpg", 2, 12.20, "test update", 1)]
-        [TestCase("81ba5e61-6ed8-454b-8419-67ebd4f16e74", "update pizza", "pizza.jpg", 3, 14.20, "test pizza", 2)]
+        [TestCase("c3182fae-c620-4b79-be5c-0f05e104f9ea", "update chicken soup", "chicken.jpg", 2, 12.20, "test update", 1ul)]
+        [TestCase("81ba5e61-6ed8-454b-8419-67ebd4f16e74", "update pizza", "pizza.jpg", 3, 14.20, "test pizza", 2ul)]
         public async Task When_CallUpdate_ShouldUpdateDishInStore(
             string id,
             string name,
@@ -284,7 +284,7 @@
             int categoryId,
             decimal price,
             string description,
-            long quantity)
+            ulong quantity)
         {
             SeedTestDishes();
 
@@ -305,9 +305,9 @@
         }
 
         [Test]
-        [TestCase("c3182fae-c620-4b79-be5c-0f05e104f9ea", "Pizza", "pizza.jpg", 2, 20.22, "test update", 12)]
-        [TestCase("82496e1f-3120-4016-860e-e98558678477", "Pizza", "pizza.jpg", 2, 12.22, "test update pizza", 14)]
-        [TestCase("c3182fae-c620-4b79-be5c-0f05e104f9ea", "Steak", "sweet.jpg", 3, 12.40, "test steak", 15)]
+        [TestCase("c3182fae-c620-4b79-be5c-0f05e104f9ea", "Pizza", "pizza.jpg", 2, 20.22, "test update", 12ul)]
+        [TestCase("82496e1f-3120-4016-860e-e98558678477", "Pizza", "pizza.jpg", 2, 12.22, "test update pizza", 14ul)]
+        [TestCase("c3182fae-c620-4b79-be5c-0f05e104f9ea", "Steak", "sweet.jpg", 3, 12.40, "test steak", 15ul)]
         public async Task When_CallUpdate_WithAlreadyExistingDishInAnotherCategory_ShouldReturnFalseAndNotUpdateDish(
             string id,
             string name,
@@ -315,7 +315,7 @@
             int categoryId,
             decimal price,
             string description,
-            long quantity)
+            ulong quantity)
         {
             SeedTestDishes();
 
@@ -335,8 +335,8 @@
         }
 
         [Test]
-        [TestCase("82496e1f-3120-4016-860e-e98558678477", "Chicken soup", "chicken.jpg", 1, 15.30, "test chicken", 13)]
-        [TestCase("c3182fae-c620-4b79-be5c-0f05e104f9ea", "Sweet soup", "soup.jpg", 1, 120.20, "test soup", 100)]
+        [TestCase("82496e1f-3120-4016-860e-e98558678477", "Chicken soup", "chicken.jpg", 1, 15.30, "test chicken", 13ul)]
+        [TestCase("c3182fae-c620-4b79-be5c-0f05e104f9ea", "Sweet soup", "soup.jpg", 1, 120.20, "test soup", 100ul)]
         public async Task When_CallUpdate_WithAlreadyExistingDishInSameCategory_ShouldReturnFalseAndNotUpdateDish(
             string id,
             string name,
@@ -344,7 +344,7 @@
             int categoryId,
             decimal price,
             string description,
-            long quantity)
+            ulong quantity)
         {
             SeedTestDishes();
 

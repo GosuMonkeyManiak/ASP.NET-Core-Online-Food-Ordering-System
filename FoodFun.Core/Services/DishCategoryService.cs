@@ -104,6 +104,11 @@
                 .Dishes
                 .Any(x => x.Name == itemName);
 
+        public async Task<bool> IsItemInAnyActiveCategory(string itemId)
+            => (await this.dishCategoryRepository
+                    .GetAllWithDishes())
+                .Any(x => !x.IsDisable && x.Dishes.FirstOrDefault(d => d.Id == itemId) != null);
+
         public async Task Update(int id, string title)
         {
             this.dishCategoryRepository

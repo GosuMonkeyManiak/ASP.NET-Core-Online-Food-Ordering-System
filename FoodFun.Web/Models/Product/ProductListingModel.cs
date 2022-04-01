@@ -9,7 +9,6 @@
     public class ProductListingModel
     {
         [Required]
-        [ShouldBeInActiveProductCategory]
         [MustBeExistingProduct]
         public string Id { get; init; }
 

@@ -30,7 +30,7 @@
         [Required]
         public string Description { get; set; }
 
-        public long Quantity { get; set; }
+        public ulong Quantity { get; set; }
 
         public ICollection<OrderProduct> ProductInOrders { get; init; } = new HashSet<OrderProduct>();
     }

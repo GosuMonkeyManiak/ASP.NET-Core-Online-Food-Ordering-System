@@ -15,7 +15,7 @@
             int categoryId,
             decimal price,
             string description,
-            long quantity);
+            ulong quantity);
 
         Task Add(
             string name,
@@ -23,7 +23,7 @@
             int categoryId,
             decimal price,
             string description,
-            long quantity);
+            ulong quantity);
 
         Task<bool> IsDishExist(string id);
     }

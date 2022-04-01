@@ -21,7 +21,7 @@
         {
             if (!this.ModelState.IsValid)
             {
-                return RedirectToAction("Cart", "Product", new { area = "" });
+                return RedirectToAction("Cart", "Cart", new { area = "" });
             }
 
             return Ok();

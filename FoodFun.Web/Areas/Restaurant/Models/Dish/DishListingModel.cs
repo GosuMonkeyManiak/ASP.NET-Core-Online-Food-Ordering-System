@@ -13,5 +13,7 @@
         public decimal Price { get; init; }
 
         public string Description { get; init; }
+
+        public ulong Quantity { get; init; }
     }
 }

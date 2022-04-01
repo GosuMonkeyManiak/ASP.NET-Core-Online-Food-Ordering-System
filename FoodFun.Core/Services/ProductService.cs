@@ -1,12 +1,13 @@
 ﻿namespace FoodFun.Core.Services
 {
+    using Base;
     using Contracts;
     using Extensions;
     using global::AutoMapper;
     using Infrastructure.Common.Contracts;
     using Models.Product;
 
-    public class ProductService : IProductService
+    public class ProductService : BaseItemService, IProductService
     {
         private readonly IMapper mapper;
         private readonly IProductCategoryService productCategoryService;
@@ -21,8 +22,6 @@
             this.productCategoryService = productCategoryService;
             this.mapper = mapper;
         }
-
-        private int LastPageNumber { get; set; }
 
         public async Task Add(
             string name, 
@@ -65,7 +64,9 @@
                     orderNumber, 
                     pageNumber,
                     pageSize,
-                    onlyAvailable);
+                    onlyAvailable,
+                    this.productCategoryService,
+                    this.productRepository);
 
             var productsWithCategories = await this.productRepository
                 .GetAllProductsWithCategories(
@@ -142,68 +143,6 @@
             await this.productRepository.SaveChangesAsync();
 
             return true;
-        }
-
-        private async Task PopulateLastPageNumberByFilter(
-            string searchTerm,
-            int categoryFilterId,
-            int pageSize,
-            bool onlyAvailable)
-        {
-            var countOfProductsByFilters = await this.productRepository
-                .GetCountOfProductsByFilters(
-                    searchTerm,
-                    categoryFilterId,
-                    onlyAvailable);
-
-            this.LastPageNumber = (int)Math.Ceiling(countOfProductsByFilters / (pageSize * 1.0));
-        }
-
-        private async Task<Tuple<string, int, byte, int>> ValidateAndSetDefaultSearchParameters(
-            string searchTerm,
-            int categoryFilterId,
-            byte orderNumber,
-            int pageNumber,
-            int pageSize,
-            bool onlyAvailable)
-        {
-            string searchTermResult = null;
-            int categoryFilterIdResult = 0;
-            byte orderNumberResult = 0;
-            int pageNumberResult = 1;
-
-            if (searchTerm != null)
-            {
-                searchTermResult = searchTerm;
-            }
-
-            if (await this.productCategoryService.IsCategoryExist(categoryFilterId))
-            {
-                categoryFilterIdResult = categoryFilterId;
-            }
-
-            if (orderNumber == 1)
-            {
-                orderNumberResult = orderNumber;
-            }
-
-            await PopulateLastPageNumberByFilter(
-                searchTermResult, 
-                categoryFilterIdResult,
-                pageSize,
-                onlyAvailable);
-
-            if (pageNumber > 0 
-                && pageNumber <= this.LastPageNumber)
-            {
-                pageNumberResult = pageNumber;
-            }
-
-            return new(
-                searchTermResult, 
-                categoryFilterIdResult, 
-                orderNumberResult,
-                pageNumberResult);
         }
     }
 }

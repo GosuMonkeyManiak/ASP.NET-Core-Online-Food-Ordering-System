@@ -1,8 +1,9 @@
 ﻿namespace FoodFun.Infrastructure.Common.Contracts
 {
+    using Base;
     using Models;
 
-    public interface IProductRepository : IRepository<Product>
+    public interface IProductRepository : IRepository<Product>, IBaseItemRepository
     {
         Task<IEnumerable<Product>> All(string[] ids);
 
@@ -14,11 +15,6 @@
             byte orderNumber,
             int pageNumber,
             int pageSize,
-            bool onlyAvailable);
-
-        Task<int> GetCountOfProductsByFilters(
-            string searchTerm,
-            int categoryFilterId,
             bool onlyAvailable);
     }
 }

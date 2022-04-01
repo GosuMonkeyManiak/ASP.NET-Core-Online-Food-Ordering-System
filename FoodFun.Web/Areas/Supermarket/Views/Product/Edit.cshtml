@@ -38,7 +38,7 @@
                             <option value="@category.Id" selected>@category.Title</option>
                             continue;
                         }
-                        <partial name="_ProductCategoryPartial" model="category"/>
+                        <partial name="_CategoryPartial" model="new Tuple<int, string>(category.Id, category.Title)"/>
                     }
                 </select>
                 <span asp-validation-for="CategoryId" class="text-danger"></span>

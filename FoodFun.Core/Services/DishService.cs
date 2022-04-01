@@ -1,13 +1,13 @@
 ﻿namespace FoodFun.Core.Services
 {
-    using Contracts;
+    using Base;using Contracts;
     using Extensions;
     using global::AutoMapper;
     using Infrastructure.Common.Contracts;
     using Infrastructure.Models;
     using Models.Dish;
 
-    public class DishService : IDishService
+    public class DishService : BaseItemService, IDishService
     {
         private readonly IDishCategoryService dishCategoryService;
         private readonly IDishRepository dishRepository;
@@ -48,11 +48,41 @@
                 .SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<DishServiceModel>> All()
+        public async Task<Tuple<IEnumerable<DishServiceModel>, int, int, int>> All(
+            string searchTerm,
+            int categoryFilterId,
+            byte orderNumber,
+            int pageNumber,
+            int pageSize,
+            bool onlyAvailable = true)
         {
-            var dishesWithCategories = await this.dishRepository.GetDishesWithCategories();
+            var (searchTermResult,
+                categoryFilterIdResult,
+                orderNumberResult,
+                pageNumberResult) = await
+                ValidateAndSetDefaultSearchParameters(
+                    searchTerm,
+                    categoryFilterId,
+                    orderNumber,
+                    pageNumber,
+                    pageSize,
+                    onlyAvailable,
+                    this.dishCategoryService,
+                    this.dishRepository);
 
-            return dishesWithCategories.ProjectTo<DishServiceModel>(this.mapper);
+            var productsWithCategories = await this.dishRepository
+                .GetAllDishesWithCategories(
+                    searchTermResult,
+                    categoryFilterIdResult,
+                    orderNumberResult,
+                    pageNumberResult,
+                    pageSize,
+                    onlyAvailable);
+
+            return new(productsWithCategories.ProjectTo<DishServiceModel>(this.mapper),
+                pageNumberResult,
+                (int)this.LastPageNumber,
+                categoryFilterIdResult);
         }
 
         public async Task<DishServiceModel> GetByIdOrDefault(string id)

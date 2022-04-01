@@ -28,7 +28,7 @@
                 <select asp-for="CategoryId" class="form-control">
                     @foreach (var category in Model.Categories)
                     {
-                        <partial name="_ProductCategoryPartial" model="category"/>
+                        <partial name="_CategoryPartial" model="new Tuple<int, string>(category.Id, category.Title)"/>
                     }
                 </select>
                 <span asp-validation-for="CategoryId" class="text-danger"></span>

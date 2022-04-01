@@ -38,7 +38,7 @@
             CreateMap<DishServiceModel, DishEditModel>()
                 .ForMember(x => x.CategoryId, options => options
                     .MapFrom(x => x.Category.Id));
-
+            
             CreateMap<DishCategoryServiceModel, DishCategoryModel>();
             CreateMap<DishCategoryServiceModel, DishCategoryEditModel>();
             CreateMap<DishCategoryWithDishCountServiceModel, DishCategoryListingModel>();

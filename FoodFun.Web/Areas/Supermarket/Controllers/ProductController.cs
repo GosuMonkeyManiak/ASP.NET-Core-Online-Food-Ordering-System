@@ -76,7 +76,7 @@
                 LastPageNumber = lastPageNumber,
                 SelectedCategoryId = selectedCategoryId,
                 Products = filteredProducts.ProjectTo<ProductListingModel>(this.mapper),
-                Categories = categoriesForProduct.ProjectTo<ProductCategoryModel>(this.mapper)
+                Categories = categoriesForProduct
             };
 
             return View(productSearchModel);

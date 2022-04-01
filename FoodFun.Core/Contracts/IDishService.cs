@@ -4,7 +4,13 @@
 
     public interface IDishService
     {
-        Task<IEnumerable<DishServiceModel>> All();
+        Task<Tuple<IEnumerable<DishServiceModel>, int, int, int>> All(
+            string searchTerm,
+            int categoryFilterId,
+            byte orderNumber,
+            int pageNumber,
+            int pageSize,
+            bool onlyAvailable = true);
 
         Task<DishServiceModel> GetByIdOrDefault(string id);
 

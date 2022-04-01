@@ -3,6 +3,7 @@
     using Core.Contracts;
     using Core.Extensions;
     using global::AutoMapper;
+    using Infrastructure.Common;
     using Microsoft.AspNetCore.Mvc;
     using Models.Dish;
     using Models.DishCategory;
@@ -54,12 +55,32 @@
             return RedirectToAction(nameof(All));
         }
         
-        public async Task<IActionResult> All()
+        public async Task<IActionResult> All([FromQuery] DishSearchModel searchModel)
         {
-            var dishesWithCategoriesFromService = await this.dishService
-                .All();
+            var (filteredDishes,
+                currentPageNumber,
+                lastPageNumber,
+                selectedCategoryId) = await this.dishService
+                .All(
+                    searchModel.SearchTerm,
+                    searchModel.CategoryId,
+                    searchModel.OrderNumber,
+                    searchModel.CurrentPageNumber,
+                    DataConstants.SupermarketPageSize,
+                    onlyAvailable: false);
 
-            return View(dishesWithCategoriesFromService.ProjectTo<DishListingModel>(this.mapper));
+            var categoriesForProduct = await GetDishCategories();
+
+            var productSearchModel = new DishSearchModel()
+            {
+                CurrentPageNumber = currentPageNumber,
+                LastPageNumber = lastPageNumber,
+                SelectedCategoryId = selectedCategoryId,
+                Dishes = filteredDishes.ProjectTo<DishListingModel>(this.mapper),
+                Categories = categoriesForProduct
+            };
+
+            return View(productSearchModel);
         }
         
         public async Task<IActionResult> Edit(string id)

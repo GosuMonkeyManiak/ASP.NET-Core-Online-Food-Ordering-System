@@ -59,7 +59,7 @@
                 .ToListAsync();
         }
 
-        public async Task<int> GetCountOfProductsByFilters(
+        public async Task<int> GetCountOfItemsByFilters(
             string searchTerm, 
             int categoryFilterId,
             bool onlyAvailable)

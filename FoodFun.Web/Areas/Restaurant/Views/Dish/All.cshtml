@@ -1,4 +1,4 @@
-﻿@model IEnumerable<DishListingModel>
+﻿@model DishSearchModel
 
 @{
     ViewData[Title] = "All Dishes";
@@ -6,20 +6,74 @@
 
 <partial name="_ErrorMessagePartial"/>
 
+<div class="row mb-4">
+    <div class="offset-3 col-6">
+        <form method="get" class="form-inline">
+            <div class="input-group">
+                
+                <input type="hidden" asp-for="CurrentPageNumber" value="@Model.CurrentPageNumber" id="pageNumberInput"/>
+
+                <button @(Model.CurrentPageNumber - 1 <= 0 
+                            ? "disabled"
+                            : "") type="submit" class="btn btn-primary rounded me-3" id="previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </button>
+
+                <div class="form-outline me-3">
+                    <input asp-for="SearchTerm" class="form-control" placeholder="Search"/>
+                </div>
+
+                <select asp-for="CategoryId" class="form-control me-3 rounded">
+                    <option value="0">All</option>
+                    @foreach (var category in Model.Categories)
+                    {
+                        if (category.Id == Model.SelectedCategoryId)
+                        {
+                            <option value="@category.Id" selected>@category.Title</option>
+                            continue;
+                        }
+                        <partial name="_CategoryPartial" model="new Tuple<int, string>(category.Id, category.Title)"/>
+                    }
+                </select>
+
+                <select asp-for="OrderNumber" class="form-control me-3 rounded">
+                    <option value="0">Low to High</option>
+                    <option value="1">High to Low</option>
+                </select>
+
+                <button type="submit" class="btn btn-primary rounded me-3">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+                
+                <button @(Model.CurrentPageNumber + 1 > Model.LastPageNumber 
+                            ? "disabled"
+                            : "") type="submit" class="btn btn-primary rounded" id="next">
+                    <span aria-hidden="true">&raquo;</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
 <div class="row">
-    @foreach (var product in Model)
+    @foreach (var dish in Model.Dishes)
     {
         <div class="col-xl-3 mb-4">
             <div class="card text-center" style="width: 18rem;">
-                <img class="card-img-top" src="@product.ImageUrl" alt="@product.Name - (@product.CategoryTitle)">
+                <img class="card-img-top" src="@dish.ImageUrl" alt="@dish.Name - (@dish.CategoryTitle)">
                 <div class="card-body">
-                    <h5 class="card-title">@product.Name - (@product.CategoryTitle)</h5>
-                    <p class="card-text">@product.Price $</p>
-                    <p class="card-text">@product.Description</p>
-                    <a class="btn btn-warning" asp-area="Restaurant" asp-controller="Dish" asp-action="Edit" asp-route-id="@Model">Edit</a>
-                    <a class="btn btn-danger">Delete</a>
+                    <h5 class="card-title">@dish.Name - (@dish.CategoryTitle)</h5>
+                    <p class="card-text">@dish.Price $</p>
+                    <p class="card-text">@dish.Description</p>
+                    <p class="card-text">Quantity: @dish.Quantity</p>
+                    <a class="btn btn-warning" asp-area="Restaurant" asp-controller="Dish" asp-action="Edit" asp-route-id="@dish.Id">Edit</a>
                 </div>
             </div>
         </div>
     }
 </div>
+
+@section Scripts{
+    <partial name="_PaginationButtonScriptPartial" model="@Model.CurrentPageNumber"/>
+}

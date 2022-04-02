@@ -23,7 +23,7 @@
             this.productCategoryService = productCategoryService;
         }
 
-        public async Task<IActionResult> All(ProductSearchModel searchModel)
+        public async Task<IActionResult> All([FromQuery] ProductSearchModel searchModel)
         {
             var (filteredProducts,
                 currentPageNumber,

@@ -2,6 +2,7 @@
 {
     using System.ComponentModel.DataAnnotations;
     using Core.ValidationAttributes.DishCategory;
+
     using static Constants.GlobalConstants.Messages;
     using static Infrastructure.Common.DataConstants.DishCategory;
 

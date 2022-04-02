@@ -3,10 +3,7 @@
     using Models;
     using Microsoft.AspNetCore.Mvc;
     using System.Diagnostics;
-    using Extensions;
     using Microsoft.AspNetCore.Authorization;
-    using Microsoft.Extensions.Caching.Distributed;
-    using Models.Cart;
 
     public class HomeController : Controller
     {

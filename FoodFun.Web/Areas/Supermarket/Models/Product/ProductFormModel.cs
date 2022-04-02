@@ -2,7 +2,6 @@
 {
     using Microsoft.AspNetCore.Mvc.ModelBinding;
     using System.ComponentModel.DataAnnotations;
-    using Core.ValidationAttributes;
     using Core.ValidationAttributes.ProductCategory;
     using Web.Models.Product;
 

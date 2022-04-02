@@ -3,7 +3,6 @@
     using System.ComponentModel.DataAnnotations;
     using DishCategory;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
-    using Web.Models.Product;
 
     public class DishSearchModel
     {

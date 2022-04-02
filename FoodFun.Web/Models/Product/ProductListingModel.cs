@@ -1,7 +1,6 @@
 ﻿namespace FoodFun.Web.Models.Product
 {
     using System.ComponentModel.DataAnnotations;
-    using Core.ValidationAttributes;
     using Core.ValidationAttributes.Product;
 
     using static Constants.GlobalConstants.Messages;

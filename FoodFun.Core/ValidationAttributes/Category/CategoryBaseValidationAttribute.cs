@@ -2,7 +2,6 @@
 {
     using System.ComponentModel.DataAnnotations;
     using Contracts;
-    using Microsoft.Extensions.DependencyInjection;
 
     public abstract class CategoryBaseValidationAttribute : ValidationAttribute
     {

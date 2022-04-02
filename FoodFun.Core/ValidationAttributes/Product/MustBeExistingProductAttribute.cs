@@ -6,6 +6,7 @@
 
     using static Constants.ValidationConstants;
 
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Parameter)]
     public class MustBeExistingProductAttribute : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)

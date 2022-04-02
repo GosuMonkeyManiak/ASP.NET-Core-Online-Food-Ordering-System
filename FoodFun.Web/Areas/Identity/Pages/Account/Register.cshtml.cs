@@ -8,7 +8,6 @@
     using System.ComponentModel.DataAnnotations;
 
     using static Constants.GlobalConstants.Messages;
-    using static Constants.GlobalConstants.Roles;
     using static Infrastructure.Common.DataConstants.User;
 
     public class RegisterModel : PageModel

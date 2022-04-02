@@ -1,6 +1,5 @@
 ﻿namespace FoodFun.Infrastructure.Data.Repositories
 {
-    using Common;
     using Common.Contracts;
     using Microsoft.EntityFrameworkCore;
     using Models;

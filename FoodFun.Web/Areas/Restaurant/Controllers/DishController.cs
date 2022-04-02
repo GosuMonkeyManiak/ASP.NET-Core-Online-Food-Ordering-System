@@ -7,8 +7,6 @@
     using Microsoft.AspNetCore.Mvc;
     using Models.Dish;
     using Models.DishCategory;
-
-    using static Constants.GlobalConstants;
     using static Constants.GlobalConstants.Messages;
 
     public class DishController : RestaurantBaseController

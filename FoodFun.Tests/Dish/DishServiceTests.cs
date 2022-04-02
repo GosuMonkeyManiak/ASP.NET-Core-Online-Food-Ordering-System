@@ -3,6 +3,7 @@
     using AutoMapper;
     using Core.AutoMapper;
     using Core.Contracts;
+    using Core.Models.DishCategory;
     using Core.Services;
     using Infrastructure.Common.Contracts;
     using Infrastructure.Models;
@@ -14,9 +15,7 @@
     using System.Linq;
     using System.Linq.Expressions;
     using System.Reflection;
-    using System.Runtime.InteropServices;
     using System.Threading.Tasks;
-    using Core.Models.DishCategory;
 
     [TestFixture]
     public class DishServiceTests
@@ -107,6 +106,64 @@
                     dishFromStorage.Price = x.Price;
                     dishFromStorage.Description = x.Description;
                     dishFromStorage.Quantity = x.Quantity;
+                });
+
+            this.dishCategoryServiceMock
+                .Setup(x => x.IsCategoryExist(It.IsAny<int>()))
+                .Returns<int>(async x => await Task.FromResult(this.dishCategories.Any(a => a.Id == x)));
+
+            this.dishRepoMock
+                .Setup(x => x.GetAllDishesWithCategories(
+                    It.IsAny<string>(),
+                    It.IsAny<int>(),
+                    It.IsAny<byte>(),
+                    It.IsAny<int>(),
+                    It.IsAny<int>(),
+                    It.IsAny<bool>()))
+                .Returns<string, int, byte, int, int, bool>(
+                async (searchTerm, categoryFilterId, orderNumber, pageNumber, pageSize, onlyAvailable) =>
+                {
+                    var result = new List<Dish>(this.dishes);
+
+                    if (searchTerm != null)
+                    {
+                        result = result
+                            .Where(x => x.Name.Contains(searchTerm)
+                                        || x.Description.Contains(searchTerm))
+                            .ToList();
+                    }
+
+                    if (categoryFilterId != 0)
+                    {
+                        result = result
+                            .Where(x => x.CategoryId == categoryFilterId)
+                            .ToList();
+                    }
+
+                    if (orderNumber == 1)
+                    {
+                        result = result
+                            .OrderByDescending(x => x.Price)
+                            .ToList();
+                    }
+                    else
+                    {
+                        result = result
+                            .OrderBy(x => x.Price)
+                            .ToList();
+                    }
+
+                    if (onlyAvailable)
+                    {
+                        result = result
+                            .Where(x => !x.Category.IsDisable)
+                            .ToList();
+                    }
+
+                    return await Task.FromResult(result
+                            .Skip((pageNumber - 1) * pageSize)
+                            .Take(pageSize)
+                            .ToList());
                 });
         }
 
@@ -361,6 +418,60 @@
             Assert.AreNotEqual(expectedResult.Price, price);
             Assert.AreNotEqual(expectedResult.Description, description);
             Assert.AreNotEqual(expectedResult.Quantity, quantity);
+        }
+
+        [Test]
+        [TestCase("ba", 2, 0, 1, 1, false)]
+        [TestCase("s", 1, 1, 1, 1, true)]
+        public async Task When_CallAllWithSearchParameter_ShouldReturnCorrectFilteredDishes(
+            string searchTerm,
+            int categoryFilterId,
+            byte orderNumber,
+            int pageNumber,
+            int pageSize,
+            bool onlyAvailable)
+        {
+            SeedTestDishes();
+
+            var (filteredDishesFromService,
+                currentPageNumber,
+                lasPageNumber,
+                selectedCategoryId) = await this.dishService
+                .All(
+                searchTerm,
+                categoryFilterId,
+                orderNumber,
+                pageNumber,
+                pageSize,
+                onlyAvailable);
+
+            var expectedResultFromRepo = await this.dishRepoMock
+                .Object
+                .GetAllDishesWithCategories(
+                searchTerm, 
+                categoryFilterId, 
+                orderNumber, 
+                pageNumber, 
+                pageSize, 
+                onlyAvailable);
+
+            var filteredDishes = filteredDishesFromService.ToList();
+            var expectedResult = expectedResultFromRepo.ToList();
+
+            Assert.AreEqual(expectedResult.Count, filteredDishes.Count);
+
+            for (int i = 0; i < expectedResult.Count; i++)
+            {
+                Assert.AreEqual(expectedResult[i].Id, filteredDishes[i].Id);
+                Assert.AreEqual(expectedResult[i].Name, filteredDishes[i].Name);
+                Assert.AreEqual(expectedResult[i].ImageUrl, filteredDishes[i].ImageUrl);
+                Assert.AreEqual(expectedResult[i].CategoryId, filteredDishes[i].Category.Id);
+                Assert.AreEqual(expectedResult[i].Category.Id, filteredDishes[i].Category.Id);
+                Assert.AreEqual(expectedResult[i].Category.Title, filteredDishes[i].Category.Title);
+                Assert.AreEqual(expectedResult[i].Price, filteredDishes[i].Price);
+                Assert.AreEqual(expectedResult[i].Description, filteredDishes[i].Description);
+                Assert.AreEqual(expectedResult[i].Quantity, filteredDishes[i].Quantity);
+            }
         }
     }
 }

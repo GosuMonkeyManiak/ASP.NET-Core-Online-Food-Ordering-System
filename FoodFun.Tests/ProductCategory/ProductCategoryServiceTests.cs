@@ -1,13 +1,6 @@
 ﻿namespace FoodFun.Tests.ProductCategory
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Linq.Expressions;
-    using System.Reflection;
-    using System.Threading.Tasks;
     using AutoMapper;
-    using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
     using Core.AutoMapper;
     using Core.Contracts;
     using Core.Services;
@@ -16,6 +9,12 @@
     using Microsoft.Extensions.DependencyInjection;
     using Moq;
     using NUnit.Framework;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Linq.Expressions;
+    using System.Reflection;
+    using System.Threading.Tasks;
 
     [TestFixture]
     public class ProductCategoryServiceTests
@@ -25,7 +24,6 @@
         private readonly IMapper mapper;
 
         private IList<ProductCategory> productCategories;
-        private IList<Product> products;
 
         public ProductCategoryServiceTests()
         {
@@ -453,6 +451,34 @@
 
             Assert.AreEqual(categoryId, actualResult.Id);
             Assert.AreEqual(title, actualResult.Title);
+        }
+
+        [Test]
+        [TestCase("4da54227-ccf1-4fd5-9fb5-21ae4356da33")]
+        [TestCase("058e7d03-7082-4d92-9fa3-b0458afd484f")]
+        public async Task When_CallIsItemInAnyActiceCategory_WithValidIdInActiveCategory_ShouldReturnTrue(
+            string itemId)
+        {
+            SeedTestCategories();
+
+            var result = await this.productCategoryService
+                .IsItemInAnyActiveCategory(itemId);
+
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        [TestCase("999cae77-6db9-4437-bb4f-440bcfcc8772")]
+        [TestCase("22164c80-b0de-4633-ada5-a74ac0674843")]
+        public async Task When_CallIsItemInAnyActiceCategory_WithInValidIdInInActiveCategory_ShouldReturnFalse(
+            string itemId)
+        {
+            SeedTestCategories();
+
+            var result = await this.productCategoryService
+                .IsItemInAnyActiveCategory(itemId);
+
+            Assert.IsFalse(result);
         }
     }
 }

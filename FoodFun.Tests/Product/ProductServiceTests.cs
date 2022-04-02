@@ -369,8 +369,8 @@
         }
 
         [Test]
-        [TestCase(null, 120, 2, 22, 1, true)]
-        [TestCase(null, 1201, 3, 320, 2, false)]
+        [TestCase(null, 1, 1, 1, 2, true)]
+        [TestCase(null, 2, 0, 1, 2, false)]
         [TestCase("ba ba", 1, 0, 1, 2, true)]
         [TestCase("ba ba", 1, 0, 1, 2, false)]
         public async Task When_PassSearchParameters_ShouldReturnProperFilteredProducts(
@@ -394,42 +394,32 @@
                     pageSize,
                     onlyAvailable);
 
-            //var (validSearchTerm,
-            //    validCategoryFilterId,
-            //    validOrderNumber,
-            //    validPageNumber) = await GetResultFromInvokeValidationMethod(
-            //        searchTerm,
-            //        categoryFilterId,
-            //        orderNumber,
-            //        pageNumber,
-            //        pageSize,
-            //        onlyAvailable);
 
-            //var expectedFilteredProducts = (await this.productRepoMock.Object.GetAllProductsWithCategories(
-            //        validSearchTerm,
-            //        validCategoryFilterId,
-            //        validOrderNumber,
-            //        validPageNumber,
-            //        pageSize,
-            //        onlyAvailable))
-            //    .ToList();
+            var expectedFilteredProducts = (await this.productRepoMock.Object.GetAllProductsWithCategories(
+                    searchTerm,
+                    categoryFilterId,
+                    orderNumber,
+                    pageNumber,
+                    pageSize,
+                    onlyAvailable))
+                .ToList();
 
-            //var actualFilteredProducts = FilteredProducts.ToList();
+            var actualFilteredProducts = FilteredProducts.ToList();
 
-            //Assert.AreEqual(expectedFilteredProducts.Count, actualFilteredProducts.Count);
+            Assert.AreEqual(expectedFilteredProducts.Count, actualFilteredProducts.Count);
 
-            //for (int i = 0; i < expectedFilteredProducts.Count; i++)
-            //{
-            //    Assert.AreEqual(expectedFilteredProducts[i].Id, actualFilteredProducts[i].Id);
-            //    Assert.AreEqual(expectedFilteredProducts[i].Name, actualFilteredProducts[i].Name);
-            //    Assert.AreEqual(expectedFilteredProducts[i].ImageUrl, actualFilteredProducts[i].ImageUrl);
-            //    Assert.AreEqual(expectedFilteredProducts[i].CategoryId, actualFilteredProducts[i].Category.Id);
-            //    Assert.AreEqual(expectedFilteredProducts[i].Category.Id, actualFilteredProducts[i].Category.Id);
-            //    Assert.AreEqual(expectedFilteredProducts[i].Category.Title, actualFilteredProducts[i].Category.Title);
-            //    Assert.AreEqual(expectedFilteredProducts[i].Price, actualFilteredProducts[i].Price);
-            //    Assert.AreEqual(expectedFilteredProducts[i].Description, actualFilteredProducts[i].Description);
-            //    Assert.AreEqual(expectedFilteredProducts[i].Quantity, actualFilteredProducts[i].Quantity);
-            //}
+            for (int i = 0; i < expectedFilteredProducts.Count; i++)
+            {
+                Assert.AreEqual(expectedFilteredProducts[i].Id, actualFilteredProducts[i].Id);
+                Assert.AreEqual(expectedFilteredProducts[i].Name, actualFilteredProducts[i].Name);
+                Assert.AreEqual(expectedFilteredProducts[i].ImageUrl, actualFilteredProducts[i].ImageUrl);
+                Assert.AreEqual(expectedFilteredProducts[i].CategoryId, actualFilteredProducts[i].Category.Id);
+                Assert.AreEqual(expectedFilteredProducts[i].Category.Id, actualFilteredProducts[i].Category.Id);
+                Assert.AreEqual(expectedFilteredProducts[i].Category.Title, actualFilteredProducts[i].Category.Title);
+                Assert.AreEqual(expectedFilteredProducts[i].Price, actualFilteredProducts[i].Price);
+                Assert.AreEqual(expectedFilteredProducts[i].Description, actualFilteredProducts[i].Description);
+                Assert.AreEqual(expectedFilteredProducts[i].Quantity, actualFilteredProducts[i].Quantity);
+            }
         }
 
         [Test]

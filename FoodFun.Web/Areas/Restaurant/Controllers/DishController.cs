@@ -66,7 +66,7 @@
                     searchModel.CategoryId,
                     searchModel.OrderNumber,
                     searchModel.CurrentPageNumber,
-                    DataConstants.SupermarketPageSize,
+                    DataConstants.PrivatePageSize,
                     onlyAvailable: false);
 
             var categoriesForProduct = await GetDishCategories();

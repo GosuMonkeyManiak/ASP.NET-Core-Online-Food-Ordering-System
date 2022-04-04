@@ -33,7 +33,7 @@
             this.dbContext = new FoodFunDbContext(this.dbContextOptions);
 
             this.dbContext.Database.EnsureDeleted();
-            this.dbContext.Database.EnsureDeleted();
+            this.dbContext.Database.EnsureCreated();
 
             this.productRepository = new ProductRepository(this.dbContext);
         }

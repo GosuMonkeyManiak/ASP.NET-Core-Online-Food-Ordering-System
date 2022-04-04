@@ -23,9 +23,7 @@
                 .FirstOrDefaultAsync(x => x.Id == id);
 
         public async Task<IEnumerable<Dish>> GetDishesWithCategories()
-            => await this.DbSet
-                .Include(x => x.Category)
-                .AsNoTracking()
+            => await this.DishesWithCategories
                 .ToListAsync();
 
         public async Task<IEnumerable<Dish>> GetAllDishesWithCategories(

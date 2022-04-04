@@ -3,7 +3,7 @@
     using System.Collections;
     using global::AutoMapper;
 
-    public static class EnumerableAutoMapperExtension
+    public static class EnumerableAutoMapperExtensions
     {
         public static IEnumerable<TDestination> ProjectTo<TDestination>(
             this IEnumerable collection,

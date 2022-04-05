@@ -36,6 +36,10 @@
             return categories.ProjectTo<DishCategoryServiceModel>(this.mapper);
         }
 
+        public async Task<IEnumerable<DishCategoryServiceModel>> AllNotDisabled()
+            => (await this.dishCategoryRepository.GeAllNotDisabled())
+                .ProjectTo<DishCategoryServiceModel>(this.mapper);
+
         public async Task<IEnumerable<DishCategoryWithDishCountServiceModel>> AllWithDishesCount()
         {
             var categoriesWithDishes = await this.dishCategoryRepository

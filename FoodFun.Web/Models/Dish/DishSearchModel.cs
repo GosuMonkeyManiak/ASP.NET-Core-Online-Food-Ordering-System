@@ -1,7 +1,8 @@
-﻿namespace FoodFun.Web.Areas.Restaurant.Models.Dish
+﻿namespace FoodFun.Web.Models.Dish
 {
     using System.ComponentModel.DataAnnotations;
-    using DishCategory;
+    using FoodFun.Web.Areas.Restaurant.Models.Dish;
+    using FoodFun.Web.Areas.Restaurant.Models.DishCategory;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
 
     public class DishSearchModel

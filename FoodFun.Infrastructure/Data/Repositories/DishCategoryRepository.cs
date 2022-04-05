@@ -11,6 +11,12 @@
         {
         }
 
+        public async Task<IEnumerable<DishCategory>> GeAllNotDisabled()
+            => await this.DbSet
+                .AsNoTracking()
+                .Where(x => !x.IsDisable)
+                .ToListAsync();
+
         public async Task<IEnumerable<DishCategory>> GetAllWithDishes()
             => await this.DbSet
                 .Include(x => x.Dishes)

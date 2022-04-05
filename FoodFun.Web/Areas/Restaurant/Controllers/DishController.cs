@@ -2,6 +2,7 @@
 {
     using Core.Contracts;
     using Core.Extensions;
+    using FoodFun.Web.Models.Dish;
     using global::AutoMapper;
     using Infrastructure.Common;
     using Microsoft.AspNetCore.Mvc;

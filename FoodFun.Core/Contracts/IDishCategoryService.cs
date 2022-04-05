@@ -6,6 +6,8 @@
     {
         Task<IEnumerable<DishCategoryServiceModel>> All();
 
+        Task<IEnumerable<DishCategoryServiceModel>> AllNotDisabled();
+
         Task<IEnumerable<DishCategoryWithDishCountServiceModel>> AllWithDishesCount();
 
         Task<DishCategoryServiceModel> GetByIdOrDefault(int id);

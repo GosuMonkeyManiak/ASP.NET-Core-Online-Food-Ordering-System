@@ -109,6 +109,10 @@
             => await this.dishRepository
                 .FindOrDefaultAsync(p => p.Id == id) != null;
 
+        public async Task<decimal> PriceForDishes(params string[] ids)
+            => (await this.dishRepository.All(ids))
+                .Sum(p => p.Price);
+
         public async Task<bool> Update(
             string id, 
             string name, 

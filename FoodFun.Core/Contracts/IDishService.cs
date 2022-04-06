@@ -34,5 +34,7 @@
             ulong quantity);
 
         Task<bool> IsDishExist(string id);
+
+        Task<decimal> PriceForDishes(params string[] ids);
     }
 }

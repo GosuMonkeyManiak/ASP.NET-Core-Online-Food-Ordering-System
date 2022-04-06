@@ -10,6 +10,7 @@
     using Core.Models.DishCategory;
     using Core.Models.Product;
     using Core.Models.ProductCategory;
+    using FoodFun.Core.Models.Cart;
     using global::AutoMapper;
     using Infrastructure.Models;
     using Microsoft.AspNetCore.Identity;
@@ -30,6 +31,7 @@
             CreateMap<ProductCategoryServiceModel, ProductCategoryEditModel>();
             CreateMap<ProductCategoryWithProductCountServiceModel, ProductCategoryListingModel>();
             CreateMap<ProductCategoryServiceModel, ProductCategoryModel>();
+            CreateMap<ProductListingModel, CartItemModel>();
 
             CreateMap<DishServiceModel, DishListingModel>()
                 .ForMember(x => x.CategoryTitle, options => options
@@ -42,6 +44,7 @@
             CreateMap<DishCategoryServiceModel, DishCategoryModel>();
             CreateMap<DishCategoryServiceModel, DishCategoryEditModel>();
             CreateMap<DishCategoryWithDishCountServiceModel, DishCategoryListingModel>();
+            CreateMap<DishListingModel, CartItemModel>();
 
             CreateMap<User, UserListingModel>();
 

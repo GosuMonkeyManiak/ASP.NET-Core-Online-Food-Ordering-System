@@ -1,6 +1,8 @@
 ﻿namespace FoodFun.Infrastructure.Common.Contracts
 {
-    public interface IOrderRepository
+    using FoodFun.Infrastructure.Models;
+
+    public interface IOrderRepository : IRepository<Order>
     {
     }
 }

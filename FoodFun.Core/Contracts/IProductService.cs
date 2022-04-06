@@ -34,5 +34,7 @@
             ulong quantity);
 
         Task<bool> IsProductExist(string productId);
+
+        Task<decimal> PriceForProducts(params string[] ids);
     }
 }

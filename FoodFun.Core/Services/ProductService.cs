@@ -107,6 +107,10 @@
             => await this.productRepository
                 .FindOrDefaultAsync(p => p.Id == productId) != null;
 
+        public async Task<decimal> PriceForProducts(params string[] ids)
+            => (await this.productRepository.All(ids))
+                .Sum(p => p.Price);
+
         public async Task<bool> Update(
             string id, 
             string name, 

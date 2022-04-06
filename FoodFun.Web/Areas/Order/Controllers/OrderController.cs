@@ -24,7 +24,7 @@
                 return RedirectToAction("Cart", "Cart", new { area = "" });
             }
 
-            return Ok();
+            return Ok(model);
         }
     }
 }

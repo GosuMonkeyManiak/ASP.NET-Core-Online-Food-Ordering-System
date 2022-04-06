@@ -18,5 +18,7 @@
         public string DishId { get; init; }
 
         public Dish Dish { get; init; }
+
+        public ulong Quantity { get; init; }
     }
 }

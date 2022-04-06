@@ -17,11 +17,6 @@
 
         public User User { get; init; }
 
-        [ForeignKey(nameof(Address))]
-        public int AddressId { get; init; }
-
-        public Address Address { get; init; }
-
         public decimal Price { get; init; }
 
         public bool IsSent { get; init; }

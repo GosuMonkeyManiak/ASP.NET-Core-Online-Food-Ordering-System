@@ -9,6 +9,7 @@
     {
         [Required]
         [MustBeExistingProduct]
+        [MustBeInActiveProductCategory]
         public string Id { get; init; }
 
         public string Name { get; init; }
@@ -23,8 +24,8 @@
 
         [Range(
             1,
-            long.MaxValue,
-            ErrorMessage = ProductQuantityError)]
+            ulong.MaxValue,
+            ErrorMessage = QuantityError)]
         public ulong Quantity { get; set; }
     }
 }

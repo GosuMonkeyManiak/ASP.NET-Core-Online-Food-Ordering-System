@@ -47,7 +47,7 @@
         [Range(
             QuantityMinLength, 
             long.MaxValue,
-            ErrorMessage = ProductQuantityError)]
+            ErrorMessage = QuantityError)]
         public ulong Quantity { get; init; }
 
         [BindNever]

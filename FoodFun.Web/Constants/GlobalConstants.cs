@@ -37,7 +37,7 @@
             public const string UrlErrorWithMaxLength = "{0} can't be more then {1} characters.";
             public const string ProductPriceError = "{0} must be between {1} and {2}.";
             public const string DescriptionError = "{0} must be with a minimum {1} characters.";
-            public const string ProductQuantityError = "{0} minimum number {1}.";
+            public const string QuantityError = "{0} minimum number {1}.";
 
             public const string ProductNotExist = $"{ProductNotExistBase}!";
             public const string ProductCategoryNotExist = $"{ProductCategoryNotExistBase}!";

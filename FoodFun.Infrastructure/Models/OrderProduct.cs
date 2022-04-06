@@ -18,5 +18,7 @@
         public string ProductId { get; init; }
 
         public Product Product { get; init; }
+
+        public ulong Quantity { get; init; }
     }
 }

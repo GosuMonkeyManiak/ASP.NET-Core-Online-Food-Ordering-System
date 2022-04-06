@@ -26,10 +26,6 @@
 
         public DbSet<OrderDish> OrdersDishes { get; init; }
 
-        public DbSet<Address> Addresses { get; init; }
-
-        public DbSet<UserAddress> UsersAddresses { get; init; }
-
         public DbSet<Table> Tables { get; init; }
 
         public DbSet<TableSize> TableSizes { get; init; }
@@ -52,9 +48,6 @@
 
             builder.Entity<ReservationDish>()
                 .HasKey(k => new { k.ReservationId, k.DishId });
-
-            builder.Entity<UserAddress>()
-                .HasKey(k => new { k.UserId, k.AddressId });
 
             builder
                 .Entity<ProductCategory>()

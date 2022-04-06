@@ -5,17 +5,16 @@
     using Core.Models.Product;
     using Core.ValidationAttributes.Product;
     using FoodFun.Core.Models.Cart;
+    using FoodFun.Core.Models.Dish;
     using FoodFun.Core.ValidationAttributes.Dish;
+    using FoodFun.Web.Areas.Restaurant.Models.Dish;
+    using FoodFun.Web.Models.Cart;
     using global::AutoMapper;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Models.Product;
-    using Core.Models.Cart;
 
     using static Constants.GlobalConstants.Messages;
-    using FoodFun.Web.Models.Cart;
-    using FoodFun.Web.Areas.Restaurant.Models.Dish;
-    using FoodFun.Core.Models.Dish;
 
     public class CartController : Controller
     {
@@ -39,7 +38,7 @@
         [Authorize]
         public async Task<IActionResult> AddProductToCard(
             [MustBeExistingProduct] 
-            [MustBeInActiveDishCategory] string id)
+            [MustBeInActiveProductCategory] string id)
         {
             if (!this.ModelState.IsValid)
             {
@@ -96,33 +95,21 @@
             });
         }
 
-        //[Authorize]
-        //public async Task<IActionResult> RemoveFromCart(string id)
-        //{
-        //    await this.HttpContext.Session.LoadAsync();
+        [Authorize]
+        public async Task<IActionResult> RemoveFromCart(string id)
+        {
+            await this.shoppingCartService.LoadCart();
 
-        //    if (!this.HttpContext.Session.IsAvailable
-        //        || !this.HttpContext.Session.Keys.Any(x => x == GlobalConstants.Cart))
-        //    {
-        //        return RedirectToAction(nameof(Cart));
-        //    }
+            if (!this.shoppingCartService.IsCartAvailable()
+                || !this.shoppingCartService.IsKeyExist(GlobalConstants.Cart))
+            {
+                return RedirectToAction(nameof(Cart));
+            }
 
-        //    var cart = this.HttpContext.Session.Get<CartModel>(GlobalConstants.Cart);
+            await this.shoppingCartService.RemoveFromCart(id, GlobalConstants.Cart);
 
-        //    if (!cart.Products.Any(x => x.Id == id))
-        //    {
-        //        return RedirectToAction(nameof(Cart));
-        //    }
-
-        //    var product = cart.Products.First(x => x.Id == id);
-        //    cart.Products.Remove(product);
-
-        //    this.HttpContext.Session.Set<CartModel>(GlobalConstants.Cart, cart);
-
-        //    await this.HttpContext.Session.CommitAsync();
-
-        //    return RedirectToAction(nameof(Cart));
-        //}
+            return RedirectToAction(nameof(Cart));
+        }
 
         private IList<ProductListingModel> MapToProductListingModels(
             IEnumerable<ProductServiceModel> productsFromService,

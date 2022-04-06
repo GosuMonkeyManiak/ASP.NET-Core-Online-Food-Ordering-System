@@ -100,5 +100,26 @@
 
         public CartModel GetCart(string cartKey)
             => this.httpContext.Session.Get<CartModel>(cartKey);
+
+        public async Task RemoveFromCart(string itemId, string cartKey)
+        {
+            var cart = GetCart(cartKey);
+
+            if (cart.Products.Any(x => x.Id == itemId))
+            {
+                var product = cart.Products.First(x => x.Id == itemId);
+                cart.Products.Remove(product);
+            }
+
+            if (cart.Dishes.Any(x => x.Id == itemId))
+            {
+                var dish = cart.Dishes.First(x => x.Id == itemId);
+                cart.Dishes.Remove(dish);
+            }
+
+            SetCart(cart, cartKey);
+
+            await CommitAsync();
+        }
     }
 }

@@ -15,5 +15,7 @@
         bool IsCartAvailable();
 
         Task LoadCart();
+
+        Task RemoveFromCart(string itemId, string cartKey);
     }
 }

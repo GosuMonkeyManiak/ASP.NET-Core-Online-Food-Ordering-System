@@ -30,15 +30,7 @@
                                         <p><span class="text-muted">Category: </span>@Model.Products[i].CategoryTitle <span class="text-muted">Description: </span>@Model.Products[i].Description</p>
                                     </div>
                                     <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                                        <button class="btn btn-link px-2" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                                            <i class="fas fa-minus"></i>
-                                        </button>
-
                                         <input asp-for="Products[i].Quantity" value="@Model.Products[i].Quantity" class="form-control form-control-sm"/>
-
-                                        <button class="btn btn-link px-2" onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
-                                            <i class="fas fa-plus"></i>
-                                        </button>
                                     </div>
                                     <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
                                         <h5 id="calculatedPrice" class="mb-0">$@Model.Products[i].Price</h5>
@@ -68,15 +60,7 @@
                                         <p><span class="text-muted">Category: </span>@Model.Dishes[i].CategoryTitle <span class="text-muted">Description: </span>@Model.Dishes[i].Description</p>
                                     </div>
                                     <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                                        <button class="btn btn-link px-2" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                                            <i class="fas fa-minus"></i>
-                                        </button>
-
                                         <input asp-for="Dishes[i].Quantity" value="@Model.Dishes[i].Quantity" class="form-control form-control-sm"/>
-
-                                        <button class="btn btn-link px-2" onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
-                                            <i class="fas fa-plus"></i>
-                                        </button>
                                     </div>
                                     <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
                                         <h5 id="calculatedPrice" class="mb-0">$@Model.Dishes[i].Price</h5>

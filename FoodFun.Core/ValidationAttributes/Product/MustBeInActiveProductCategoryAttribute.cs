@@ -7,19 +7,13 @@
 
     using static Constants.ValidationConstants;
 
-    public class MustBeInActiveProductCategoryAttribute : CategoryBaseValidationAttribute
+    public class MustBeInActiveDishCategory : CategoryBaseValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            var productService = validationContext.GetService<IProductService>();
-            var productCategory = validationContext.GetService<IProductCategoryService>();
+            var dishCategoryService = validationContext.GetService<IDishCategoryService>();
 
-            if (!productService.IsProductExist((string) value).GetAwaiter().GetResult())
-            {
-                return ValidationResult.Success;
-            }
-
-            if (IsItemInAnyActiveCategory((string) value, productCategory))
+            if (IsItemInAnyActiveCategory((string) value, dishCategoryService))
             {
                 return ValidationResult.Success;
             }

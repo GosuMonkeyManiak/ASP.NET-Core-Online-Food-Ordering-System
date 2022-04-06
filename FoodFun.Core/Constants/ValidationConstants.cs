@@ -4,6 +4,8 @@
     {
         public const string CategoryNotExist = "Category doesn't exist!";
         public const string CategoryAlreadyExist = "Category already exist!";
+
+        public const string ItemNotExist = "Item doesn't exist.";
         public const string ItemAlreadyExistInCategory = "Item already exist in category!";
         public const string ItemMustBeInActiveCategory = "Item must be in active category!";
 

@@ -53,6 +53,44 @@
                         </div>
                     }
 
+                    @for (int i = 0; i < Model.Dishes.Count; i++)
+                    {
+                        <input asp-for="Dishes[i].Id" type="hidden" value="@Model.Dishes[i].Id"/>
+
+                        <div class="card rounded-3 mb-4">
+                            <div class="card-body p-4">
+                                <div class="row d-flex justify-content-between align-items-center">
+                                    <div class="col-md-2 col-lg-2 col-xl-2">
+                                        <img src="@Model.Dishes[i].ImageUrl" class="img-fluid rounded-3" alt="@($"{Model.Dishes[i].ImageUrl} - {Model.Dishes[i].Name} - {Model.Dishes[i].CategoryTitle}")">
+                                    </div>
+                                    <div class="col-md-3 col-lg-3 col-xl-3">
+                                        <p class="lead fw-normal mb-2">@Model.Dishes[i].Name</p>
+                                        <p><span class="text-muted">Category: </span>@Model.Dishes[i].CategoryTitle <span class="text-muted">Description: </span>@Model.Dishes[i].Description</p>
+                                    </div>
+                                    <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                                        <button class="btn btn-link px-2" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+
+                                        <input asp-for="Dishes[i].Quantity" value="@Model.Dishes[i].Quantity" class="form-control form-control-sm"/>
+
+                                        <button class="btn btn-link px-2" onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                                            <i class="fas fa-plus"></i>
+                                        </button>
+                                    </div>
+                                    <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                                        <h5 id="calculatedPrice" class="mb-0">$@Model.Dishes[i].Price</h5>
+                                    </div>
+                                    <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                                        <a asp-area="" asp-controller="Cart" asp-action="RemoveFromCart" asp-route-id="@Model.Dishes[i].Id" class="text-danger"><i class="fas fa-trash fa-lg"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        </div>
+                    }
+
                     <div class="card text-center">
                         <div class="card-body">
                             <button type="submit" class="btn btn-warning btn-block btn-lg">Make a order</button>

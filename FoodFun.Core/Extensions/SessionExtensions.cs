@@ -1,5 +1,6 @@
-﻿namespace FoodFun.Web.Extensions
+﻿namespace FoodFun.Core.Extensions
 {
+    using Microsoft.AspNetCore.Http;
     using System.Text.Json;
 
     public static class SessionExtensions

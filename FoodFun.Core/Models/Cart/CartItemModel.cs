@@ -1,9 +1,9 @@
 ﻿namespace FoodFun.Core.Models.Cart
 {
-    public class CartItemServiceModel
+    public class CartItemModel
     {
         public string Id { get; init; }
-
-        public long Quantity { get; init; }
+       
+        public ulong Quantity { get; set; }
     }
 }

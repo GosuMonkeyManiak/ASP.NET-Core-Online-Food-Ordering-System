@@ -66,8 +66,7 @@
                     <h5 class="card-title">@product.Name - (@product.CategoryTitle)</h5>
                     <p class="card-text">@product.Price $</p>
                     <p class="card-text">@product.Description</p>
-                    <p class="card-text">Quantity: @product.Quantity</p>
-                    <a asp-area="" asp-controller="Cart" asp-action="AddToCard" asp-route-id="@product.Id" class="btn btn-primary">Add to Cart</a>
+                    <a asp-area="" asp-controller="Cart" asp-action="AddProductToCard" asp-route-id="@product.Id" class="btn btn-primary">Add to Cart</a>
                 </div>
             </div>
         </div>

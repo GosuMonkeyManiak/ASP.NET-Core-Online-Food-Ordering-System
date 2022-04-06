@@ -57,17 +57,16 @@
         </form>
     </div>
 
-    @foreach (var product in Model.Dishes)
+    @foreach (var dish in Model.Dishes)
     {
         <div class="col-xl-3 mb-4">
             <div class="card text-center" style="width: 18rem;">
-                <img class="card-img-top" src="@product.ImageUrl" alt="@product.Name - (@product.CategoryTitle)">
+                <img class="card-img-top" src="@dish.ImageUrl" alt="@dish.Name - (@dish.CategoryTitle)">
                 <div class="card-body">
-                    <h5 class="card-title">@product.Name - (@product.CategoryTitle)</h5>
-                    <p class="card-text">@product.Price $</p>
-                    <p class="card-text">@product.Description</p>
-                    <p class="card-text">Quantity: @product.Quantity</p>
-                    <a asp-area="" asp-controller="Cart" asp-action="AddToCard" asp-route-id="@product.Id" class="btn btn-primary">Add to Cart</a>
+                    <h5 class="card-title">@dish.Name - (@dish.CategoryTitle)</h5>
+                    <p class="card-text">@dish.Price $</p>
+                    <p class="card-text">@dish.Description</p>
+                    <a asp-area="" asp-controller="Cart" asp-action="AddDishToCard" asp-route-id="@dish.Id" class="btn btn-primary">Add to Cart</a>
                 </div>
             </div>
         </div>

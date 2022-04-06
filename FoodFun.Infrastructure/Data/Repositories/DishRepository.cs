@@ -107,5 +107,12 @@
 
             return query;
         }
+
+        public async Task<IEnumerable<Dish>> All(string[] ids)
+            => await this.DbSet
+                .AsNoTracking()
+                .Include(c => c.Category)
+                .Where(x => ids.Contains(x.Id))
+                .ToListAsync();
     }
 }

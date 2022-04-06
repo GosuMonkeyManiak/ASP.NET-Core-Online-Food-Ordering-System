@@ -25,6 +25,6 @@
             1,
             long.MaxValue,
             ErrorMessage = ProductQuantityError)]
-        public long Quantity { get; set; }
+        public ulong Quantity { get; set; }
     }
 }

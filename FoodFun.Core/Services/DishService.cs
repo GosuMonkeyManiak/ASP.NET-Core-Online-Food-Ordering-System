@@ -85,6 +85,13 @@
                 categoryFilterIdResult);
         }
 
+        public async Task<IEnumerable<DishServiceModel>> All(params string[] ids)
+        {
+            var dishes = await this.dishRepository.All(ids);
+
+            return dishes.ProjectTo<DishServiceModel>(this.mapper);
+        }
+
         public async Task<DishServiceModel> GetByIdOrDefault(string id)
         {
             if (!await IsDishExist(id))

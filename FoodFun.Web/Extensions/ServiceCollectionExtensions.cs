@@ -73,7 +73,8 @@
                 .AddTransient<IProductCategoryService, ProductCategoryService>()
                 .AddTransient<IDishService, DishService>()
                 .AddTransient<IDishCategoryService, DishCategoryService>()
-                .AddTransient<IOrderService, OrderService>();
+                .AddTransient<IOrderService, OrderService>()
+                .AddTransient<IShoppingCartService, ShoppingCartService>();
 
         public static IServiceCollection AddConfiguredCookies(this IServiceCollection services)
             => services

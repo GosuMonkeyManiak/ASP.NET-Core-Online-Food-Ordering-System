@@ -5,6 +5,8 @@
 
     public interface IDishRepository : IRepository<Dish>, IBaseItemRepository
     {
+        Task<IEnumerable<Dish>> All(string[] ids);
+
         Task<Dish> GetDishWithCategoryById(string id);
 
         Task<IEnumerable<Dish>> GetDishesWithCategories();

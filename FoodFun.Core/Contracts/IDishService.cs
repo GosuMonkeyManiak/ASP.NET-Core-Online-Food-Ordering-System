@@ -12,6 +12,8 @@
             int pageSize,
             bool onlyAvailable = true);
 
+        Task<IEnumerable<DishServiceModel>> All(params string[] ids);
+
         Task<DishServiceModel> GetByIdOrDefault(string id);
 
         Task<bool> Update(

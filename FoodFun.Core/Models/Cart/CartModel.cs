@@ -1,4 +1,4 @@
-﻿namespace FoodFun.Web.Models.Cart
+﻿namespace FoodFun.Core.Models.Cart
 {
     public class CartModel
     {

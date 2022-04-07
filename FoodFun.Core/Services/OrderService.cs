@@ -35,6 +35,34 @@
             return orders.ProjectTo<OrderServiceModel>(this.mapper);
         }
 
+        public async Task<OrderWithItemsServiceModel> ByIdWithItems(int id)
+        {
+            var order = await this.orderRepository.ByItWithItems(id);
+
+            var products = (await this.productService.All(order.OrderProducts.Select(x => x.ProductId).ToArray()))
+                .Select(x =>
+                {
+                    x.Quantity = order.OrderProducts.First(x => x.ProductId == x.ProductId).Quantity;
+                    return x;
+                });
+            var dishes = (await this.dishService.All(order.OrderDishes.Select(x => x.DishId).ToArray()))
+                .Select(x =>
+                {
+                    x.Quantity = order.OrderDishes.First(x => x.DishId == x.DishId).Quantity;
+                    return x;
+                });
+
+            var orderWithItems = new OrderWithItemsServiceModel()
+            {
+                UserEmail = order.User.Email,
+                Price = order.Price,
+                Products = products,
+                Dishes = dishes
+            };
+
+            return orderWithItems;
+        }
+
         public async Task<int> Create(
             string userId, 
             IEnumerable<CartItemModel> products,

@@ -5,5 +5,7 @@
     public interface IOrderRepository : IRepository<Order>
     {
         Task<IEnumerable<Order>> AllWithUsers();
+
+        Task<Order> ByItWithItems(int id);
     }
 }

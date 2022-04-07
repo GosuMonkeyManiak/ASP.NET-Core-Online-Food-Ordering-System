@@ -26,9 +26,13 @@
             return View(orders.ProjectTo<OrderListingModel>(this.mapper));
         }
 
-        //public async Task<IActionResult> Details(int id)
-        //{
+        public async Task<IActionResult> Details(int id)
+        {
+            //validated id
 
-        //}
+            var orderWithItems = await this.orderService.ByIdWithItems(id);
+
+            return View(this.mapper.Map<OrderWithItemsListingModel>(orderWithItems));
+        }
     }
 }

@@ -18,5 +18,13 @@
                 .Include(o => o.User)
                 .AsNoTracking()
                 .ToListAsync();
+
+        public async Task<Order> ByItWithItems(int id)
+            => await this.DbSet
+                .Include(p => p.OrderProducts)
+                .Include(u => u.User)
+                .Include(d => d.OrderDishes)
+                .AsNoTracking()
+                .FirstAsync(x => x.Id == id);
     }
 }

@@ -11,5 +11,7 @@
             IEnumerable<CartItemModel> dishes);
 
         Task<IEnumerable<OrderServiceModel>> All();
+
+        Task<OrderWithItemsServiceModel> ByIdWithItems(int id);
     }
 }

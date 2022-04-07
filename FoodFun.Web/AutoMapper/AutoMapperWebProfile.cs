@@ -30,6 +30,8 @@
                 .ForMember(x => x.CategoryId, options => options.
                     MapFrom(x => x.Category.Id));
 
+            CreateMap<ProductServiceModel, OrderItemModel>();
+
             CreateMap<ProductCategoryServiceModel, ProductCategoryEditModel>();
             CreateMap<ProductCategoryWithProductCountServiceModel, ProductCategoryListingModel>();
             CreateMap<ProductCategoryServiceModel, ProductCategoryModel>();
@@ -42,6 +44,8 @@
             CreateMap<DishServiceModel, DishEditModel>()
                 .ForMember(x => x.CategoryId, options => options
                     .MapFrom(x => x.Category.Id));
+
+            CreateMap<DishServiceModel, OrderItemModel>();
             
             CreateMap<DishCategoryServiceModel, DishCategoryModel>();
             CreateMap<DishCategoryServiceModel, DishCategoryEditModel>();
@@ -55,6 +59,7 @@
                     .MapFrom(x => x.Name));
 
             CreateMap<OrderServiceModel, OrderListingModel>();
+            CreateMap<OrderWithItemsServiceModel, OrderWithItemsListingModel>();
         }
     }
 }

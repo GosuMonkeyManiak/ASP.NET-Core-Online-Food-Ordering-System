@@ -1,0 +1,51 @@
+﻿@model OrderWithItemsListingModel
+
+@{
+    ViewData[Title] = "Details";
+}
+
+<div class="row">
+    <div class="offset-lg-4 col-lg-4">
+        <p class="text-center">@Model.UserEmail - $@Model.Price</p>
+
+         <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Product Name</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Quantity</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var producut in Model.Products)
+                {
+                    <tr>
+                        <td>@producut.Name</td>
+                        <td>$@producut.Price</td>
+                        <td>@producut.Quantity</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Dish Name</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Quantity</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var dish in Model.Dishes)
+                {
+                    <tr>
+                        <td>@dish.Name</td>
+                        <td>$@dish.Price</td>
+                        <td>@dish.Quantity</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

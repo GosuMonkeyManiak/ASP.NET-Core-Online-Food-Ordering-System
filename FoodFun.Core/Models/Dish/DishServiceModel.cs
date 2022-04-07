@@ -16,6 +16,6 @@
 
         public string Description { get; init; }
 
-        public ulong Quantity { get; init; }
+        public ulong Quantity { get; set; }
     }
 }

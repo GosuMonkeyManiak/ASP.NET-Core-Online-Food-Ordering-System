@@ -1,0 +1,4 @@
+﻿@if(this.User.IsInRole(OrderManager))
+{
+    <li><a class="dropdown-item" asp-area="Order" asp-controller="Home" asp-action="Index" >To Order</a></li>
+}

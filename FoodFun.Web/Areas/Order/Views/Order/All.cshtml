@@ -30,8 +30,8 @@
                         <td>@(order.IsDelivered ? "Yes" : "No")</td>
                         <td>
                             <a asp-area="Order" asp-controller="Order" asp-action="Details" asp-route-id="@order.Id" class="btn btn-info">Details</a> |
-                            <a asp-area="Order" asp-controller="Order" asp-action="Sent" asp-route-id="@order.Id" class="btn btn-success">Mark as Sent</a> |
-                            <a asp-area="Order" asp-controller="Order" asp-action="Delivered" asp-route-id="@order.Id" class="btn btn-success">Mark as Delivered</a>
+                            <a asp-area="Order" asp-controller="Order" asp-action="Sent" asp-route-id="@order.Id" class="btn btn-success @(order.IsSent ? "disabled" : "")">Mark as Sent</a> |
+                            <a asp-area="Order" asp-controller="Order" asp-action="Delivered" asp-route-id="@order.Id" class="btn btn-success @(order.IsDelivered ? "disabled" : "")">Mark as Delivered</a>
                         </td>
                     </tr>
                 }

@@ -11,6 +11,8 @@
     using Core.Models.Product;
     using Core.Models.ProductCategory;
     using FoodFun.Core.Models.Cart;
+    using FoodFun.Core.Models.Order;
+    using FoodFun.Web.Areas.Order.Models.Order;
     using global::AutoMapper;
     using Infrastructure.Models;
     using Microsoft.AspNetCore.Identity;
@@ -51,6 +53,8 @@
             CreateMap<IdentityRole, RoleListingModel>()
                 .ForMember(x => x.Title, options => options
                     .MapFrom(x => x.Name));
+
+            CreateMap<OrderServiceModel, OrderListingModel>();
         }
     }
 }

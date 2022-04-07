@@ -1,0 +1,39 @@
+﻿@model IEnumerable<OrderListingModel>
+
+@{
+    ViewData[Title] = "All Orders";
+}
+
+<div class="row">
+    <div class="offset-lg-3 col-lg-7">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Order number</th>
+                    <th scope="col">User email</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Is Sent</th>
+                    <th scope="col">Is Delivered</th>
+                    <th scope="col">Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var order in Model)
+                {
+                    <tr>
+                        <td>@order.Id</td>
+                        <td>@order.UserEmail</td>
+                        <td>$@order.Price</td>
+                        <td>@(order.IsSent ? "Yes" : "No")</td>
+                        <td>@(order.IsDelivered ? "Yes" : "No")</td>
+                        <td>
+                            <a asp-area="Order" asp-controller="Order" asp-action="Details" asp-route-id="@order.Id" class="btn btn-info">Details</a> |
+                            <a asp-area="Order" asp-controller="Order" asp-action="Sent" asp-route-id="@order.Id" class="btn btn-success">Mark as Sent</a> |
+                            <a asp-area="Order" asp-controller="Order" asp-action="Delivered" asp-route-id="@order.Id" class="btn btn-success">Mark as Delivered</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

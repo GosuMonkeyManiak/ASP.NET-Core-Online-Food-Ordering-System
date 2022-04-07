@@ -1,6 +1,7 @@
 ﻿namespace FoodFun.Core.Contracts
 {
     using FoodFun.Core.Models.Cart;
+    using FoodFun.Core.Models.Order;
 
     public interface IOrderService
     {
@@ -8,5 +9,7 @@
             string userId,
             IEnumerable<CartItemModel> products,
             IEnumerable<CartItemModel> dishes);
+
+        Task<IEnumerable<OrderServiceModel>> All();
     }
 }

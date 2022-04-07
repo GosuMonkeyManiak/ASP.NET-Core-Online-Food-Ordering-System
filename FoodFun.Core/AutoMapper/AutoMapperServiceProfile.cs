@@ -1,6 +1,7 @@
 ﻿namespace FoodFun.Core.AutoMapper
 {
     using FoodFun.Core.Models.Cart;
+    using FoodFun.Core.Models.Order;
     using global::AutoMapper;
     using Infrastructure.Models;
     using Models.Dish;
@@ -31,6 +32,9 @@
 
             CreateMap<CartItemModel, OrderDish>()
                 .ForMember(x => x.DishId, options => options.MapFrom(x => x.Id));
+
+            CreateMap<Order, OrderServiceModel>()
+                .ForMember(x => x.UserEmail, options => options.MapFrom(x => x.User.Email));
         }
     }
 }

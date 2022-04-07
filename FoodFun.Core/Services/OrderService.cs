@@ -3,6 +3,7 @@
     using Contracts;
     using FoodFun.Core.Extensions;
     using FoodFun.Core.Models.Cart;
+    using FoodFun.Core.Models.Order;
     using FoodFun.Infrastructure.Common.Contracts;
     using FoodFun.Infrastructure.Models;
     using global::AutoMapper;
@@ -25,6 +26,13 @@
             this.mapper = mapper;
             this.productService = productService;
             this.dishService = dishService;
+        }
+
+        public async Task<IEnumerable<OrderServiceModel>> All()
+        {
+            var orders = await this.orderRepository.AllWithUsers();
+
+            return orders.ProjectTo<OrderServiceModel>(this.mapper);
         }
 
         public async Task<int> Create(

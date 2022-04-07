@@ -13,11 +13,20 @@
         {
         }
 
-        public async Task<IEnumerable<Order>> AllWithUsers()
-            => await this.DbSet
+        public async Task<IEnumerable<Order>> AllWithUsers(bool onlyActive)
+        {
+            var query = this.DbSet
                 .Include(o => o.User)
-                .AsNoTracking()
-                .ToListAsync();
+                .AsNoTracking();
+
+            if (onlyActive)
+            {
+                query = query
+                    .Where(x => !x.IsDelivered);
+            }
+
+            return await query.ToListAsync();
+        }
 
         public async Task<Order> ByItWithItems(int id)
             => await this.DbSet

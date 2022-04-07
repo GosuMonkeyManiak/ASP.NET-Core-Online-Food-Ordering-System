@@ -28,9 +28,9 @@
             this.productService = productService;
         }
 
-        public async Task<IEnumerable<OrderServiceModel>> All()
+        public async Task<IEnumerable<OrderServiceModel>> All(bool onlyActive = true)
         {
-            var orders = await this.orderRepository.AllWithUsers();
+            var orders = await this.orderRepository.AllWithUsers(onlyActive);
 
             return orders.ProjectTo<OrderServiceModel>(this.mapper);
         }

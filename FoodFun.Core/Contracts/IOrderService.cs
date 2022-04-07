@@ -10,7 +10,7 @@
             IEnumerable<CartItemModel> products,
             IEnumerable<CartItemModel> dishes);
 
-        Task<IEnumerable<OrderServiceModel>> All();
+        Task<IEnumerable<OrderServiceModel>> All(bool onlyActive = true);
 
         Task<OrderWithItemsServiceModel> ByIdWithItems(int id);
 

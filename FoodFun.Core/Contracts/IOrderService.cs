@@ -13,5 +13,10 @@
         Task<IEnumerable<OrderServiceModel>> All();
 
         Task<OrderWithItemsServiceModel> ByIdWithItems(int id);
+
+        Task<bool> IsOrderExist(int id);
+
+        Task Sent(int id);
+        Task Deliver(int id);
     }
 }

@@ -11,21 +11,21 @@
 
     public class OrderService : IOrderService
     {
-        private readonly IOrderRepository orderRepository;
-        private readonly IMapper mapper;
-        private readonly IProductService productService;
         private readonly IDishService dishService;
+        private readonly IMapper mapper;
+        private readonly IOrderRepository orderRepository;
+        private readonly IProductService productService;
 
         public OrderService(
-            IOrderRepository orderRepository,
-            IMapper mapper,
-            IProductService productService,
-            IDishService dishService)
+             IDishService dishService,
+             IMapper mapper,
+             IOrderRepository orderRepository,
+             IProductService productService)
         { 
-            this.orderRepository = orderRepository;
-            this.mapper = mapper;
-            this.productService = productService;
             this.dishService = dishService;
+            this.mapper = mapper;
+            this.orderRepository = orderRepository;
+            this.productService = productService;
         }
 
         public async Task<IEnumerable<OrderServiceModel>> All()
@@ -86,6 +86,34 @@
                 .SaveChangesAsync();
 
             return order.Id;
+        }
+
+        public async Task Deliver(int id)
+        {
+            var order = await this.orderRepository.FindAsync(x => x.Id == id);
+            order.IsDelivered = true;
+
+            this.orderRepository
+                .Update(order);
+
+            await this.orderRepository
+                .SaveChangesAsync();
+        }
+
+        public async Task<bool> IsOrderExist(int id)
+            => (await this.orderRepository
+                .FindOrDefaultAsync(x => x.Id == id)) != null;
+
+        public async Task Sent(int id)
+        {
+            var order =  await this.orderRepository.FindAsync(x => x.Id == id);
+            order.IsSent = true;
+
+            this.orderRepository
+                .Update(order);
+
+            await this.orderRepository
+                    .SaveChangesAsync();
         }
     }
 }

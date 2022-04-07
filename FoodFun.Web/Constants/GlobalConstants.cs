@@ -63,6 +63,8 @@
             public const string RoleNotExit = "Role doesn't exist!";
 
             public const string SomethingWentWrong = "Something went wrong!";
+
+            public const string OrderNotExist = "Order not exist!";
         }
 
         public static class Roles

@@ -19,9 +19,9 @@
 
         public decimal Price { get; init; }
 
-        public bool IsSent { get; init; }
+        public bool IsSent { get; set; }
 
-        public bool IsDelivered { get; init; }
+        public bool IsDelivered { get; set; }
 
         public ICollection<OrderProduct> OrderProducts { get; init; } = new HashSet<OrderProduct>();
 

@@ -6,6 +6,8 @@
     using global::AutoMapper;
     using Microsoft.AspNetCore.Mvc;
 
+    using static Constants.GlobalConstants.Messages;
+
     public class OrderController : OrderBaseController
     {
         private readonly IOrderService orderService;
@@ -28,11 +30,44 @@
 
         public async Task<IActionResult> Details(int id)
         {
-            //validated id
+            if (!await this.orderService.IsOrderExist(id))
+            {
+                this.TempData[Error] = OrderNotExist;
+
+                return RedirectToAction(nameof(All));
+            }
 
             var orderWithItems = await this.orderService.ByIdWithItems(id);
 
             return View(this.mapper.Map<OrderWithItemsListingModel>(orderWithItems));
+        }
+
+        public async Task<IActionResult> Sent(int id)
+        {
+            if (!await this.orderService.IsOrderExist(id))
+            {
+                this.TempData[Error] = OrderNotExist;
+
+                return RedirectToAction(nameof(All));
+            }
+
+            await this.orderService.Sent(id);
+
+            return RedirectToAction(nameof(All));
+        }
+
+        public async Task<IActionResult> Delivered(int id)
+        {
+            if (!await this.orderService.IsOrderExist(id))
+            {
+                this.TempData[Error] = OrderNotExist;
+
+                return RedirectToAction(nameof(All));
+            }
+
+            await this.orderService.Deliver(id);
+
+            return RedirectToAction(nameof(All));
         }
     }
 }

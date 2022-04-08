@@ -50,6 +50,21 @@
                     .GetAwaiter()
                     .GetResult();
             }
+
+            if (!db.TableSizes.Any())
+            {
+                SeedTableSizes(db).GetAwaiter().GetResult();
+            }
+
+            if (!db.TablePositions.Any())
+            {
+                SeedTablePositions(db).GetAwaiter().GetResult();
+            }
+
+            if (!db.Tables.Any())
+            {
+                SeedTable(db).GetAwaiter().GetResult();
+            }
         }
 
         private async static Task SeedRoles(RoleManager<IdentityRole> roleManager)
@@ -106,6 +121,72 @@
 
             await dbContext.DishesCategories
                 .AddRangeAsync(categories);
+
+            await dbContext.SaveChangesAsync();
+        }
+
+        private async static Task SeedTableSizes(FoodFunDbContext dbContext)
+        {
+            var tableSizes = new List<TableSize>()
+            {
+                new TableSize() { Seats = 4 },
+                new TableSize() { Seats = 5 },
+                new TableSize() { Seats = 6 },
+                new TableSize() { Seats = 7 },
+                new TableSize() { Seats = 8 },
+                new TableSize() { Seats = 9 },
+                new TableSize() { Seats = 10 },
+            };
+
+            await dbContext.TableSizes
+                .AddRangeAsync(tableSizes);
+
+            await dbContext.SaveChangesAsync();
+        }
+
+        private async static Task SeedTablePositions(FoodFunDbContext dbContext)
+        {
+            var tablePositions = new List<TablePosition>()
+            {
+                new TablePosition() { Position = "Out side" },
+                new TablePosition() { Position = "In side" }
+            };
+
+            await dbContext.TablePositions
+                .AddRangeAsync(tablePositions);
+
+            await dbContext.SaveChangesAsync();
+        }
+
+        private async static Task SeedTable(FoodFunDbContext dbContext)
+        {
+            var tables = new List<Table>()
+            {
+                new Table() { TableSizeId = 1, TablePositionId = 1},
+                new Table() { TableSizeId = 2, TablePositionId = 1},
+                new Table() { TableSizeId = 3, TablePositionId = 1},
+                new Table() { TableSizeId = 4, TablePositionId = 1},
+                new Table() { TableSizeId = 5, TablePositionId = 1},
+                new Table() { TableSizeId = 6, TablePositionId = 1},
+                new Table() { TableSizeId = 7, TablePositionId = 1},
+                new Table() { TableSizeId = 1, TablePositionId = 1},
+                new Table() { TableSizeId = 2, TablePositionId = 1},
+                new Table() { TableSizeId = 3, TablePositionId = 1},
+
+                new Table() { TableSizeId = 1, TablePositionId = 2},
+                new Table() { TableSizeId = 2, TablePositionId = 2},
+                new Table() { TableSizeId = 3, TablePositionId = 2},
+                new Table() { TableSizeId = 4, TablePositionId = 2},
+                new Table() { TableSizeId = 5, TablePositionId = 2},
+                new Table() { TableSizeId = 6, TablePositionId = 2},
+                new Table() { TableSizeId = 7, TablePositionId = 2},
+                new Table() { TableSizeId = 1, TablePositionId = 2},
+                new Table() { TableSizeId = 2, TablePositionId = 2},
+                new Table() { TableSizeId = 3, TablePositionId = 2},
+            };
+
+            await dbContext.Tables
+                .AddRangeAsync(tables);
 
             await dbContext.SaveChangesAsync();
         }

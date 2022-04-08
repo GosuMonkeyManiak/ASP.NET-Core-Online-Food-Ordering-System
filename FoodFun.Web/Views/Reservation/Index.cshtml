@@ -1,0 +1,15 @@
+﻿@{
+    ViewData[Title] = "Pick Date";
+}
+
+<div class="row">
+    <div class="offset-lg-3 col-lg-4">
+        <form method="get" asp-area="" asp-controller="Reservation" asp-action="FreeTablesForDate">
+            <label class="form-label">Date:</label>
+            <input type="text" class="form-control" name="dat"/>
+            <div class="form-text">Date must be in format: "day/month/year"</div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>

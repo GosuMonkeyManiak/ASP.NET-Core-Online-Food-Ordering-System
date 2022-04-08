@@ -3,6 +3,7 @@
     using Core.AutoMapper;
     using Core.Contracts;
     using Core.Services;
+    using FoodFun.Web.ModelBinders;
     using Infrastructure.Common.Contracts;
     using Infrastructure.Data;
     using Infrastructure.Data.Repositories;
@@ -89,6 +90,7 @@
                 .AddControllersWithViews(options =>
                 {
                     options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
+                    options.ModelBinderProviders.Insert(0, new DateBinderProvider("dd/MM/yyyy"));
                 });
 
             return services;

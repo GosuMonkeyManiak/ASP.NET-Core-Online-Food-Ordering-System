@@ -11,5 +11,7 @@
 
         public const string ProductNotExist = "Product doesn't exist!";
         public const string DishNotExist = "Dish doesn't exist!";
+
+        public const string DateMustBeNowOrInTheFuture = "Date must be today or in the future!";
     }
 }

@@ -12,6 +12,8 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
 
+    using static Constants.GlobalConstants;
+
     public static class ServiceCollectionExtensions
     {
         public static IServiceCollection AddDbContext(
@@ -90,7 +92,7 @@
                 .AddControllersWithViews(options =>
                 {
                     options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
-                    options.ModelBinderProviders.Insert(0, new DateBinderProvider("dd/MM/yyyy"));
+                    options.ModelBinderProviders.Insert(0, new DateBinderProvider(DateFormat));
                 });
 
             return services;

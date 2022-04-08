@@ -14,6 +14,8 @@
 
         public const string Cart = nameof(Cart);
 
+        public const string DateFormat = "dd/MM/yyyy";
+
         public static class Redirect
         {
             public const string HomeIndexUrl = $"/{Home}/{Index}";

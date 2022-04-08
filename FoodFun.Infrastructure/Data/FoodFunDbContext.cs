@@ -34,8 +34,6 @@
 
         public DbSet<Reservation> Reservations { get; init; }
 
-        public DbSet<ReservationDish> ReservationsDishes { get; init; }
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -45,9 +43,6 @@
 
             builder.Entity<OrderDish>()
                 .HasKey(k => new { k.OrderId, k.DishId });
-
-            builder.Entity<ReservationDish>()
-                .HasKey(k => new { k.ReservationId, k.DishId });
 
             builder
                 .Entity<ProductCategory>()

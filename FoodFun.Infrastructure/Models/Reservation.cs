@@ -24,10 +24,7 @@
 
         public User User { get; init; }
 
+        [Column(TypeName = "date")]
         public DateTime Date { get; init; }
-
-        public decimal Price { get; init; }
-
-        public ICollection<ReservationDish> ReservationDishes { get; init; } = new HashSet<ReservationDish>();
     }
 }

@@ -19,6 +19,8 @@
                 return RedirectToAction(nameof(Index));
             }
 
+            //extract free table for date
+
             return Ok(date.Year);
         }
     }

@@ -33,7 +33,5 @@
         public ulong Quantity { get; set; }
 
         public ICollection<OrderDish> DishInOrders { get; init; } = new HashSet<OrderDish>();
-
-        public ICollection<ReservationDish> DishInReservations { get; init; } = new HashSet<ReservationDish>();
     }
 }

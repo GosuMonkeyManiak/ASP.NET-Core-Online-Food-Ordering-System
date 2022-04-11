@@ -7,5 +7,7 @@
         Task<IEnumerable<TableServiceModel>> FreeTables(DateOnly date);
 
         Task<bool> Reserv(DateOnly date, string tableId, string userId);
+
+        Task<IEnumerable<TableServiceModel>> ByDate(DateOnly date);
     }
 }

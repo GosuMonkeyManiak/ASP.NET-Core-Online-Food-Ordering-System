@@ -14,9 +14,11 @@
         {
         }
 
-        public async Task<IEnumerable<Reservation>> GetAllByDate(DateOnly date)
+        public async Task<IEnumerable<Reservation>> GetAllWithTablesByDate(DateOnly date)
             => await this.DbSet
                 .Include(t => t.Table)
+                .ThenInclude(t => t.TableSize)
+                .Include(t => t.Table.TablePosition)
                 .AsNoTracking()
                 .Where(t => t.Date == date.ToDateTime(new TimeOnly()))
                 .ToListAsync();

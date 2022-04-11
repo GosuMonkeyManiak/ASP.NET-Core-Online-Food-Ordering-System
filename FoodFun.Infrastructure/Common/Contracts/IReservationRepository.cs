@@ -4,6 +4,6 @@
 
     public interface IReservationRepository : IRepository<Reservation>
     {
-        Task<IEnumerable<Reservation>> GetAllByDate(DateOnly date);
+        Task<IEnumerable<Reservation>> GetAllWithTablesByDate(DateOnly date);
     }
 }

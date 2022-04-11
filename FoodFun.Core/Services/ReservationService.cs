@@ -27,9 +27,19 @@
             this.mapper = mapper;
         }
 
+        public async Task<IEnumerable<TableServiceModel>> ByDate(DateOnly date)
+        {
+            var table = (await this.reservationRepository
+                .GetAllWithTablesByDate(date))
+                .Select(x => x.Table)
+                .ToList();
+
+            return table.ProjectTo<TableServiceModel>(this.mapper);
+        }
+
         public async Task<IEnumerable<TableServiceModel>> FreeTables(DateOnly date)
         {
-            var reservationsByDate = await this.reservationRepository.GetAllByDate(date);
+            var reservationsByDate = await this.reservationRepository.GetAllWithTablesByDate(date);
 
             var allTables = (await this.tableService.All());
 

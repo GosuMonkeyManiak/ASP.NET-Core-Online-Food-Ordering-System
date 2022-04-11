@@ -2,11 +2,11 @@
     ViewData[Title] = "Pick a Date";
 }
 
-<partial name="_ErrorMessagePartial"/>
+<partial name="_ErrorMessagePartial" />
 
 <div class="row">
     <div class="offset-lg-3 col-lg-4">
-        <form method="get" asp-area="" asp-controller="Reservation" asp-action="FreeTablesForDate">
+        <form method="get" asp-area="Restaurant" asp-controller="Reservation" asp-action="AllTakenTablesByDate">
             <label class="form-label">Date:</label>
             <input type="text" class="form-control" name="date"/>
             <div class="form-text">Date must be in format: "day/month/year"</div>

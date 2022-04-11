@@ -1,0 +1,24 @@
+﻿@model Tuple<DateOnly, IEnumerable<TableServiceModel>>
+
+@{
+    ViewData[Title] = "Taken table by Date";
+}
+
+<div class="text-center">
+    <h1>All Reservations for @($"{Model.Item1.Day:d2}/{Model.Item1.Month:d2}/{Model.Item1.Year}")</h1>
+</div>
+
+<div class="row">
+    @foreach (var table in Model.Item2)
+    {
+        <div class="col-lg-3 mb-3 text-center">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h4 class="card-title">Table (@table.TablePosition)</h4>
+                    <h5 class="card-title">Table Number: @table.Id</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">This table is for @table.TableSize people.</h6>
+                </div>
+            </div>
+        </div>
+    }
+</div>

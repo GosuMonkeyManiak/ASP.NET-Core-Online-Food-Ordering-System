@@ -25,5 +25,9 @@
 
             return tables.ProjectTo<TableServiceModel>(this.mapper);
         }
+
+        public async Task<bool> IsTableExist(string id)
+            => await this.tableRepository
+                .FindOrDefaultAsync(x => x.Id == id) != null;
     }
 }

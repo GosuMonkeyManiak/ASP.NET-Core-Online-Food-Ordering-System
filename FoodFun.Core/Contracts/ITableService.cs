@@ -5,5 +5,7 @@
     public interface ITableService
     {
         Task<IEnumerable<TableServiceModel>> All();
+
+        Task<bool> IsTableExist(string id);
     }
 }

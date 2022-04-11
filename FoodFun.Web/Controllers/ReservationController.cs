@@ -7,6 +7,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using System.Security.Claims;
+
     using static Constants.GlobalConstants.Messages;
 
     public class ReservationController : Controller
@@ -35,7 +36,7 @@
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> Reserv(
+        public async Task<IActionResult> Reserve(
             [ShouldBeNowOrInTheFuture] DateOnly date,
             [ShouldBeExistingTable] string id)
         {
@@ -49,7 +50,7 @@
             var isSucceed = await this.reservationService
                 .Reserv(date, id, this.User.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value);
 
-            return Ok(isSucceed);
+            return View();
         }
     }
 }

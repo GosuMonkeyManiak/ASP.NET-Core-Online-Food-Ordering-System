@@ -12,7 +12,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Table (@table.TablePosition)</h5>
                     <h6 class="card-subtitle mb-2 text-muted">This table is for @table.TableSize people.</h6>
-                      <form asp-area="" asp-controller="Reservation" asp-action="Reserv" method="post">
+                      <form asp-area="" asp-controller="Reservation" asp-action="Reserve" method="post">
                         <input type="hidden" value="@table.Id" name="id"/>
                         <input type="hidden" value="@($"{Model.Item1.Day:d2}/{Model.Item1.Month:d2}/{Model.Item1.Year}")" name="date"/>
                         <button type="submit" class="btn btn-primary">Reserve</button>

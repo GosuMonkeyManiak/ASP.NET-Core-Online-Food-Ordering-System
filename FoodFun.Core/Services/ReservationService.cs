@@ -9,6 +9,7 @@
     using System.Linq;
     using FoodFun.Core.Extensions;
     using global::AutoMapper;
+    using FoodFun.Infrastructure.Models;
 
     public class ReservationService : IReservationService
     {
@@ -40,6 +41,30 @@
             }
 
             return allTables;
+        }
+
+        public async Task<bool> Reserv(DateOnly date, string tableId, string userId)
+        {
+            var newReservation = new Reservation()
+            {
+                TableId = tableId,
+                UserId = userId,
+                Date = date.ToDateTime(new TimeOnly())
+            };
+
+            await this.reservationRepository
+                .AddAsync(newReservation);
+
+            try
+            {
+                await this.reservationRepository.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

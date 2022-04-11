@@ -38,6 +38,10 @@
         {
             base.OnModelCreating(builder);
 
+            builder.Entity<Reservation>()
+                .HasIndex(x => new { x.TableId, x.Date })
+                .IsUnique();
+
             builder.Entity<OrderProduct>()
                 .HasKey(k => new { k.OrderId, k.ProductId });
 

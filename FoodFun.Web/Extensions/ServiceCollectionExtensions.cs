@@ -68,7 +68,9 @@
                 .AddScoped<IProductCategoryRepository, ProductCategoryRepository>()
                 .AddScoped<IDishRepository, DishRepository>()
                 .AddScoped<IDishCategoryRepository, DishCategoryRepository>()
-                .AddScoped<IOrderRepository, OrderRepository>();
+                .AddScoped<IOrderRepository, OrderRepository>()
+                .AddScoped<IReservationRepository, ReservationRepository>()
+                .AddScoped<ITableRepository, TableRepository>();
 
         public static IServiceCollection AddServices(this IServiceCollection services)
             => services
@@ -77,7 +79,9 @@
                 .AddTransient<IDishService, DishService>()
                 .AddTransient<IDishCategoryService, DishCategoryService>()
                 .AddTransient<IOrderService, OrderService>()
-                .AddTransient<IShoppingCartService, ShoppingCartService>();
+                .AddTransient<IShoppingCartService, ShoppingCartService>()
+                .AddTransient<IReservationService, ReservationService>()
+                .AddTransient<ITableService, TableService>();
 
         public static IServiceCollection AddConfiguredCookies(this IServiceCollection services)
             => services

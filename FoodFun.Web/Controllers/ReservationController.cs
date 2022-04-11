@@ -1,5 +1,6 @@
 ﻿namespace FoodFun.Web.Controllers
 {
+    using FoodFun.Core.Contracts;
     using FoodFun.Core.ValidationAttributes.Date;
     using Microsoft.AspNetCore.Mvc;
 
@@ -7,10 +8,15 @@
 
     public class ReservationController : Controller
     {
+        private readonly IReservationService reservationService;
+
+        public ReservationController(IReservationService reservationService) 
+            => this.reservationService = reservationService;
+
         public IActionResult Index()
             => View();
 
-        public IActionResult FreeTablesForDate([ShouldBeNowOrInTheFuture] DateOnly date)
+        public async Task<IActionResult> FreeTablesForDate([ShouldBeNowOrInTheFuture] DateOnly date)
         {
             if (!this.ModelState.IsValid)
             {
@@ -18,10 +24,10 @@
 
                 return RedirectToAction(nameof(Index));
             }
+            //extract free table for date (return tables)
+            var freeTables = await this.reservationService.FreeTables(date);
 
-            //extract free table for date
-
-            return Ok(date.Year);
+            return View(freeTables);
         }
     }
 }

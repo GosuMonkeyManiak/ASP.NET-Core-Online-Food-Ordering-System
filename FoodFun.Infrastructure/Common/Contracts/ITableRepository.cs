@@ -4,5 +4,6 @@
 
     public interface ITableRepository : IRepository<Table>
     {
+        Task<IEnumerable<Table>> AllWithPositionsAndSizes();
     }
 }

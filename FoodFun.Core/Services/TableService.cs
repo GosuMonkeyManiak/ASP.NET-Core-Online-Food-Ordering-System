@@ -21,7 +21,7 @@
 
         public async Task<IEnumerable<TableServiceModel>> All()
         {
-            var tables = await this.tableRepository.AllAsNoTracking();
+            var tables = await this.tableRepository.AllWithPositionsAndSizes();
 
             return tables.ProjectTo<TableServiceModel>(this.mapper);
         }

@@ -1,0 +1,20 @@
+﻿@model IEnumerable<TableServiceModel>
+
+@{
+    ViewData[Title] = "Free Tables";
+}
+
+<div class="row">
+    @foreach (var table in Model)
+    {
+        <div class="col-lg-3 mb-3 text-center">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Table (@table.TablePosition)</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">This table is for @table.TableSize people.</h6>
+                    <a class="btn btn-primary">Reserve</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

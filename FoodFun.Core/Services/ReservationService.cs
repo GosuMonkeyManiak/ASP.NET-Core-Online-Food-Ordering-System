@@ -27,7 +27,7 @@
             this.mapper = mapper;
         }
 
-        public async Task<IEnumerable<TableServiceModel>> ByDate(DateOnly date)
+        public async Task<IEnumerable<TableServiceModel>> AllByDate(DateOnly date)
         {
             var table = (await this.reservationRepository
                 .GetAllWithTablesByDate(date))
@@ -46,7 +46,7 @@
             if (reservationsByDate.Any())
             {
                 allTables = allTables
-                    .Where(t => reservationsByDate.Any(x => x.TableId != t.Id))
+                    .Where(t => !reservationsByDate.Any(x => x.TableId == t.Id))
                     .ToList();
             }
 

@@ -67,6 +67,7 @@
             public const string SomethingWentWrong = "Something went wrong!";
 
             public const string OrderNotExist = "Order not exist!";
+            public const string TableIsAlreadyTaken = "Table is already taken!";
         }
 
         public static class Roles

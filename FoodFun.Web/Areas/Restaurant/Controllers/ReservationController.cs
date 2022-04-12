@@ -30,7 +30,7 @@
                 return RedirectToAction(nameof(Index));
             }
 
-            var tables = await this.reservationService.ByDate(date);
+            var tables = await this.reservationService.AllByDate(date);
 
             return View(new Tuple<DateOnly, IEnumerable<TableServiceModel>>(date, tables));
         }

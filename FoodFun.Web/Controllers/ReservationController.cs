@@ -50,6 +50,13 @@
             var isSucceed = await this.reservationService
                 .Reserv(date, id, this.User.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value);
 
+            if (!isSucceed)
+            {
+                this.TempData[Error] = TableIsAlreadyTaken;
+
+                return RedirectToAction(nameof(Index));
+            }
+
             return View();
         }
     }

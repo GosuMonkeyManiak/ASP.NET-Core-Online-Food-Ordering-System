@@ -107,6 +107,10 @@
             => await this.productRepository
                 .FindOrDefaultAsync(p => p.Id == productId) != null;
 
+        public async Task<IEnumerable<LatestProductServiceModel>> Latest()
+            => (await this.productRepository.LatestFive())
+                .ProjectTo<LatestProductServiceModel>(this.mapper);
+
         public async Task<decimal> PriceForProducts(params string[] ids)
             => (await this.productRepository.All(ids))
                 .Sum(p => p.Price);

@@ -35,6 +35,8 @@
 
         Task<bool> IsProductExist(string productId);
 
+        Task<IEnumerable<LatestProductServiceModel>> Latest();
+
         Task<decimal> PriceForProducts(params string[] ids);
     }
 }

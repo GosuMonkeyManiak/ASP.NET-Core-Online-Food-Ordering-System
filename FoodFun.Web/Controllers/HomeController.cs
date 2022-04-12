@@ -1,37 +1,48 @@
 ﻿namespace FoodFun.Web.Controllers
 {
-    using Models;
+    using FoodFun.Core.Contracts;
+    using FoodFun.Core.Models.Product;
     using Microsoft.AspNetCore.Mvc;
-    using System.Diagnostics;
-    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.Extensions.Caching.Distributed;
+    using FoodFun.Core.Extensions;
 
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private const string LatestProductsKey = "LatestProducts";
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IProductService productService;
+        private readonly IDistributedCache cache; 
+
+        public HomeController(
+            IProductService productService,
+            IDistributedCache cache)
         {
-            _logger = logger;
+            this.productService = productService;
+            this.cache = cache;
         }
-        
-        public IActionResult Index()
+
+        public async Task<IActionResult> Index()
         {
-            return View();
-        }
-        
-        [Authorize]
-        public async Task<IActionResult> Privacy()
-        {
-            return View();
+            var latesProducts = this.cache.Get<List<LatestProductServiceModel>>(LatestProductsKey);
+
+            if (latesProducts == null)
+            {
+                latesProducts = (await this.productService.Latest()).ToList();
+
+                var cacheOptions = new DistributedCacheEntryOptions()
+                    .SetAbsoluteExpiration(TimeSpan.FromMinutes(15));
+
+                this.cache.Set<List<LatestProductServiceModel>>(LatestProductsKey, latesProducts, cacheOptions);
+            }
+
+            return View(latesProducts);
         }
 
         [ResponseCache(
-            Duration = 0, 
-            Location = ResponseCacheLocation.None, 
+            Duration = 0,
+            Location = ResponseCacheLocation.None,
             NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+        public IActionResult Error() 
+            => View();
     }
 }

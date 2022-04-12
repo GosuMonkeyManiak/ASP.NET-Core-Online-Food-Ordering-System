@@ -16,5 +16,7 @@
             int pageNumber,
             int pageSize,
             bool onlyAvailable);
+
+        Task<IEnumerable<Product>> LatestFive();
     }
 }

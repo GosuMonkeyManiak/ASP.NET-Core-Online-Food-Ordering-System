@@ -106,5 +106,11 @@
 
             return query;
         }
+
+        public async Task<IEnumerable<Product>> LatestFive()
+            => (await this.DbSet
+                .AsNoTracking()
+                .ToListAsync())
+                .TakeLast(5);
     }
 }

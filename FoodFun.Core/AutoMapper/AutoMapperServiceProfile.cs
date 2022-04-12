@@ -22,6 +22,8 @@
                 .ForMember(x => x.ProductsCount, options => options
                     .MapFrom(x => x.Products.Count));
 
+            CreateMap<Product, LatestProductServiceModel>();
+
            
             CreateMap<Dish, DishServiceModel>();
             CreateMap<DishCategory, DishCategoryServiceModel>();

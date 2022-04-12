@@ -1,5 +1,6 @@
 ﻿namespace FoodFun.Core.Contracts
 {
+    using FoodFun.Core.Models.Reservation;
     using FoodFun.Core.Models.Table;
 
     public interface IReservationService
@@ -8,6 +9,6 @@
 
         Task<bool> Reserv(DateOnly date, string tableId, string userId);
 
-        Task<IEnumerable<TableServiceModel>> AllByDate(DateOnly date);
+        Task<IEnumerable<ReservationServiceModel>> AllByDate(DateOnly date);
     }
 }

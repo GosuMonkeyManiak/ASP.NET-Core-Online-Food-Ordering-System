@@ -1,4 +1,4 @@
-﻿@model Tuple<DateOnly, IEnumerable<TableServiceModel>>
+﻿@model Tuple<DateOnly, IEnumerable<ReservationServiceModel>>
 
 @{
     ViewData[Title] = "Taken table by Date";
@@ -9,14 +9,15 @@
 </div>
 
 <div class="row">
-    @foreach (var table in Model.Item2)
+    @foreach (var reservation in Model.Item2)
     {
         <div class="col-lg-3 mb-3 text-center">
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
-                    <h4 class="card-title">Table (@table.TablePosition)</h4>
-                    <h5 class="card-title">Table Number: @table.Id</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">This table is for @table.TableSize people.</h6>
+                    <h4 class="card-title">User: @reservation.UserName </h4>
+                    <h4 class="card-title">Table (@reservation.Table.TablePosition)</h4>
+                    <h5 class="card-title">Table Number: @reservation.Table.Id</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">This table is for @reservation.Table.TableSize people.</h6>
                 </div>
             </div>
         </div>

@@ -2,6 +2,7 @@
 {
     using FoodFun.Core.Models.Cart;
     using FoodFun.Core.Models.Order;
+    using FoodFun.Core.Models.Reservation;
     using FoodFun.Core.Models.Table;
     using global::AutoMapper;
     using Infrastructure.Models;
@@ -40,6 +41,9 @@
             CreateMap<Table, TableServiceModel>()
                 .ForMember(x => x.TablePosition, options => options.MapFrom(x => x.TablePosition.Position))
                 .ForMember(x => x.TableSize, options => options.MapFrom(x => x.TableSize.Seats));
+
+            CreateMap<Reservation, ReservationServiceModel>()
+                .ForMember(x => x.UserName, options => options.MapFrom(x => x.User.UserName));
         }
     }
 }

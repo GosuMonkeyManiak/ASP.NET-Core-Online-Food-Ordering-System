@@ -1,7 +1,7 @@
 ﻿namespace FoodFun.Web.Areas.Restaurant.Controllers
 {
     using FoodFun.Core.Contracts;
-    using FoodFun.Core.Models.Table;
+    using FoodFun.Core.Models.Reservation;
     using Microsoft.AspNetCore.Mvc;
 
     using static Constants.GlobalConstants.Messages;
@@ -32,7 +32,7 @@
 
             var tables = await this.reservationService.AllByDate(date);
 
-            return View(new Tuple<DateOnly, IEnumerable<TableServiceModel>>(date, tables));
+            return View(new Tuple<DateOnly, IEnumerable<ReservationServiceModel>>(date, tables));
         }
     }
 }

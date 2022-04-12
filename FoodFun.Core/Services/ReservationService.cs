@@ -10,6 +10,7 @@
     using FoodFun.Core.Extensions;
     using global::AutoMapper;
     using FoodFun.Infrastructure.Models;
+    using FoodFun.Core.Models.Reservation;
 
     public class ReservationService : IReservationService
     {
@@ -27,19 +28,18 @@
             this.mapper = mapper;
         }
 
-        public async Task<IEnumerable<TableServiceModel>> AllByDate(DateOnly date)
+        public async Task<IEnumerable<ReservationServiceModel>> AllByDate(DateOnly date)
         {
             var table = (await this.reservationRepository
                 .GetAllWithTablesByDate(date))
-                .Select(x => x.Table)
                 .ToList();
 
-            return table.ProjectTo<TableServiceModel>(this.mapper);
+            return table.ProjectTo<ReservationServiceModel>(this.mapper);
         }
 
         public async Task<IEnumerable<TableServiceModel>> FreeTables(DateOnly date)
         {
-            var reservationsByDate = await this.reservationRepository.GetAllWithTablesByDate(date);
+            var reservationsByDate = await this.reservationRepository.All(date);
 
             var allTables = (await this.tableService.All());
 

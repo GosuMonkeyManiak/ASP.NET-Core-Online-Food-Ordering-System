@@ -49,6 +49,7 @@
 
         public class TablePosition
         {
+            public const int PositionMinLength = 2;
             public const int PositionMaxLength = 20;
         }
 

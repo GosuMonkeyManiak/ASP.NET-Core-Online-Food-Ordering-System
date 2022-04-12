@@ -68,6 +68,8 @@
 
             public const string OrderNotExist = "Order not exist!";
             public const string TableIsAlreadyTaken = "Table is already taken!";
+
+            public const string PositionError = "{0} must be between {2} and {1} characters!";
         }
 
         public static class Roles

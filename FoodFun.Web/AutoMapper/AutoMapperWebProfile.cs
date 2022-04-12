@@ -12,7 +12,9 @@
     using Core.Models.ProductCategory;
     using FoodFun.Core.Models.Cart;
     using FoodFun.Core.Models.Order;
+    using FoodFun.Core.Models.TablePosition;
     using FoodFun.Web.Areas.Order.Models.Order;
+    using FoodFun.Web.Areas.Restaurant.Models.TablePosition;
     using global::AutoMapper;
     using Infrastructure.Models;
     using Microsoft.AspNetCore.Identity;
@@ -60,6 +62,9 @@
 
             CreateMap<OrderServiceModel, OrderListingModel>();
             CreateMap<OrderWithItemsServiceModel, OrderWithItemsListingModel>();
+
+            CreateMap<TablePositionServiceModel, TablePositionListingModel>();
+            CreateMap<TablePositionServiceModel, TablePositionEditModel>();
         }
     }
 }

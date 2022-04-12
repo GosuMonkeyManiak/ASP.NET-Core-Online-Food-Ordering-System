@@ -1,0 +1,31 @@
+﻿@model IEnumerable<TablePositionListingModel>
+
+@{
+    ViewData[Title] = "All Positions";
+}
+
+<partial name="_ErrorMessagePartial"/>
+
+<div class="row">
+    <div class="offset-3 col-5">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Position</th>
+                <th scope="col">Operations</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var tablePosition in Model)
+            {
+                <tr>
+                    <td>@tablePosition.Position</td>
+                    <td>
+                        <a asp-area="Restaurant" asp-controller="TablePosition" asp-action="Edit" asp-route-id="@tablePosition.Id" class="btn btn-warning">Edit</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>

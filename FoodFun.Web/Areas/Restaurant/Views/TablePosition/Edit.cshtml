@@ -1,0 +1,30 @@
+﻿@model TablePositionEditModel
+
+@{
+    ViewData[Title] = "Edit Position";
+}
+
+<div class="row">
+    <div class="offset-xl-3 col-xl-6">
+        <h1 class="text-center">@ViewData[Title]</h1>
+
+        <form method="post">
+            <div class="form-group mb-3">
+                <input type="hidden" asp-for="Id" value="@Model.Id" />
+
+                <label asp-for="Position" class="mb-1"></label>
+                <input asp-for="Position" class="form-control" placeholder="outside, inside, balcon" value="@Model.Position">
+                <span asp-validation-for="Position" class="text-danger"></span>
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-success">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial"/>
+}

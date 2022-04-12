@@ -1,4 +1,4 @@
-﻿namespace FoodFun.Web.Areas.Restaurant.Models.Table
+﻿namespace FoodFun.Web.Areas.Restaurant.Models.TablePosition
 {
     using FoodFun.Core.ValidationAttributes.TablePosition;
     using System.ComponentModel.DataAnnotations;

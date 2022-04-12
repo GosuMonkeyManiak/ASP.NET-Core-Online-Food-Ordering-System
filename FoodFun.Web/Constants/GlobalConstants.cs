@@ -70,6 +70,7 @@
             public const string TableIsAlreadyTaken = "Table is already taken!";
 
             public const string PositionError = "{0} must be between {2} and {1} characters!";
+            public const string TablePositionNotExist = "Table position doesn't exist!";
         }
 
         public static class Roles

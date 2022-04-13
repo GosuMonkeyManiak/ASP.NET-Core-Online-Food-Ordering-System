@@ -13,8 +13,10 @@
     using FoodFun.Core.Models.Cart;
     using FoodFun.Core.Models.Order;
     using FoodFun.Core.Models.TablePosition;
+    using FoodFun.Core.Models.TableSize;
     using FoodFun.Web.Areas.Order.Models.Order;
     using FoodFun.Web.Areas.Restaurant.Models.TablePosition;
+    using FoodFun.Web.Areas.Restaurant.Models.TableSize;
     using global::AutoMapper;
     using Infrastructure.Models;
     using Microsoft.AspNetCore.Identity;
@@ -65,6 +67,9 @@
 
             CreateMap<TablePositionServiceModel, TablePositionListingModel>();
             CreateMap<TablePositionServiceModel, TablePositionEditModel>();
+
+            CreateMap<TableSizeServiceModel, TableSizeListingModel>();
+            CreateMap<TableSizeServiceModel, TableSizeEditModel>();
         }
     }
 }

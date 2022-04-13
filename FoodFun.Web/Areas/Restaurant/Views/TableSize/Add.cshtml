@@ -1,0 +1,27 @@
+﻿@model TableSizeFormModel
+
+@{
+    ViewData[Title] = "Add table size";
+}
+
+<div class="row">
+    <div class="offset-xl-3 col-xl-6">
+        <h1 class="text-center">@ViewData[Title]</h1>
+
+        <form method="post">
+            <div class="form-group mb-3">
+                <label asp-for="Seats" class="mb-1"></label>
+                <input asp-for="Seats" class="form-control" placeholder="1, 2, 3...">
+                <span asp-validation-for="Seats" class="text-danger"></span>
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Add</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial"/>
+}

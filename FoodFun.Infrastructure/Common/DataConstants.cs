@@ -53,6 +53,11 @@
             public const int PositionMaxLength = 20;
         }
 
+        public class TableSize
+        {
+            public const int SizeMinLength = 2;
+        }
+
         public class Address
         {
             public const int NameMaxLength = 50;

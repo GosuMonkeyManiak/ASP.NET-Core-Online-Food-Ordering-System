@@ -5,6 +5,7 @@
     using FoodFun.Core.Models.Reservation;
     using FoodFun.Core.Models.Table;
     using FoodFun.Core.Models.TablePosition;
+    using FoodFun.Core.Models.TableSize;
     using global::AutoMapper;
     using Infrastructure.Models;
     using Models.Dish;
@@ -49,6 +50,8 @@
                 .ForMember(x => x.UserName, options => options.MapFrom(x => x.User.UserName));
 
             CreateMap<TablePosition, TablePositionServiceModel>();
+
+            CreateMap<TableSize, TableSizeServiceModel>();
         }
     }
 }

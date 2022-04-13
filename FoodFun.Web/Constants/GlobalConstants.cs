@@ -71,6 +71,9 @@
 
             public const string PositionError = "{0} must be between {2} and {1} characters!";
             public const string TablePositionNotExist = "Table position doesn't exist!";
+
+            public const string TableSizeError = "{0} minimum number {1}.";
+            public const string TableSizeNotExist = "Table size doesn't exist!";
         }
 
         public static class Roles

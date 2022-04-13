@@ -1,0 +1,32 @@
+﻿@model IEnumerable<TableSizeListingModel>
+
+@{
+    ViewData[Title] = "All Sizes";
+}
+
+<partial name="_ErrorMessagePartial"/>
+
+<div class="row">
+    <div class="offset-3 col-5">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Seats</th>
+                <th scope="col">Operations</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var tableSize in Model)
+            {
+                <tr>
+                    <td>@tableSize.Seats</td>
+                    <td>
+                        <a asp-area="Restaurant" asp-controller="TableSize" asp-action="Edit" asp-route-id="@tableSize.Id" class="btn btn-warning">Edit</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>
+

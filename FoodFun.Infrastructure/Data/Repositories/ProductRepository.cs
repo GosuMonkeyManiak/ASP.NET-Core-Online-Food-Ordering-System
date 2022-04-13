@@ -110,6 +110,8 @@
         public async Task<IEnumerable<Product>> LatestFive()
             => (await this.DbSet
                 .AsNoTracking()
+                .Include(x => x.Category)
+                .Where(x => x.Quantity > 0 && !x.Category.IsDisable)
                 .ToListAsync())
                 .TakeLast(5);
     }

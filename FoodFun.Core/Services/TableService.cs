@@ -4,6 +4,7 @@
     using FoodFun.Core.Extensions;
     using FoodFun.Core.Models.Table;
     using FoodFun.Infrastructure.Common.Contracts;
+    using FoodFun.Infrastructure.Models;
     using global::AutoMapper;
     using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -17,6 +18,15 @@
         { 
             this.tableRepository = tableRepository;
             this.mapper = mapper;
+        }
+
+        public async Task Add(int sizeId, int positionId)
+        {
+            await this.tableRepository
+                    .AddAsync(new Table() { TableSizeId = sizeId, TablePositionId = positionId });
+
+            await this.tableRepository
+                    .SaveChangesAsync();
         }
 
         public async Task<IEnumerable<TableServiceModel>> All()

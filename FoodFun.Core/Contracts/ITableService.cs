@@ -7,5 +7,7 @@
         Task<IEnumerable<TableServiceModel>> All();
 
         Task<bool> IsTableExist(string id);
+
+        Task Add(int sizeId, int positionId);
     }
 }

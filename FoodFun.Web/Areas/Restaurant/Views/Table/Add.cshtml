@@ -1,0 +1,45 @@
+﻿@model TableFormModel
+
+@{
+    ViewData[Title] = "Add Table";
+}
+
+<div class="row">
+    <div class="offset-xl-3 col-xl-6">
+        <h1 class="text-center">@ViewData[Title]</h1>
+
+        <form method="post">
+           
+            <div class="form-group mb-3">
+                <label asp-for="SizeId" class="form-label mb-1"></label>
+                <select asp-for="SizeId" class="form-control">
+                    @foreach (var tableSize in Model.Sizes)
+                    {
+                        <option value="@tableSize.Id">@tableSize.Seats</option>
+                    }
+                </select>
+                <span asp-validation-for="SizeId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="PositionId" class="form-label mb-1"></label>
+                <select asp-for="PositionId" class="form-control">
+                    @foreach (var tablePosition in Model.Positions)
+                    {
+                        <option value="@tablePosition.Id">@tablePosition.Position</option>
+                    }
+                </select>
+                <span asp-validation-for="PositionId" class="text-danger"></span>
+            </div>
+            
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Add</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial"/>
+}

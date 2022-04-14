@@ -22,7 +22,7 @@ else
           {
               <div class="carousel-item @(i == 0 ? "active" : string.Empty)">
                   <img src="@Model[i].ImageUrl" class="d-block w-100" >
-                  <div class="carousel-caption d-none d-md-block">
+                  <div class="carousel-caption d-none d-md-block text-dark">
                       <h5>@Model[i].Name (@($"${Model[i].Price}"))</h5>
                       <p>@Model[i].Description</p>
                   </div>

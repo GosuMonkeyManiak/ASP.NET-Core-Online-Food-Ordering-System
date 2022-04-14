@@ -1,0 +1,48 @@
+﻿@model TableSearchModel
+
+@{
+    ViewData[Title] = "All tables";
+}
+
+<partial name="_ErrorMessagePartial"/>
+
+<div class="row">
+    <div class="offset-3 col-5">
+        <form method="get" class="form-inline">
+            <div class="input-group">
+                <div class="form-outline me-3">
+                    <input asp-for="SearchTerm" class="form-control" placeholder="Search"/>
+                </div>
+
+                <button type="submit" class="btn btn-primary rounded me-3">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </div>
+        </form>
+
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Table number:</th>
+                <th scope="col">Position</th>
+                <th scope="col">Seats</th>
+                <th scope="col">Operations</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var table in Model.Tables)
+            {
+                <tr>
+                    <td>@table.Id</td>
+                    <td>@table.Position</td>
+                    <td>@table.Seats</td>
+                    <td>
+                        <a asp-area="Restaurant" asp-controller="Table" asp-action="Edit" asp-route-id="@table.Id" class="btn btn-warning">Edit</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>

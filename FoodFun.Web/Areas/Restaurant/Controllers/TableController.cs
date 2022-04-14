@@ -47,7 +47,16 @@
 
             await this.tableService.Add(tableformModel.SizeId, tableformModel.PositionId);
 
-            return Ok();
+            return RedirectToAction(nameof(All));
+        }
+
+        public async Task<IActionResult> All([FromQuery] TableSearchModel searchModel) 
+        {
+            searchModel.Tables = (await this.tableService
+                .All(searchModel.SearchTerm))
+                .ProjectTo<TableListingModel>(this.mapper);
+
+            return View(searchModel);
         }
 
         private async Task<IEnumerable<TableSizeListingModel>> GetTableSizes()

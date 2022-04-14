@@ -29,9 +29,9 @@
                     .SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<TableServiceModel>> All()
+        public async Task<IEnumerable<TableServiceModel>> All(string searchTerm = null)
         {
-            var tables = await this.tableRepository.AllWithPositionsAndSizes();
+            var tables = await this.tableRepository.AllWithPositionsAndSizes(searchTerm);
 
             return tables.ProjectTo<TableServiceModel>(this.mapper);
         }

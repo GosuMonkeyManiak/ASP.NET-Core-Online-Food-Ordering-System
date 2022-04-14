@@ -13,11 +13,22 @@
         {
         }
 
-        public async Task<IEnumerable<Table>> AllWithPositionsAndSizes()
-            => await this.DbSet
-                .Include(t => t.TablePosition)
-                .Include(t => t.TableSize)
-                .AsNoTracking()
-                .ToListAsync();
+        public async Task<IEnumerable<Table>> AllWithPositionsAndSizes(string searchTerm = null)
+        {
+            var query = this.DbSet
+               .Include(t => t.TablePosition)
+               .Include(t => t.TableSize)
+               .AsNoTracking();
+
+            if (searchTerm != null)
+            {
+                query = query
+                    .Where(x =>
+                        x.Id.Contains(searchTerm) ||
+                        x.TablePosition.Position.Contains(searchTerm));
+            }
+
+            return await query.ToListAsync();
+        }
     }
 }

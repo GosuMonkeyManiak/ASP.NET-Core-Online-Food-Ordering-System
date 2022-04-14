@@ -74,6 +74,8 @@
 
             public const string TableSizeError = "{0} minimum number {1}.";
             public const string TableSizeNotExist = "Table size doesn't exist!";
+
+            public const string TableNotExist = "Table doesn't exist!";
         }
 
         public static class Roles

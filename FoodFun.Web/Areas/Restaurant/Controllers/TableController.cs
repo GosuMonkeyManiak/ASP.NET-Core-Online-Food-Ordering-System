@@ -8,6 +8,8 @@
     using global::AutoMapper;
     using Microsoft.AspNetCore.Mvc;
 
+    using static Constants.GlobalConstants.Messages;
+
     public class TableController : RestaurantBaseController
     {
         private readonly ITableService tableService;
@@ -57,6 +59,44 @@
                 .ProjectTo<TableListingModel>(this.mapper);
 
             return View(searchModel);
+        }
+
+        public async Task<IActionResult> Edit(string id)
+        {
+            var table = await this.tableService.GetByIdOrDefault(id);
+
+            if (table == null)
+            {
+                this.TempData[Error] = TableNotExist;
+
+                return RedirectToAction(nameof(All));
+            }
+
+            return View(new TableEditModel()
+            {
+                Id = id,
+                Position = table.TablePosition,
+                Seats = table.TableSize,
+                AllPositions = await GetTablePositions(),
+                AllSeats = await GetTableSizes()
+            });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(TableEditModel editModel)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                editModel.AllPositions = await GetTablePositions();
+                editModel.AllSeats = await GetTableSizes();
+
+                return View(editModel);
+            }
+
+            await this.tableService
+                    .Update(editModel.Id, editModel.PositionId, editModel.SizeId);
+
+            return RedirectToAction(nameof(All));
         }
 
         private async Task<IEnumerable<TableSizeListingModel>> GetTableSizes()

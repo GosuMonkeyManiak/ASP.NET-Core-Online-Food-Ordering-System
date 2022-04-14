@@ -1,0 +1,56 @@
+﻿@model TableEditModel
+
+@{
+    ViewData[Title] = "Edit table";
+}
+
+<div class="row">
+    <div class="offset-xl-3 col-xl-6">
+        <h1 class="text-center">@ViewData[Title]</h1>
+
+        <form method="post">
+           
+            <input type="hidden" asp-for="Id" value="@Model.Id" />
+
+            <div class="form-group mb-3">
+                <label asp-for="SizeId" class="form-label mb-1"></label>
+                <select asp-for="SizeId" class="form-control">
+                    @foreach (var tableSize in Model.AllSeats)
+                    {
+                        if (tableSize.Seats == Model.Seats)
+                        {
+                            <option value="@tableSize.Id" selected>@tableSize.Seats</option>
+                            continue;
+                        }
+
+                        <option value="@tableSize.Id">@tableSize.Seats</option>
+                    }
+                </select>
+                <span asp-validation-for="SizeId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="PositionId" class="form-label mb-1"></label>
+                <select asp-for="PositionId" class="form-control">
+                    @foreach (var tablePosition in Model.AllPositions)
+                    {
+                        if (tablePosition.Position == Model.Position)
+                        {
+                            <option value="@tablePosition.Id" selected>@tablePosition.Position</option>
+                            continue;
+                        }
+
+                        <option value="@tablePosition.Id">@tablePosition.Position</option>
+                    }
+                </select>
+                <span asp-validation-for="PositionId" class="text-danger"></span>
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>
+            
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-success">Save</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -14,7 +14,7 @@
 
         public const string DateMustBeNowOrInTheFuture = "Date must be today or in the future!";
 
-        public const string TableNotExist = "Table doesn't exist";
+        public const string TableNotExist = "Table doesn't exist!";
 
         public const string TablePositionAlreadyExist = "Table position already exist!";
         public const string TablePostionNotExist = "Table position not exist!";

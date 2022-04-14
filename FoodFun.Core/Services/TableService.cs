@@ -36,8 +36,34 @@
             return tables.ProjectTo<TableServiceModel>(this.mapper);
         }
 
+        public async Task<TableServiceModel> GetByIdOrDefault(string id)
+        {
+            if (!await IsTableExist(id))
+            {
+                return null;
+            }
+
+            var table = await this.tableRepository.GetWithPositionAndSizeById(id);
+
+            return this.mapper.Map<TableServiceModel>(table);
+        }
+
         public async Task<bool> IsTableExist(string id)
             => await this.tableRepository
                 .FindOrDefaultAsync(x => x.Id == id) != null;
+
+        public async Task Update(string id, int positionId, int sizeId)
+        {
+            var table = new Table()
+            {
+                Id = id,
+                TablePositionId = positionId,
+                TableSizeId = sizeId,
+            };
+
+            this.tableRepository.Update(table);
+
+            await this.tableRepository.SaveChangesAsync();
+        }
     }
 }

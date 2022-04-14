@@ -30,5 +30,12 @@
 
             return await query.ToListAsync();
         }
+
+        public async Task<Table> GetWithPositionAndSizeById(string id)
+            => await this.DbSet
+                .AsNoTracking()
+                .Include(x => x.TablePosition)
+                .Include(x => x.TableSize)
+                .FirstAsync(x => x.Id == id);
     }
 }

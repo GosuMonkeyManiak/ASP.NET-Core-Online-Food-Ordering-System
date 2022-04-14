@@ -4,7 +4,7 @@
     using Infrastructure.Models;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
-
+    using Newtonsoft.Json;
     using static Constants.GlobalConstants.Roles;
 
     public static class ApplicationExtensions
@@ -13,58 +13,55 @@
         {
             var scope = app.Services.CreateScope();
 
-            var db = scope.ServiceProvider.GetService<FoodFunDbContext>();
+            var dbContext = scope.ServiceProvider.GetService<FoodFunDbContext>();
+            dbContext.Database.Migrate();
 
-            db.Database.Migrate();
+            //if (!db.Roles.Any())
+            //{
+            //    SeedRoles(scope.ServiceProvider.GetService<RoleManager<IdentityRole>>())
+            //        .GetAwaiter()
+            //        .GetResult();
+            //}
 
-            if (!db.Roles.Any())
+            //if (!db.Users.Any())
+            //{
+            //    var configuration = scope.ServiceProvider.GetService<IConfiguration>();
+
+            //    SeedUsers(
+            //        scope.ServiceProvider.GetService<UserManager<User>>(),
+            //        configuration["AdminUser:Username"],
+            //        configuration["AdminUser:Password"],
+            //        configuration["AdminUser:Email"])
+            //        .GetAwaiter()
+            //        .GetResult();
+            //}
+
+            if (!dbContext.ProductsCategories.Any())
             {
-                SeedRoles(scope.ServiceProvider.GetService<RoleManager<IdentityRole>>())
-                    .GetAwaiter()
-                    .GetResult();
+                SeedCategoriesForProduct(dbContext);
             }
 
-            if (!db.Users.Any())
-            {
-                var configuration = scope.ServiceProvider.GetService<IConfiguration>();
+            //if (!db.DishesCategories.Any())
+            //{
+            //    SeedCategoriesForDish(db)
+            //        .GetAwaiter()
+            //        .GetResult();
+            //}
 
-                SeedUsers(
-                    scope.ServiceProvider.GetService<UserManager<User>>(),
-                    configuration["AdminUser:Username"],
-                    configuration["AdminUser:Password"],
-                    configuration["AdminUser:Email"])
-                    .GetAwaiter()
-                    .GetResult();
-            }
+            //if (!db.TableSizes.Any())
+            //{
+            //    SeedTableSizes(db).GetAwaiter().GetResult();
+            //}
 
-            if (!db.ProductsCategories.Any())
-            {
-                SeedCategoriesForProduct(db)
-                    .GetAwaiter()
-                    .GetResult();
-            }
+            //if (!db.TablePositions.Any())
+            //{
+            //    SeedTablePositions(db).GetAwaiter().GetResult();
+            //}
 
-            if (!db.DishesCategories.Any())
-            {
-                SeedCategoriesForDish(db)
-                    .GetAwaiter()
-                    .GetResult();
-            }
-
-            if (!db.TableSizes.Any())
-            {
-                SeedTableSizes(db).GetAwaiter().GetResult();
-            }
-
-            if (!db.TablePositions.Any())
-            {
-                SeedTablePositions(db).GetAwaiter().GetResult();
-            }
-
-            if (!db.Tables.Any())
-            {
-                SeedTable(db).GetAwaiter().GetResult();
-            }
+            //if (!db.Tables.Any())
+            //{
+            //    SeedTable(db).GetAwaiter().GetResult();
+            //}
         }
 
         private async static Task SeedRoles(RoleManager<IdentityRole> roleManager)
@@ -91,21 +88,16 @@
             await userManager.AddToRoleAsync(user, Administrator);
         }
 
-        private async static Task SeedCategoriesForProduct(FoodFunDbContext dbContext)
+        private static void SeedCategoriesForProduct(FoodFunDbContext dbContext)
         {
-            List<ProductCategory> categories = new List<ProductCategory>()
-            {
-                new() { Title = "Meat" },
-                new() { Title = "Sea Food" },
-                new() { Title = "Drinks" },
-                new() { Title = "Vegetables" },
-                new() { Title = "Fruits" },
-            };
+            var productCategoriesSet = File.ReadAllText("DataSets/ProductCategory/productCategories.json");
 
-            await dbContext.ProductsCategories
-                .AddRangeAsync(categories);
+            List<ProductCategory> categories = JsonConvert.DeserializeObject<List<ProductCategory>>(productCategoriesSet);
 
-            await dbContext.SaveChangesAsync();
+            dbContext.ProductsCategories
+                .AddRange(categories);
+
+            dbContext.SaveChanges();
         }
 
         private async static Task SeedCategoriesForDish(FoodFunDbContext dbContext)

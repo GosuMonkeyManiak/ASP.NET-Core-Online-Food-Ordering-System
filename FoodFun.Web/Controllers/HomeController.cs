@@ -5,6 +5,8 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Caching.Distributed;
     using FoodFun.Core.Extensions;
+    using System.Diagnostics;
+    using FoodFun.Web.Models;
 
     public class HomeController : Controller
     {
@@ -43,6 +45,6 @@
             Location = ResponseCacheLocation.None,
             NoStore = true)]
         public IActionResult Error() 
-            => View();
+            => View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 }

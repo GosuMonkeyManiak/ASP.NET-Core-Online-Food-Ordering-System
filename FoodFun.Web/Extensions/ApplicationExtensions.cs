@@ -12,64 +12,66 @@
     {
         public static void MigrateDatabaseAndSeed(this WebApplication app)
         {
-            var scope = app.Services.CreateScope();
-
-            var dbContext = scope.ServiceProvider.GetService<FoodFunDbContext>();
-            dbContext.Database.Migrate();
-
-            if (!dbContext.Roles.Any())
+            using (var scope = app.Services.CreateScope())
             {
-                SeedRoles(scope.ServiceProvider.GetService<RoleManager<IdentityRole>>())
-                    .GetAwaiter()
-                    .GetResult();
-            }
+                var dbContext = scope.ServiceProvider.GetService<FoodFunDbContext>();
 
-            if (!dbContext.Users.Any())
-            {
-                var configuration = scope.ServiceProvider.GetService<IConfiguration>();
+                dbContext.Database.Migrate();
 
-                SeedAdminUser(
-                    scope.ServiceProvider.GetService<UserManager<User>>(),
-                    configuration["AdminUser:Username"],
-                    configuration["AdminUser:Password"],
-                    configuration["AdminUser:Email"])
-                    .GetAwaiter()
-                    .GetResult();
-            }
+                if (!dbContext.Roles.Any())
+                {
+                    SeedRoles(scope.ServiceProvider.GetService<RoleManager<IdentityRole>>())
+                        .GetAwaiter()
+                        .GetResult();
+                }
 
-            if (!dbContext.ProductsCategories.Any())
-            {
-                SeedCategoriesForProduct(dbContext);
-            }
+                if (!dbContext.Users.Any())
+                {
+                    var configuration = scope.ServiceProvider.GetService<IConfiguration>();
 
-            if(!dbContext.Products.Any())
-            {
-                SeedProducts(dbContext);
-            }
+                    SeedAdminUser(
+                        scope.ServiceProvider.GetService<UserManager<User>>(),
+                        configuration["AdminUser:Username"],
+                        configuration["AdminUser:Password"],
+                        configuration["AdminUser:Email"])
+                        .GetAwaiter()
+                        .GetResult();
+                }
 
-            if (!dbContext.DishesCategories.Any())
-            {
-                SeedCategoriesForDish(dbContext);
-            }
+                if (!dbContext.ProductsCategories.Any())
+                {
+                    SeedCategoriesForProduct(dbContext);
+                }
 
-            if (!dbContext.Dishes.Any())
-            {
-                SeedDishes(dbContext);
-            }
+                if (!dbContext.Products.Any())
+                {
+                    SeedProducts(dbContext);
+                }
 
-            if (!dbContext.TableSizes.Any())
-            {
-                SeedTableSizes(dbContext);
-            }
+                if (!dbContext.DishesCategories.Any())
+                {
+                    SeedCategoriesForDish(dbContext);
+                }
 
-            if (!dbContext.TablePositions.Any())
-            {
-                SeedTablePositions(dbContext);
-            }
+                if (!dbContext.Dishes.Any())
+                {
+                    SeedDishes(dbContext);
+                }
 
-            if (!dbContext.Tables.Any())
-            {
-                SeedTable(dbContext);
+                if (!dbContext.TableSizes.Any())
+                {
+                    SeedTableSizes(dbContext);
+                }
+
+                if (!dbContext.TablePositions.Any())
+                {
+                    SeedTablePositions(dbContext);
+                }
+
+                if (!dbContext.Tables.Any())
+                {
+                    SeedTable(dbContext);
+                }
             }
         }
 

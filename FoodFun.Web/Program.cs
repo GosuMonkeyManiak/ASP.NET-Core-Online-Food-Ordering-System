@@ -20,7 +20,6 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
-    app.MigrateDatabaseAndSeed();
 }
 else
 {
@@ -45,5 +44,7 @@ app.MapControllerRoute(
     "{controller=Home}/{action=Index}/{id?}");
 
 app.MapRazorPages();
+
+app.MigrateDatabaseAndSeed();
 
 app.Run();

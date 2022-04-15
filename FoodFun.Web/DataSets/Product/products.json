@@ -1,0 +1,258 @@
+[
+  {
+    "name": "Bananas",
+    "imageUrl": "https://images.immediate.co.uk/production/volatile/sites/30/2017/01/Bananas-218094b-scaled.jpg",
+    "categoryId": 4,
+    "price": 2.52,
+    "description": "Best bananas ever only here",
+    "quantity": 1120
+  },
+  {
+    "name": "Avocado",
+    "imageUrl": "https://learnenglishteens.britishcouncil.org/sites/teens/files/styles/article/public/rs7776_thinkstockphotos-856586464_1-low.jpg",
+    "categoryId": 4,
+    "price": 1.48,
+    "description": "100% fresh avocado",
+    "quantity": 120
+  },
+  {
+    "name": "Oranges",
+    "imageUrl": "https://produits.bienmanger.com/33285-0w470h470_Organic_Fresh_Oranges_From_Italy_New_Hall.jpg",
+    "categoryId": 4,
+    "price": 2.40,
+    "description": "100% fresh oranges",
+    "quantity": 2120
+  },
+  {
+    "name": "Limon",
+    "imageUrl": "https://media.istockphoto.com/photos/lemon-picture-id469507426?k=20&m=469507426&s=612x612&w=0&h=JmrB-RBPWsgiiprDPdAY0eTKKPH7KjKMsD8L1psLZA8=",
+    "categoryId": 4,
+    "price": 1.20,
+    "description": "100% fresh limons",
+    "quantity": 122
+  },
+  {
+    "name": "Strawberry",
+    "imageUrl": "https://www.crodapersonalcare.com/croda_image_downloads.ashx?fn=Personalcare_0_strawberry-shutterstock_771314446.jpg&mn=personalcare&w=768&xr=0&yr=0&xfp=6&yfp=6&hash=FDA6E5C93BDE278AA0B30F90EF2A401519C138999FEC74AA&t=7",
+    "categoryId": 4,
+    "price": 2.20,
+    "description": "100% fresh strawberries",
+    "quantity": 150
+  },
+  {
+    "name": "Apples",
+    "imageUrl": "https://images.heb.com/is/image/HEBGrocery/000466634",
+    "categoryId": 4,
+    "price": 2.10,
+    "description": "100% fresh apples",
+    "quantity": 190
+  },
+  {
+    "name": "Kiwi",
+    "imageUrl": "https://solidstarts.com/wp-content/uploads/Kiwi_edited-scaled.jpg",
+    "categoryId": 4,
+    "price": 2.99,
+    "description": "100% fresh kiwis",
+    "quantity": 290
+  },
+  {
+    "name": "Eurasian carp",
+    "imageUrl": "https://m.netinfo.bg/media/images/29247/29247567/640-420-britanec-hvana-sharan-gigant.jpg",
+    "categoryId": 2,
+    "price": 12.99,
+    "description": "Fresh eurasian carp",
+    "quantity": 50
+  },
+  {
+    "name": "Brown trout",
+    "imageUrl": "https://cdncloudcart.com/16372/products/images/42655/pastarva-cistena-ohladena-s-glavi-image_60d338f103bd3_800x800.jpeg?1624455449",
+    "categoryId": 2,
+    "price": 16.99,
+    "description": "Fresh brown trout",
+    "quantity": 55
+  },
+  {
+    "name": "Lobster",
+    "imageUrl": "https://post.greatist.com/wp-content/uploads/sites/2/2021/03/GRT-lobster-1200x628-facebook.jpg",
+    "categoryId": 2,
+    "price": 45.99,
+    "description": "Fresh lobster",
+    "quantity": 20
+  },
+  {
+    "name": "Salmon",
+    "imageUrl": "https://alexfish.bg/files/products/666792dc-0c9b-e211-8038-0025228f53e3_1.jpg",
+    "categoryId": 2,
+    "price": 25.99,
+    "description": "Fresh salmon",
+    "quantity": 99
+  },
+  {
+    "name": "Bacon",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/3/31/Made20bacon.png",
+    "categoryId": 1,
+    "price": 10.99,
+    "description": "Fresh bacon",
+    "quantity": 100
+  },
+  {
+    "name": "Chiken",
+    "imageUrl": "https://thumbs.dreamstime.com/b/top-view-fresh-raw-chicken-isolated-white-top-view-fresh-raw-chicken-isolated-white-background-123737779.jpg",
+    "categoryId": 1,
+    "price": 9.99,
+    "description": "Whole raw bacon",
+    "quantity": 125
+  },
+  {
+    "name": "Beef Steak",
+    "imageUrl": "https://previews.123rf.com/images/topntp/topntp1907/topntp190704628/127802337-%E7%94%9F%E3%81%AE%E7%89%9B%E8%82%89%E3%82%B9%E3%83%86%E3%83%BC%E3%82%AD%E3%81%BE%E3%81%9F%E3%81%AF%E7%94%9F%E8%82%89.jpg",
+    "categoryId": 1,
+    "price": 19.99,
+    "description": "Raw beef steak",
+    "quantity": 130
+  },
+  {
+    "name": "Potatoes",
+    "imageUrl": "https://cdn.mos.cms.futurecdn.net/iC7HBvohbJqExqvbKcV3pP.jpg",
+    "categoryId": 3,
+    "price": 4.99,
+    "description": "100% bulgaria potatoes",
+    "quantity": 2010
+  },
+  {
+    "name": "Cucumber",
+    "imageUrl": "https://cdncloudcart.com/16398/products/images/39803/krastavici-1-kg-image_5ea2d32a84356_800x800.png?1587732266",
+    "categoryId": 3,
+    "price": 3.99,
+    "description": "100% bulgaria cucumber",
+    "quantity": 240
+  },
+  {
+    "name": "Tomatoes",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/8/89/Tomato_je.jpg",
+    "categoryId": 3,
+    "price": 3.40,
+    "description": "100% bulgaria tomatoes",
+    "quantity": 250
+  },
+  {
+    "name": "Daucus",
+    "imageUrl": "https://www.obekti.bg/sites/default/files/styles/article_gallery/public/images/220103shutterstock_459404320.jpg?itok=bqxnBVHG",
+    "categoryId": 3,
+    "price": 2.20,
+    "description": "100% bulgaria daucus",
+    "quantity": 360
+  },
+  {
+    "name": "Onion",
+    "imageUrl": "https://zashtita.bulagro.bg/thumbs/6/7394558.jpg",
+    "categoryId": 3,
+    "price": 1.20,
+    "description": "100% bulgaria onion",
+    "quantity": 460
+  },
+  {
+    "name": "Eggs",
+    "imageUrl": "https://images-prod.healthline.com/hlcmsresource/images/AN_images/health-benefits-of-eggs-1296x728-feature.jpg",
+    "categoryId": 5,
+    "price": 1.50,
+    "description": "100% bulgaria eggs",
+    "quantity": 560
+  },
+  {
+    "name": "Milk",
+    "imageUrl": "https://m.ebag.bg/products/images/93135/800",
+    "categoryId": 5,
+    "price": 2.00,
+    "description": "100% bulgaria milk",
+    "quantity": 660
+  },
+  {
+    "name": "Yoghurt",
+    "imageUrl": "https://m.ebag.bg/products/images/93131/800",
+    "categoryId": 5,
+    "price": 1.20,
+    "description": "100% bulgaria yoghurt",
+    "quantity": 670
+  },
+  {
+    "name": "Cheese",
+    "imageUrl": "https://www.puls.bg/cache/2/d/0/b/0/2d0b04bd53513260dd8af462a1ffb37f332a6800.jpeg",
+    "categoryId": 5,
+    "price": 3.20,
+    "description": "100% bulgaria cheese",
+    "quantity": 680
+  },
+  {
+    "name": "Kashkaval",
+    "imageUrl": "https://cdncloudcart.com/16372/products/images/27453/kaskaval-madzarov-vitosa-bds-420-g-image_5e8335ca1f37b_800x800.jpeg?1585685748",
+    "categoryId": 5,
+    "price": 3.10,
+    "description": "100% bulgaria kashkaval",
+    "quantity": 690
+  },
+  {
+    "name": "Milk",
+    "imageUrl": "https://www.dangersalimentaires.com/wp-content/uploads/2018/11/lait-bio-carrefour.jpg",
+    "categoryId": 6,
+    "price": 5.10,
+    "description": "100% bio milk",
+    "quantity": 700
+  },
+  {
+    "name": "Yoghurt",
+    "imageUrl": "https://assets.dpo.store/wp-content/uploads/sites/254/2021/04/1454012708-500x500.jpg",
+    "categoryId": 6,
+    "price": 7.10,
+    "description": "100% bio yoghurt",
+    "quantity": 810
+  },
+  {
+    "name": "Sugar",
+    "imageUrl": "https://www.eatthis.com/wp-content/uploads/sites/4/2022/02/sugar.jpg?quality=82&strip=all",
+    "categoryId": 7,
+    "price": 2.10,
+    "description": "100% real sugar",
+    "quantity": 820
+  },
+  {
+    "name": "Flour",
+    "imageUrl": "https://m.ebag.bg/products/images/86857/800",
+    "categoryId": 7,
+    "price": 2.20,
+    "description": "100% bulgaria flour",
+    "quantity": 840
+  },
+  {
+    "name": "Ice cream",
+    "imageUrl": "https://www.icecreamland.bg/products/familia/3in1_coca-bisquit-hazel_new1.png",
+    "categoryId": 8,
+    "price": 2.20,
+    "description": "Best ice cream only here",
+    "quantity": 880
+  },
+  {
+    "name": "Pizza",
+    "imageUrl": "https://bulmag.org/files/products-v2/64/review/b4cd2e25b838878b5557afadd276bab5.jpg",
+    "categoryId": 8,
+    "price": 4.20,
+    "description": "Best pizza only here",
+    "quantity": 890
+  },
+  {
+    "name": "Coca Cola",
+    "imageUrl": "https://bulmag.org/files/products-v2/2/review/44d89b29f34023e5b36029b7e6ab4273.jpg",
+    "categoryId": 9,
+    "price": 2.05,
+    "description": "Best coca cola",
+    "quantity": 900
+  },
+  {
+    "name": "Blue johnnie walker",
+    "imageUrl": "https://cdncloudcart.com/25930/products/images/6699/uiski-johnnie-walker-blue-label-0-7-l--sin-etiket-image_612fa8a45d773_800x800.jpeg?1630513340",
+    "categoryId": 9,
+    "price": 500.00,
+    "description": "Best walker",
+    "quantity": 5
+  }
+]

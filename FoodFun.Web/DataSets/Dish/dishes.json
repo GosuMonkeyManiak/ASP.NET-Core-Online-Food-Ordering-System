@@ -1,0 +1,82 @@
+﻿[
+  {
+    "name": "Chicken soup",
+    "imageUrl": "https://www.inspiredtaste.net/wp-content/uploads/2018/09/Easy-Chicken-Noodle-Soup-Recipe-1200.jpg",
+    "categoryId": 2,
+    "price": 2.20,
+    "description": "Best chicken soup only here",
+    "quantity": 20
+  },
+  {
+    "name": "Greek salad",
+    "imageUrl": "https://www.simplyrecipes.com/thmb/au60mVTA5EPLLknjdtQ9BYO0OC4=/1067x1067/smart/filters:no_upscale()/__opt__aboutcom__coeus__resources__content_migration__simply_recipes__uploads__2011__08__dads-greek-salad-horiz-a-1600-bc71b85bc907414a9bb3179a923b58fc.jpg",
+    "categoryId": 1,
+    "price": 4.20,
+    "description": "Best greek salad only here",
+    "quantity": 25
+  },
+  {
+    "name": "Shopska salad",
+    "imageUrl": "https://dostavka.happy.bg/remote/files/images/196/fit_640_400.png?rev=0",
+    "categoryId": 1,
+    "price": 3.20,
+    "description": "Best сhopska salad only here",
+    "quantity": 30
+  },
+  {
+    "name": "Zagorka",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/d/d8/Zagorka_Special_beer.JPG",
+    "categoryId": 3,
+    "price": 1.20,
+    "description": "Best zagorka only here",
+    "quantity": 50
+  },
+  {
+    "name": "Mastika",
+    "imageUrl": "https://bulgarianfood.eu/wp-content/uploads/2018/11/mastika2.jpg",
+    "categoryId": 3,
+    "price": 1.50,
+    "description": "Best mastika only here",
+    "quantity": 10
+  },
+  {
+    "name": "Ouzo",
+    "imageUrl": "https://produits.bienmanger.com/18553-0w470h470_Ouzo_Kazanisto.jpg",
+    "categoryId": 3,
+    "price": 2.50,
+    "description": "Best ouzo only here",
+    "quantity": 12
+  },
+  {
+    "name": "Rakiq",
+    "imageUrl": "https://topfresh.bg/wp-content/uploads/2018/04/peshterska-grozdova.png",
+    "categoryId": 3,
+    "price": 3.50,
+    "description": "Best rakiq only here",
+    "quantity": 15
+  },
+  {
+    "name": "Steak",
+    "imageUrl": "https://www.seriouseats.com/thmb/uGGwEqPZf7PzhES1ZCAqHLgCbG8=/1500x844/smart/filters:no_upscale()/__opt__aboutcom__coeus__resources__content_migration__serious_eats__seriouseats.com__recipes__images__2015__05__Anova-Steak-Guide-Sous-Vide-Photos15-beauty-159b7038c56a4e7685b57f478ca3e4c8.jpg",
+    "categoryId": 4,
+    "price": 5.50,
+    "description": "Best steak only here",
+    "quantity": 20
+  },
+  {
+    "name": "Chicken wings",
+    "imageUrl": "https://tastesbetterfromscratch.com/wp-content/uploads/2014/09/Baked-Chicken-Wings-3.jpg",
+    "categoryId": 4,
+    "price": 6.50,
+    "description": "Best wing only here",
+    "quantity": 30
+  },
+  {
+    "name": "Margherita",
+    "imageUrl": "https://images.getrecipekit.com/20220211142347-margherita-9920.jpg?aspect_ratio=16:9&quality=90&",
+    "categoryId": 5,
+    "price": 7.50,
+    "description": "Best margherita only here",
+    "quantity": 50
+  }
+]

@@ -137,6 +137,14 @@
             this.productRepoMock
                 .Setup(x => x.All(It.IsAny<string[]>()))
                 .Returns<string[]>(async x => await Task.FromResult(this.products.Where(a => x.Contains(a.Id))));
+
+            this.productRepoMock
+                .Setup(x => x.All(It.IsAny<string[]>()))
+                .Returns<string[]>(async x => await Task.FromResult(this.products.Where(a => x.Contains(a.Id))));
+
+            this.productRepoMock
+                .Setup(x => x.LatestFive())
+                .ReturnsAsync(this.products.Where(x => x.Quantity > 0 && !x.Category.IsDisable));
         }
 
         private void MockProductCategoryServiceMethods()
@@ -218,6 +226,28 @@
                 Price = 12,
                 Description = "Test chicken",
                 Quantity = 0
+            });
+            this.products.Add(new()
+            {
+                Id = "5470a4f2-1b6f-4c65-89e5-de130aaf5b45",
+                Name = "Chicken wgins",
+                ImageUrl = "chicken-wings.jpg",
+                CategoryId = meatCategory.Id,
+                Category = meatCategory,
+                Price = 12,
+                Description = "Test chicken wings",
+                Quantity = 5
+            });
+            this.products.Add(new()
+            {
+                Id = "3a25e53d-c90f-4849-a3cb-e8544a1c7144",
+                Name = "Steak",
+                ImageUrl = "steak.jpg",
+                CategoryId = meatCategory.Id,
+                Category = meatCategory,
+                Price = 12,
+                Description = "Test steak",
+                Quantity = 5
             });
         }
 
@@ -481,6 +511,44 @@
                 .ToList();
 
             Assert.AreEqual(expectedResult.Count, actualResult.Count);
+        }
+
+        [Test]
+        [TestCase("4da54227-ccf1-4fd5-9fb5-21ae4356da33", "058e7d03-7082-4d92-9fa3-b0458afd484f")]
+        [TestCase("999cae77-6db9-4437-bb4f-440bcfcc8772", "22164c80-b0de-4633-ada5-a74ac0674843")]
+        public async Task When_Call_PriceForProducts_ShouldReturnValidSum(params string[] ids)
+        {
+            SeedTestProductsAndCategories();
+
+            var actualResult = await this.productService.PriceForProducts(ids);
+
+            var expectedResult = this.products
+                .Where(x => ids.Contains(x.Id))
+                .Sum(x => x.Price);
+
+            Assert.AreEqual(expectedResult, actualResult);
+        }
+
+        [Test]
+        public async Task When_Call_Latest_Should_Return_ValidLastestProducts()
+        {
+            SeedTestProductsAndCategories();
+
+            var actualResult = (await this.productService.Latest()).ToList();
+
+            var expectedResult = this.products
+                .Where(x => x.Quantity > 0 && !x.Category.IsDisable)
+                .ToList();
+
+            Assert.AreEqual(expectedResult.Count, actualResult.Count);
+
+            for (int i = 0; i < expectedResult.Count; i++)
+            {
+                Assert.AreEqual(expectedResult[i].Name, actualResult[i].Name);
+                Assert.AreEqual(expectedResult[i].ImageUrl, actualResult[i].ImageUrl);
+                Assert.AreEqual(expectedResult[i].Price, actualResult[i].Price);
+                Assert.AreEqual(expectedResult[i].Description, actualResult[i].Description);
+            }
         }
     }
 }

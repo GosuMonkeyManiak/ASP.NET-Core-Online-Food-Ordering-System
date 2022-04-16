@@ -165,6 +165,10 @@
                             .Take(pageSize)
                             .ToList());
                 });
+
+            this.dishRepoMock
+                .Setup(x => x.All(It.IsAny<string[]>()))
+                .Returns<string[]>(async x => await Task.FromResult(this.dishes.Where(a => x.Contains(a.Id))));
         }
 
         private void SeedTestDishes()
@@ -471,6 +475,50 @@
                 Assert.AreEqual(expectedResult[i].Price, filteredDishes[i].Price);
                 Assert.AreEqual(expectedResult[i].Description, filteredDishes[i].Description);
                 Assert.AreEqual(expectedResult[i].Quantity, filteredDishes[i].Quantity);
+            }
+        }
+
+        [Test]
+        [TestCase("c3182fae-c620-4b79-be5c-0f05e104f9ea", "82496e1f-3120-4016-860e-e98558678477")]
+        public async Task When_Call_PriceForDishes_ShouldReturnValidPrice(params string[] ids)
+        {
+            SeedTestDishes();
+
+            var actualResult = (await this.dishService.PriceForDishes(ids));
+
+            var expectedResult = this.dishes
+                .Where(x => ids.Contains(x.Id))
+                .Sum(x => x.Price);
+
+            Assert.AreEqual(expectedResult, actualResult);
+        }
+
+        [Test]
+        [TestCase("c3182fae-c620-4b79-be5c-0f05e104f9ea", "82496e1f-3120-4016-860e-e98558678477")]
+        [TestCase("81ba5e61-6ed8-454b-8419-67ebd4f16e74", "5bc5fdbc-4bba-46fa-aa18-1f307a1d48ae")]
+        public async Task When_Call_All_Should_Return_ValidDishes(params string[] ids)
+        {
+            SeedTestDishes();
+
+            var actualResult = (await this.dishService.All(ids)).ToList();
+
+            var expectedResult = this.dishes
+                .Where(x => ids.Contains(x.Id))
+                .ToList();
+
+            Assert.AreEqual(expectedResult.Count, actualResult.Count);
+
+            for (int i = 0; i < expectedResult.Count; i++)
+            {
+                Assert.AreEqual(expectedResult[i].Id, actualResult[i].Id);
+                Assert.AreEqual(expectedResult[i].Name, actualResult[i].Name);
+                Assert.AreEqual(expectedResult[i].ImageUrl, actualResult[i].ImageUrl);
+                Assert.AreEqual(expectedResult[i].CategoryId, actualResult[i].Category.Id);
+                Assert.AreEqual(expectedResult[i].Category.Id, actualResult[i].Category.Id);
+                Assert.AreEqual(expectedResult[i].Category.Title, actualResult[i].Category.Title);
+                Assert.AreEqual(expectedResult[i].Price, actualResult[i].Price);
+                Assert.AreEqual(expectedResult[i].Description, actualResult[i].Description);
+                Assert.AreEqual(expectedResult[i].Quantity, actualResult[i].Quantity);
             }
         }
     }

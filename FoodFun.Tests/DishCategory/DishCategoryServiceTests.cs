@@ -15,6 +15,8 @@
     using System.Threading.Tasks;
     using System.Linq;
     using System.Linq.Expressions;
+    using FoodFun.Core.Extensions;
+    using FoodFun.Core.Models.DishCategory;
 
     [TestFixture]
     public class DishCategoryServiceTests
@@ -79,6 +81,10 @@
             this.dishCategoryRepo
                 .Setup(x => x.FindOrDefaultAsync(It.IsAny<Expression<Func<DishCategory, bool>>>()))
                 .Returns<Expression<Func<DishCategory, bool>>>(async x => await Task.FromResult(this.dishCategories.FirstOrDefault(x.Compile())));
+
+            this.dishCategoryRepo
+                .Setup(x => x.GeAllNotDisabled())
+                .ReturnsAsync(this.dishCategories.Where(x => x.IsDisable == false));
         }
 
         private void SeedTestCategories()
@@ -438,6 +444,26 @@
                 .GetByIdOrDefault(id);
 
             Assert.IsNull(actualResult);
+        }
+
+        [TestCase]
+        public async Task When_CallAllNotDisable_Should_Return_AllCategoriesWhichIsNotDisabled()
+        {
+            SeedTestCategories();
+
+            var actualResult = (await this.dishCategoryService.AllNotDisabled()).ToList();
+
+            var expectedResult = this.dishCategories
+                .Where(x => !x.IsDisable)
+                .ToList();
+
+            Assert.AreEqual(expectedResult.Count, actualResult.Count);
+
+            for (int i = 0; i < expectedResult.Count; i++)
+            {
+                Assert.AreEqual(expectedResult[i].Id, actualResult[i].Id);
+                Assert.AreEqual(expectedResult[i].Title, actualResult[i].Title);
+            }
         }
     }
 }

@@ -14,7 +14,9 @@
         private readonly ITableRepository tableRepository;
         private readonly IMapper mapper;
 
-        public TableService(ITableRepository tableRepository, IMapper mapper)
+        public TableService(
+            ITableRepository tableRepository, 
+            IMapper mapper)
         { 
             this.tableRepository = tableRepository;
             this.mapper = mapper;

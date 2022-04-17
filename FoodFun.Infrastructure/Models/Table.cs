@@ -12,12 +12,12 @@
         public string Id { get; init; } = Guid.NewGuid().ToString();
 
         [ForeignKey(nameof(TableSize))]
-        public int TableSizeId { get; init; }
+        public int TableSizeId { get; set; }
 
         public TableSize TableSize { get; init; }
 
         [ForeignKey(nameof(TablePosition))]
-        public int TablePositionId { get; init; }
+        public int TablePositionId { get; set; }
 
         public TablePosition TablePosition { get; init; }
 
